@@ -32,6 +32,121 @@ function Index() {
   const [donation, setDonation] = useState(50);
   const [email, setEmail] = useState("");
   const [sent, setSent] = useState(false);
+  const [displayDonation, setDisplayDonation] = useState(50);
+
+  const rootRef = useRef<HTMLDivElement>(null);
+  const scopeRef = useRef<Scope | null>(null);
+  const statsRef = useRef<HTMLDivElement>(null);
+  const donationDisplayRef = useRef<HTMLSpanElement>(null);
+
+  // Split hero headline into animated words
+  useEffect(() => {
+    if (!rootRef.current) return;
+    scopeRef.current = createScope({ root: rootRef.current }).add(() => {
+      // Hero words stagger reveal
+      animate(".hero-word", {
+        opacity: [0, 1],
+        translateY: [40, 0],
+        filter: ["blur(12px)", "blur(0px)"],
+        duration: 900,
+        delay: stagger(80, { start: 200 }),
+        ease: "out(3)",
+      });
+
+      // Hero subtitle + CTAs
+      animate(".hero-reveal", {
+        opacity: [0, 1],
+        translateY: [20, 0],
+        duration: 700,
+        delay: stagger(120, { start: 700 }),
+        ease: "out(2)",
+      });
+
+      // Floating coin (continuous)
+      animate(".coin-float", {
+        translateY: [-18, 18],
+        rotate: [-3, 3],
+        duration: 3500,
+        ease: "inOut(2)",
+        alternate: true,
+        loop: true,
+      });
+
+      // Coin glow pulse
+      animate(".coin-glow", {
+        scale: [1, 1.15, 1],
+        opacity: [0.6, 0.9, 0.6],
+        duration: 4000,
+        ease: "inOut(2)",
+        loop: true,
+      });
+    });
+
+    // Scroll reveal via IntersectionObserver
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            animate(entry.target, {
+              opacity: [0, 1],
+              translateY: [40, 0],
+              duration: 800,
+              ease: "out(3)",
+            });
+            observer.unobserve(entry.target);
+          }
+        });
+      },
+      { threshold: 0.15 }
+    );
+    rootRef.current.querySelectorAll(".reveal").forEach((el) => {
+      (el as HTMLElement).style.opacity = "0";
+      observer.observe(el);
+    });
+
+    // Stats count up
+    const statsObserver = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.querySelectorAll<HTMLElement>("[data-count]").forEach((el) => {
+              const target = Number(el.dataset.count);
+              const obj = { n: 0 };
+              animate(obj, {
+                n: target,
+                duration: 1600,
+                ease: "out(3)",
+                onUpdate: () => {
+                  el.textContent = Math.round(obj.n).toLocaleString();
+                },
+              });
+            });
+            statsObserver.unobserve(entry.target);
+          }
+        });
+      },
+      { threshold: 0.4 }
+    );
+    if (statsRef.current) statsObserver.observe(statsRef.current);
+
+    return () => {
+      scopeRef.current?.revert();
+      observer.disconnect();
+      statsObserver.disconnect();
+    };
+  }, []);
+
+  // Animate donation number when changed
+  useEffect(() => {
+    const obj = { n: displayDonation };
+    animate(obj, {
+      n: donation,
+      duration: 500,
+      ease: "out(3)",
+      onUpdate: () => setDisplayDonation(Math.round(obj.n)),
+    });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [donation]);
 
   return (
     <div className="relative min-h-screen overflow-x-hidden bg-background text-foreground">
