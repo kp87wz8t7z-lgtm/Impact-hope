@@ -149,7 +149,7 @@ function Index() {
   }, [donation]);
 
   return (
-    <div className="relative min-h-screen overflow-x-hidden bg-background text-foreground">
+    <div ref={rootRef} className="relative min-h-screen overflow-x-hidden bg-background text-foreground">
       {/* Fixed background image with overlay */}
       <div className="fixed inset-0 -z-10">
         <img
