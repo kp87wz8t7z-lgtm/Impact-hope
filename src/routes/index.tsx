@@ -190,17 +190,23 @@ function Index() {
       <section id="top" className="relative">
         <div className="mx-auto max-w-7xl px-6 pt-20 pb-32 grid lg:grid-cols-2 gap-12 items-center">
           <div>
-            <span className="inline-flex items-center gap-2 rounded-full border border-primary/30 bg-primary/10 px-4 py-1.5 text-xs font-medium text-primary">
+            <span className="hero-reveal inline-flex items-center gap-2 rounded-full border border-primary/30 bg-primary/10 px-4 py-1.5 text-xs font-medium text-primary opacity-0">
               <Sparkles className="h-3.5 w-3.5" /> Pre-lanzamiento · Token con propósito
             </span>
             <h1 className="mt-6 text-5xl sm:text-6xl lg:text-7xl font-bold tracking-tight leading-[1.05]">
-              Invierte con el <span className="bg-gradient-to-r from-amber-300 via-amber-400 to-orange-500 bg-clip-text text-transparent">corazón</span>.
-              <br />Transforma vidas reales.
+              {"Invierte con el".split(" ").map((w, i) => (
+                <span key={`a${i}`} className="hero-word inline-block opacity-0 mr-[0.25em]">{w}</span>
+              ))}
+              <span className="hero-word inline-block opacity-0 mr-[0.25em] bg-gradient-to-r from-amber-300 via-amber-400 to-orange-500 bg-clip-text text-transparent">corazón.</span>
+              <br />
+              {"Transforma vidas reales.".split(" ").map((w, i) => (
+                <span key={`b${i}`} className="hero-word inline-block opacity-0 mr-[0.25em]">{w}</span>
+              ))}
             </h1>
-            <p className="mt-6 text-lg text-foreground/80 max-w-xl leading-relaxed">
+            <p className="hero-reveal mt-6 text-lg text-foreground/80 max-w-xl leading-relaxed opacity-0">
               ImpactHope Coin une blockchain, comunidad y causas benéficas. Cada transacción genera una contribución verificable para niños, familias y organizaciones que más lo necesitan.
             </p>
-            <div className="mt-8 flex flex-wrap gap-3">
+            <div className="hero-reveal mt-8 flex flex-wrap gap-3 opacity-0">
               <Button size="lg" asChild className="bg-gradient-to-r from-amber-400 to-orange-500 text-black hover:opacity-90 shadow-[0_15px_40px_-10px_rgba(250,180,50,0.6)]">
                 <a href="#donar">Donar ahora <ArrowRight className="ml-1 h-4 w-4" /></a>
               </Button>
@@ -208,14 +214,24 @@ function Index() {
                 <a href="#funciona">Cómo funciona</a>
               </Button>
             </div>
-            <div className="mt-10 grid grid-cols-3 gap-6 max-w-md">
+            <div ref={statsRef} className="hero-reveal mt-10 grid grid-cols-3 gap-6 max-w-md opacity-0">
               {[
-                { k: "$3K", v: "Inversión inicial" },
-                { k: "100%", v: "Transparente" },
-                { k: "∞", v: "Vidas posibles" },
+                { k: "3000", prefix: "$", suffix: "", v: "Inversión inicial" },
+                { k: "100", prefix: "", suffix: "%", v: "Transparente" },
+                { k: null, raw: "∞", v: "Vidas posibles" },
               ].map((s) => (
                 <div key={s.v}>
-                  <div className="text-3xl font-bold text-primary">{s.k}</div>
+                  <div className="text-3xl font-bold text-primary">
+                    {s.k !== null ? (
+                      <>
+                        {s.prefix}
+                        <span data-count={s.k}>0</span>
+                        {s.suffix}
+                      </>
+                    ) : (
+                      s.raw
+                    )}
+                  </div>
                   <div className="text-xs text-foreground/60 mt-1">{s.v}</div>
                 </div>
               ))}
@@ -223,11 +239,11 @@ function Index() {
           </div>
 
           <div className="relative flex justify-center">
-            <div className="absolute inset-0 bg-gradient-to-tr from-amber-500/30 via-orange-500/20 to-transparent blur-3xl" />
+            <div className="coin-glow absolute inset-0 bg-gradient-to-tr from-amber-500/30 via-orange-500/20 to-transparent blur-3xl" />
             <img
               src={coinImg}
               alt="Token ImpactHope Coin"
-              className="relative w-[420px] max-w-full animate-[float_6s_ease-in-out_infinite] drop-shadow-[0_25px_60px_rgba(250,180,50,0.45)]"
+              className="coin-float relative w-[420px] max-w-full drop-shadow-[0_25px_60px_rgba(250,180,50,0.45)]"
               width={420}
               height={420}
             />
