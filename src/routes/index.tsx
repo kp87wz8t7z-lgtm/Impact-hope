@@ -337,7 +337,7 @@ function Index() {
               { f: "Fase 3", t: "Alianzas", d: "ONG aliadas, acuerdos preliminares y criterios de donación claros." },
               { f: "Fase 4", t: "Lanzamiento", d: "Activación de mercado, métricas e informes de impacto." },
             ].map((r, i) => (
-              <div key={r.f} className="flex gap-6 rounded-2xl border border-white/10 bg-card backdrop-blur-xl p-6 hover:border-primary/40 transition-colors">
+              <div key={r.f} className="reveal flex gap-6 rounded-2xl border border-white/10 bg-card backdrop-blur-xl p-6 hover:border-primary/40 transition-colors">
                 <div className="flex-shrink-0 w-14 h-14 rounded-xl bg-gradient-to-br from-amber-400 to-orange-500 flex items-center justify-center font-bold text-black text-lg">
                   0{i + 1}
                 </div>
