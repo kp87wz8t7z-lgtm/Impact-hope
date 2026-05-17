@@ -279,7 +279,7 @@ function Index() {
               { icon: TrendingUp, t: "Cada tx genera impacto", d: "Un porcentaje de las transacciones se destina automáticamente a causas benéficas." },
               { icon: Heart, t: "Cambia vidas", d: "Recibe reportes verificables sobre las personas y proyectos que tu participación apoya." },
             ].map((s, i) => (
-              <div key={s.t} className="group relative rounded-2xl border border-white/10 bg-card backdrop-blur-xl p-8 hover:border-primary/50 transition-all hover:-translate-y-1">
+              <div key={s.t} className="reveal group relative rounded-2xl border border-white/10 bg-card backdrop-blur-xl p-8 hover:border-primary/50 transition-all hover:-translate-y-1">
                 <div className="text-6xl font-bold text-primary/20 absolute top-4 right-6">0{i + 1}</div>
                 <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-amber-400 to-orange-500 flex items-center justify-center text-black mb-5">
                   <s.icon className="h-6 w-6" />
