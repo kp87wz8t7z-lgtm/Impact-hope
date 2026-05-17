@@ -426,7 +426,7 @@ function Index() {
                       />
                     </div>
                     <Button type="submit" size="lg" className="w-full h-12 bg-gradient-to-r from-amber-400 to-orange-500 text-black hover:opacity-90 text-base font-bold">
-                      Donar ${donation} <Heart className="ml-2 h-4 w-4" />
+                      Donar ${displayDonation} <Heart className="ml-2 h-4 w-4" />
                     </Button>
                   </form>
                 )}
