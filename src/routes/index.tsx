@@ -355,7 +355,7 @@ function Index() {
       {/* DONACIÓN */}
       <section id="donar" className="relative py-24">
         <div className="mx-auto max-w-5xl px-6">
-          <div className="rounded-3xl border border-primary/30 bg-gradient-to-br from-amber-500/10 via-card to-orange-500/10 backdrop-blur-xl p-10 md:p-14 shadow-[0_30px_80px_-20px_rgba(250,180,50,0.4)]">
+          <div className="reveal rounded-3xl border border-primary/30 bg-gradient-to-br from-amber-500/10 via-card to-orange-500/10 backdrop-blur-xl p-10 md:p-14 shadow-[0_30px_80px_-20px_rgba(250,180,50,0.4)]">
             <div className="grid md:grid-cols-2 gap-12 items-center">
               <div>
                 <span className="inline-flex items-center gap-2 rounded-full bg-primary/20 px-3 py-1 text-xs font-semibold text-primary">
