@@ -310,7 +310,7 @@ function Index() {
               { img: impact2, t: "Alimentación", d: "Llevamos comida a quien la necesita" },
               { img: impact3, t: "Educación", d: "Construyendo el futuro con conocimiento" },
             ].map((c) => (
-              <div key={c.t} className="group relative overflow-hidden rounded-2xl border border-white/10 aspect-[4/5]">
+              <div key={c.t} className="reveal group relative overflow-hidden rounded-2xl border border-white/10 aspect-[4/5]">
                 <img src={c.img} alt={c.t} loading="lazy" width={1024} height={1280} className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 group-hover:scale-110" />
                 <div className="absolute inset-0 bg-gradient-to-t from-background via-background/40 to-transparent" />
                 <div className="absolute bottom-0 left-0 right-0 p-6">
