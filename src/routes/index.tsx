@@ -1,5 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
+import { animate, stagger, createScope, type Scope } from "animejs";
 import { Heart, Shield, Sparkles, Users, TrendingUp, Globe, ArrowRight, Coins, CheckCircle2, Mail } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
