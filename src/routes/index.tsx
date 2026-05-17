@@ -37,7 +37,6 @@ function Index() {
   const rootRef = useRef<HTMLDivElement>(null);
   const scopeRef = useRef<Scope | null>(null);
   const statsRef = useRef<HTMLDivElement>(null);
-  const donationDisplayRef = useRef<HTMLSpanElement>(null);
 
   // Split hero headline into animated words
   useEffect(() => {
