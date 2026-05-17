@@ -1,5 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
+import { animate, stagger, createScope, type Scope } from "animejs";
 import { Heart, Shield, Sparkles, Users, TrendingUp, Globe, ArrowRight, Coins, CheckCircle2, Mail } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -31,9 +32,123 @@ function Index() {
   const [donation, setDonation] = useState(50);
   const [email, setEmail] = useState("");
   const [sent, setSent] = useState(false);
+  const [displayDonation, setDisplayDonation] = useState(50);
+
+  const rootRef = useRef<HTMLDivElement>(null);
+  const scopeRef = useRef<Scope | null>(null);
+  const statsRef = useRef<HTMLDivElement>(null);
+
+  // Split hero headline into animated words
+  useEffect(() => {
+    if (!rootRef.current) return;
+    scopeRef.current = createScope({ root: rootRef.current }).add(() => {
+      // Hero words stagger reveal
+      animate(".hero-word", {
+        opacity: [0, 1],
+        translateY: [40, 0],
+        filter: ["blur(12px)", "blur(0px)"],
+        duration: 900,
+        delay: stagger(80, { start: 200 }),
+        ease: "out(3)",
+      });
+
+      // Hero subtitle + CTAs
+      animate(".hero-reveal", {
+        opacity: [0, 1],
+        translateY: [20, 0],
+        duration: 700,
+        delay: stagger(120, { start: 700 }),
+        ease: "out(2)",
+      });
+
+      // Floating coin (continuous)
+      animate(".coin-float", {
+        translateY: [-18, 18],
+        rotate: [-3, 3],
+        duration: 3500,
+        ease: "inOut(2)",
+        alternate: true,
+        loop: true,
+      });
+
+      // Coin glow pulse
+      animate(".coin-glow", {
+        scale: [1, 1.15, 1],
+        opacity: [0.6, 0.9, 0.6],
+        duration: 4000,
+        ease: "inOut(2)",
+        loop: true,
+      });
+    });
+
+    // Scroll reveal via IntersectionObserver
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            animate(entry.target, {
+              opacity: [0, 1],
+              translateY: [40, 0],
+              duration: 800,
+              ease: "out(3)",
+            });
+            observer.unobserve(entry.target);
+          }
+        });
+      },
+      { threshold: 0.15 }
+    );
+    rootRef.current.querySelectorAll(".reveal").forEach((el) => {
+      (el as HTMLElement).style.opacity = "0";
+      observer.observe(el);
+    });
+
+    // Stats count up
+    const statsObserver = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.querySelectorAll<HTMLElement>("[data-count]").forEach((el) => {
+              const target = Number(el.dataset.count);
+              const obj = { n: 0 };
+              animate(obj, {
+                n: target,
+                duration: 1600,
+                ease: "out(3)",
+                onUpdate: () => {
+                  el.textContent = Math.round(obj.n).toLocaleString();
+                },
+              });
+            });
+            statsObserver.unobserve(entry.target);
+          }
+        });
+      },
+      { threshold: 0.4 }
+    );
+    if (statsRef.current) statsObserver.observe(statsRef.current);
+
+    return () => {
+      scopeRef.current?.revert();
+      observer.disconnect();
+      statsObserver.disconnect();
+    };
+  }, []);
+
+  // Animate donation number when changed
+  useEffect(() => {
+    const obj = { n: displayDonation };
+    animate(obj, {
+      n: donation,
+      duration: 500,
+      ease: "out(3)",
+      onUpdate: () => setDisplayDonation(Math.round(obj.n)),
+    });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [donation]);
 
   return (
-    <div className="relative min-h-screen overflow-x-hidden bg-background text-foreground">
+    <div ref={rootRef} className="relative min-h-screen overflow-x-hidden bg-background text-foreground">
       {/* Fixed background image with overlay */}
       <div className="fixed inset-0 -z-10">
         <img
@@ -74,17 +189,23 @@ function Index() {
       <section id="top" className="relative">
         <div className="mx-auto max-w-7xl px-6 pt-20 pb-32 grid lg:grid-cols-2 gap-12 items-center">
           <div>
-            <span className="inline-flex items-center gap-2 rounded-full border border-primary/30 bg-primary/10 px-4 py-1.5 text-xs font-medium text-primary">
+            <span className="hero-reveal inline-flex items-center gap-2 rounded-full border border-primary/30 bg-primary/10 px-4 py-1.5 text-xs font-medium text-primary opacity-0">
               <Sparkles className="h-3.5 w-3.5" /> Pre-lanzamiento · Token con propósito
             </span>
             <h1 className="mt-6 text-5xl sm:text-6xl lg:text-7xl font-bold tracking-tight leading-[1.05]">
-              Invierte con el <span className="bg-gradient-to-r from-amber-300 via-amber-400 to-orange-500 bg-clip-text text-transparent">corazón</span>.
-              <br />Transforma vidas reales.
+              {"Invierte con el".split(" ").map((w, i) => (
+                <span key={`a${i}`} className="hero-word inline-block opacity-0 mr-[0.25em]">{w}</span>
+              ))}
+              <span className="hero-word inline-block opacity-0 mr-[0.25em] bg-gradient-to-r from-amber-300 via-amber-400 to-orange-500 bg-clip-text text-transparent">corazón.</span>
+              <br />
+              {"Transforma vidas reales.".split(" ").map((w, i) => (
+                <span key={`b${i}`} className="hero-word inline-block opacity-0 mr-[0.25em]">{w}</span>
+              ))}
             </h1>
-            <p className="mt-6 text-lg text-foreground/80 max-w-xl leading-relaxed">
+            <p className="hero-reveal mt-6 text-lg text-foreground/80 max-w-xl leading-relaxed opacity-0">
               ImpactHope Coin une blockchain, comunidad y causas benéficas. Cada transacción genera una contribución verificable para niños, familias y organizaciones que más lo necesitan.
             </p>
-            <div className="mt-8 flex flex-wrap gap-3">
+            <div className="hero-reveal mt-8 flex flex-wrap gap-3 opacity-0">
               <Button size="lg" asChild className="bg-gradient-to-r from-amber-400 to-orange-500 text-black hover:opacity-90 shadow-[0_15px_40px_-10px_rgba(250,180,50,0.6)]">
                 <a href="#donar">Donar ahora <ArrowRight className="ml-1 h-4 w-4" /></a>
               </Button>
@@ -92,14 +213,24 @@ function Index() {
                 <a href="#funciona">Cómo funciona</a>
               </Button>
             </div>
-            <div className="mt-10 grid grid-cols-3 gap-6 max-w-md">
+            <div ref={statsRef} className="hero-reveal mt-10 grid grid-cols-3 gap-6 max-w-md opacity-0">
               {[
-                { k: "$3K", v: "Inversión inicial" },
-                { k: "100%", v: "Transparente" },
-                { k: "∞", v: "Vidas posibles" },
+                { k: "3000", prefix: "$", suffix: "", v: "Inversión inicial" },
+                { k: "100", prefix: "", suffix: "%", v: "Transparente" },
+                { k: null, raw: "∞", v: "Vidas posibles" },
               ].map((s) => (
                 <div key={s.v}>
-                  <div className="text-3xl font-bold text-primary">{s.k}</div>
+                  <div className="text-3xl font-bold text-primary">
+                    {s.k !== null ? (
+                      <>
+                        {s.prefix}
+                        <span data-count={s.k}>0</span>
+                        {s.suffix}
+                      </>
+                    ) : (
+                      s.raw
+                    )}
+                  </div>
                   <div className="text-xs text-foreground/60 mt-1">{s.v}</div>
                 </div>
               ))}
@@ -107,11 +238,11 @@ function Index() {
           </div>
 
           <div className="relative flex justify-center">
-            <div className="absolute inset-0 bg-gradient-to-tr from-amber-500/30 via-orange-500/20 to-transparent blur-3xl" />
+            <div className="coin-glow absolute inset-0 bg-gradient-to-tr from-amber-500/30 via-orange-500/20 to-transparent blur-3xl" />
             <img
               src={coinImg}
               alt="Token ImpactHope Coin"
-              className="relative w-[420px] max-w-full animate-[float_6s_ease-in-out_infinite] drop-shadow-[0_25px_60px_rgba(250,180,50,0.45)]"
+              className="coin-float relative w-[420px] max-w-full drop-shadow-[0_25px_60px_rgba(250,180,50,0.45)]"
               width={420}
               height={420}
             />
@@ -122,7 +253,7 @@ function Index() {
       {/* MISIÓN */}
       <section id="mision" className="relative py-24">
         <div className="mx-auto max-w-6xl px-6">
-          <div className="rounded-3xl border border-white/10 bg-card backdrop-blur-xl p-10 md:p-16 shadow-2xl">
+          <div className="reveal rounded-3xl border border-white/10 bg-card backdrop-blur-xl p-10 md:p-16 shadow-2xl">
             <span className="text-primary text-sm font-semibold tracking-widest uppercase">Nuestra Misión</span>
             <h2 className="mt-3 text-4xl md:text-5xl font-bold leading-tight">
               Un puente entre la <span className="text-primary">economía digital</span> y el <span className="text-primary">impacto humano</span>.
@@ -147,7 +278,7 @@ function Index() {
               { icon: TrendingUp, t: "Cada tx genera impacto", d: "Un porcentaje de las transacciones se destina automáticamente a causas benéficas." },
               { icon: Heart, t: "Cambia vidas", d: "Recibe reportes verificables sobre las personas y proyectos que tu participación apoya." },
             ].map((s, i) => (
-              <div key={s.t} className="group relative rounded-2xl border border-white/10 bg-card backdrop-blur-xl p-8 hover:border-primary/50 transition-all hover:-translate-y-1">
+              <div key={s.t} className="reveal group relative rounded-2xl border border-white/10 bg-card backdrop-blur-xl p-8 hover:border-primary/50 transition-all hover:-translate-y-1">
                 <div className="text-6xl font-bold text-primary/20 absolute top-4 right-6">0{i + 1}</div>
                 <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-amber-400 to-orange-500 flex items-center justify-center text-black mb-5">
                   <s.icon className="h-6 w-6" />
@@ -178,7 +309,7 @@ function Index() {
               { img: impact2, t: "Alimentación", d: "Llevamos comida a quien la necesita" },
               { img: impact3, t: "Educación", d: "Construyendo el futuro con conocimiento" },
             ].map((c) => (
-              <div key={c.t} className="group relative overflow-hidden rounded-2xl border border-white/10 aspect-[4/5]">
+              <div key={c.t} className="reveal group relative overflow-hidden rounded-2xl border border-white/10 aspect-[4/5]">
                 <img src={c.img} alt={c.t} loading="lazy" width={1024} height={1280} className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 group-hover:scale-110" />
                 <div className="absolute inset-0 bg-gradient-to-t from-background via-background/40 to-transparent" />
                 <div className="absolute bottom-0 left-0 right-0 p-6">
@@ -205,7 +336,7 @@ function Index() {
               { f: "Fase 3", t: "Alianzas", d: "ONG aliadas, acuerdos preliminares y criterios de donación claros." },
               { f: "Fase 4", t: "Lanzamiento", d: "Activación de mercado, métricas e informes de impacto." },
             ].map((r, i) => (
-              <div key={r.f} className="flex gap-6 rounded-2xl border border-white/10 bg-card backdrop-blur-xl p-6 hover:border-primary/40 transition-colors">
+              <div key={r.f} className="reveal flex gap-6 rounded-2xl border border-white/10 bg-card backdrop-blur-xl p-6 hover:border-primary/40 transition-colors">
                 <div className="flex-shrink-0 w-14 h-14 rounded-xl bg-gradient-to-br from-amber-400 to-orange-500 flex items-center justify-center font-bold text-black text-lg">
                   0{i + 1}
                 </div>
@@ -223,7 +354,7 @@ function Index() {
       {/* DONACIÓN */}
       <section id="donar" className="relative py-24">
         <div className="mx-auto max-w-5xl px-6">
-          <div className="rounded-3xl border border-primary/30 bg-gradient-to-br from-amber-500/10 via-card to-orange-500/10 backdrop-blur-xl p-10 md:p-14 shadow-[0_30px_80px_-20px_rgba(250,180,50,0.4)]">
+          <div className="reveal rounded-3xl border border-primary/30 bg-gradient-to-br from-amber-500/10 via-card to-orange-500/10 backdrop-blur-xl p-10 md:p-14 shadow-[0_30px_80px_-20px_rgba(250,180,50,0.4)]">
             <div className="grid md:grid-cols-2 gap-12 items-center">
               <div>
                 <span className="inline-flex items-center gap-2 rounded-full bg-primary/20 px-3 py-1 text-xs font-semibold text-primary">
@@ -272,7 +403,7 @@ function Index() {
                 </div>
                 {sent ? (
                   <div className="rounded-xl bg-primary/15 border border-primary/30 p-4 text-center text-sm">
-                    ¡Gracias! Te contactaremos pronto sobre tu aporte de ${donation}.
+                    ¡Gracias! Te contactaremos pronto sobre tu aporte de ${displayDonation}.
                   </div>
                 ) : (
                   <form
@@ -294,7 +425,7 @@ function Index() {
                       />
                     </div>
                     <Button type="submit" size="lg" className="w-full h-12 bg-gradient-to-r from-amber-400 to-orange-500 text-black hover:opacity-90 text-base font-bold">
-                      Donar ${donation} <Heart className="ml-2 h-4 w-4" />
+                      Donar ${displayDonation} <Heart className="ml-2 h-4 w-4" />
                     </Button>
                   </form>
                 )}
@@ -316,7 +447,7 @@ function Index() {
             { i: Globe, t: "Alcance global", d: "Impacto sin fronteras." },
             { i: Heart, t: "Propósito real", d: "Causas verificadas." },
           ].map((v) => (
-            <div key={v.t} className="rounded-2xl border border-white/10 bg-card backdrop-blur-xl p-6 text-center">
+            <div key={v.t} className="reveal rounded-2xl border border-white/10 bg-card backdrop-blur-xl p-6 text-center">
               <v.i className="h-8 w-8 text-primary mx-auto" />
               <div className="font-bold mt-3">{v.t}</div>
               <div className="text-sm text-foreground/70 mt-1">{v.d}</div>
