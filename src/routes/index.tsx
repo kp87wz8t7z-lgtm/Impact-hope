@@ -254,7 +254,7 @@ function Index() {
       {/* MISIÓN */}
       <section id="mision" className="relative py-24">
         <div className="mx-auto max-w-6xl px-6">
-          <div className="rounded-3xl border border-white/10 bg-card backdrop-blur-xl p-10 md:p-16 shadow-2xl">
+          <div className="reveal rounded-3xl border border-white/10 bg-card backdrop-blur-xl p-10 md:p-16 shadow-2xl">
             <span className="text-primary text-sm font-semibold tracking-widest uppercase">Nuestra Misión</span>
             <h2 className="mt-3 text-4xl md:text-5xl font-bold leading-tight">
               Un puente entre la <span className="text-primary">economía digital</span> y el <span className="text-primary">impacto humano</span>.
