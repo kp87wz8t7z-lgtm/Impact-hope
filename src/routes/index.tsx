@@ -448,7 +448,7 @@ function Index() {
             { i: Globe, t: "Alcance global", d: "Impacto sin fronteras." },
             { i: Heart, t: "Propósito real", d: "Causas verificadas." },
           ].map((v) => (
-            <div key={v.t} className="rounded-2xl border border-white/10 bg-card backdrop-blur-xl p-6 text-center">
+            <div key={v.t} className="reveal rounded-2xl border border-white/10 bg-card backdrop-blur-xl p-6 text-center">
               <v.i className="h-8 w-8 text-primary mx-auto" />
               <div className="font-bold mt-3">{v.t}</div>
               <div className="text-sm text-foreground/70 mt-1">{v.d}</div>
