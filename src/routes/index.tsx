@@ -404,7 +404,7 @@ function Index() {
                 </div>
                 {sent ? (
                   <div className="rounded-xl bg-primary/15 border border-primary/30 p-4 text-center text-sm">
-                    ¡Gracias! Te contactaremos pronto sobre tu aporte de ${donation}.
+                    ¡Gracias! Te contactaremos pronto sobre tu aporte de ${displayDonation}.
                   </div>
                 ) : (
                   <form
