@@ -145,3 +145,36 @@
     color: var(--color-foreground);
   }
 }
+
+@layer utilities {
+  .network-node {
+    animation: network-node-drift 7s ease-in-out infinite;
+  }
+
+  @keyframes network-node-drift {
+    0%,
+    100% {
+      transform: translate3d(0, 0, 0);
+    }
+    50% {
+      transform: translate3d(0, -12px, 0);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .network-node,
+    .coin-motion,
+    .coin-core,
+    .network-link,
+    .pulse-dot,
+    .hero-word,
+    .hero-reveal,
+    .reveal {
+      animation: none !important;
+      transition: none !important;
+      transform: none !important;
+      filter: none !important;
+      opacity: 1 !important;
+    }
+  }
+}
