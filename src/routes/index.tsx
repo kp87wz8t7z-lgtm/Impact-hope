@@ -18,6 +18,7 @@ import {
   Link2,
   LockKeyhole,
   Mail,
+  Map,
   MapPin,
   Network,
   PieChart,
@@ -103,11 +104,9 @@ const orbitNodes = [
 ];
 
 const impactMetrics = [
-  { icon: Users, value: "25,842+", label: "Comunidad global", color: "text-amber-300" },
-  { icon: Globe, value: "54+", label: "Países impactados", color: "text-cyan-300" },
-  { icon: Heart, value: "1,245+", label: "Vidas transformadas", color: "text-orange-300" },
-  { icon: Coins, value: "$3.2M+", label: "Fondos donados", color: "text-amber-300" },
-  { icon: BadgeCheck, value: "100%", label: "Transparente on-chain", color: "text-cyan-300" },
+  { icon: HandHeart, value: "+50", label: "ONG apoyadas", color: "text-amber-300" },
+  { icon: Users, value: "+120K", label: "Personas beneficiadas", color: "text-cyan-300" },
+  { icon: Globe, value: "+25", label: "Países alcanzados", color: "text-orange-300" },
 ];
 
 const transactions = [
@@ -118,12 +117,32 @@ const transactions = [
 ];
 
 const tokenomics = [
-  { label: "Liquidity DEX y estabilidad", value: "30%", color: "bg-cyan-400" },
-  { label: "Rewards y comunidad", value: "20%", color: "bg-amber-400" },
-  { label: "Reserva estratégica", value: "15%", color: "bg-emerald-400" },
-  { label: "Tesorería y desarrollo", value: "15%", color: "bg-violet-400" },
-  { label: "Premarket inicial", value: "10%", color: "bg-rose-400" },
-  { label: "Operaciones y cumplimiento", value: "10%", color: "bg-sky-300" },
+  {
+    label: "Liquidez",
+    desc: "Estabilidad y confianza para el crecimiento",
+    value: "30%",
+    color: "bg-cyan-400",
+  },
+  {
+    label: "Recompensas e incentivos",
+    desc: "Para quienes construyen y apoyan el ecosistema",
+    value: "20%",
+    color: "bg-amber-400",
+  },
+  {
+    label: "Reserva de impacto",
+    desc: "Financia proyectos sociales y ambientales",
+    value: "15%",
+    color: "bg-emerald-400",
+  },
+  {
+    label: "Tesorería",
+    desc: "Desarrollo y expansión sostenible",
+    value: "15%",
+    color: "bg-violet-400",
+  },
+  { label: "Premarket", desc: "Soporte inicial del proyecto", value: "10%", color: "bg-rose-400" },
+  { label: "Operaciones", desc: "Team & legal", value: "10%", color: "bg-sky-300" },
 ];
 
 function Index() {
@@ -157,7 +176,6 @@ function Index() {
         delay: stagger(110, { start: 650 }),
         ease: "out(2)",
       });
-
     });
 
     const observer = new IntersectionObserver(
@@ -267,23 +285,14 @@ function Index() {
       </header>
 
       <section id="top" className="relative min-h-[calc(100svh-72px)] overflow-hidden bg-[#050914]">
-        <div className="absolute inset-0 bg-[#050914]" />
-        <div className="pointer-events-none absolute bottom-0 right-0 top-0 z-[2] hidden w-[61vw] lg:block">
-          <div className="absolute inset-0 overflow-hidden rounded-l-[3rem] shadow-[-36px_0_90px_rgba(0,0,0,.3)]">
-            <img
-              src={networkHero}
-              alt=""
-              className="h-full w-full scale-[1.03] object-cover object-[48%_center] brightness-[1.04] contrast-[1.03] saturate-[1.06]"
-              width={1461}
-              height={1024}
-            />
-            <div className="absolute inset-0 bg-[radial-gradient(circle_at_42%_45%,rgba(251,191,36,.08),transparent_36%),linear-gradient(90deg,rgba(5,9,20,.5)_0%,rgba(5,9,20,.16)_20%,rgba(5,9,20,0)_54%,rgba(5,9,20,.14)_100%)]" />
-            <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(5,9,20,.08)_0%,rgba(5,9,20,0)_50%,rgba(5,9,20,.2)_100%)]" />
-          </div>
-          <div className="absolute inset-y-0 left-0 w-44 bg-gradient-to-r from-[#050914] via-[#050914]/64 to-transparent" />
-        </div>
-        <div className="pointer-events-none absolute inset-x-0 bottom-0 z-[3] h-20 bg-gradient-to-b from-transparent to-[#050914]" />
-        <div className="relative z-10 mx-auto grid min-h-[calc(100svh-72px)] max-w-7xl items-center gap-8 px-5 pb-10 pt-14 md:px-6 md:py-16 lg:grid-cols-[.78fr_1.22fr] lg:gap-10 lg:py-10">
+        <img
+          src={networkHero}
+          alt=""
+          className="absolute inset-0 h-full w-full object-cover object-center"
+          width={1672}
+          height={941}
+        />
+        <div className="relative z-10 mx-auto grid min-h-[calc(100svh-72px)] max-w-7xl items-center px-5 pb-14 pt-14 md:px-6 md:py-16 lg:py-10">
           <div className="relative z-10 max-w-[680px]">
             <div className="pointer-events-none absolute -right-16 top-16 -z-10 h-44 w-44 opacity-45 sm:hidden">
               <div className="absolute inset-0 rounded-full bg-amber-300/35 blur-3xl" />
@@ -299,24 +308,25 @@ function Index() {
               <Sparkles className="h-3.5 w-3.5" /> Partner-ready impact infrastructure
             </div>
             <h1 className="mt-6 max-w-[620px] text-5xl font-black leading-[.94] tracking-tight text-white drop-shadow-[0_8px_34px_rgba(0,0,0,.55)] sm:text-6xl lg:text-[4.9rem]">
-              {"Capital digital".split(" ").map((w, i) => (
+              {"Ayuda con el".split(" ").map((w, i) => (
                 <span key={`a${i}`} className="hero-word mr-[0.22em] inline-block opacity-0">
                   {w}
                 </span>
               ))}
               <span className="hero-word mr-[0.22em] inline-block bg-gradient-to-r from-amber-200 via-amber-400 to-orange-500 bg-clip-text text-transparent opacity-0">
-                para
+                corazón.
               </span>
               <br />
-              {"impacto humano verificable.".split(" ").map((w, i) => (
+              {"Transforma vidas reales.".split(" ").map((w, i) => (
                 <span key={`b${i}`} className="hero-word mr-[0.22em] inline-block opacity-0">
                   {w}
                 </span>
               ))}
             </h1>
             <p className="hero-reveal mt-6 max-w-xl text-lg leading-relaxed text-white/82 opacity-0 drop-shadow-[0_6px_24px_rgba(0,0,0,.45)]">
-              ImpactHope Coin conecta blockchain, partners y causas sociales en una red trazable:
-              cada aporte se convierte en educacion, proteccion y oportunidades medibles.
+              ImpactHope Coin une blockchain, comunidad y causas benéficas. Cada transacción genera
+              una contribución verificable para niños, familias y organizaciones que más lo
+              necesitan.
             </p>
             <div className="hero-reveal mt-8 flex flex-wrap gap-3 opacity-0">
               <Button
@@ -325,7 +335,7 @@ function Index() {
                 className="bg-gradient-to-r from-amber-300 to-orange-500 text-black shadow-[0_18px_46px_-12px_rgba(250,180,50,0.85)] hover:opacity-90"
               >
                 <a href="#donar">
-                  Unirse como partner <ArrowRight className="ml-1 h-4 w-4" />
+                  Donar ahora <ArrowRight className="ml-1 h-4 w-4" />
                 </a>
               </Button>
               <Button
@@ -334,7 +344,7 @@ function Index() {
                 asChild
                 className="border-white/18 bg-white/[.04] text-white backdrop-blur hover:bg-white/[.08]"
               >
-                <a href="#impacto">Ver impacto</a>
+                <a href="#funciona">Cómo funciona</a>
               </Button>
             </div>
             <div
@@ -342,9 +352,9 @@ function Index() {
               className="hero-reveal mt-10 grid max-w-md grid-cols-3 gap-4 opacity-0"
             >
               {[
-                { k: "3000", prefix: "$", suffix: "", v: "Capital inicial" },
-                { k: "100", prefix: "", suffix: "%", v: "Trazable" },
-                { k: null, raw: "24/7", v: "Impacto visible" },
+                { k: "3000", prefix: "$", suffix: "", v: "Inversión inicial" },
+                { k: "100", prefix: "", suffix: "%", v: "Transparente" },
+                { k: null, raw: "∞", v: "Vidas posibles" },
               ].map((s) => (
                 <div
                   key={s.v}
@@ -556,7 +566,7 @@ function Index() {
               </div>
             ))}
           </div>
-          <div className="reveal mt-6 grid gap-4 rounded-2xl border border-amber-300/25 bg-[#07101d]/70 p-5 backdrop-blur-xl md:grid-cols-5">
+          <div className="reveal mt-6 grid gap-4 rounded-2xl border border-amber-300/25 bg-[#07101d]/70 p-5 backdrop-blur-xl md:grid-cols-3">
             {impactMetrics.map((metric) => (
               <div
                 key={metric.label}
@@ -574,7 +584,136 @@ function Index() {
       </section>
 
       <section id="impacto" className="relative py-20">
-        <div className="mx-auto max-w-7xl px-5 md:px-6">
+        <div className="mx-auto max-w-[430px] px-5 lg:max-w-5xl lg:px-6">
+          <div className="reveal overflow-hidden rounded-[1.65rem] border border-white/12 bg-[#070c19]/86 shadow-[0_26px_78px_rgba(0,0,0,.44)] backdrop-blur-xl">
+            <div className="relative min-h-[232px] p-7 lg:min-h-[280px] lg:p-10">
+              <img
+                src={impact2}
+                alt="Manos cuidando a un niño"
+                loading="lazy"
+                width={1024}
+                height={1024}
+                className="absolute inset-y-0 right-0 h-full w-[70%] object-cover object-center opacity-95 brightness-110 [mask-image:linear-gradient(90deg,transparent,black_18%)]"
+              />
+              <div className="absolute inset-0 bg-[radial-gradient(circle_at_78%_48%,rgba(251,191,36,.34),transparent_24%),linear-gradient(90deg,#070c19_0%,rgba(7,12,25,.82)_42%,rgba(7,12,25,.1)_100%)]" />
+              <div className="relative max-w-[270px]">
+                <h2 className="text-[2.45rem] font-black leading-[.98] tracking-normal text-white lg:text-6xl">
+                  Tu token,
+                  <span className="block text-primary">su esperanza.</span>
+                </h2>
+                <p className="mt-5 text-xl leading-snug text-white/78 lg:text-2xl">
+                  Cada transacción genera impacto real para ONG y comunidades que más lo necesitan.
+                </p>
+              </div>
+              <Button
+                variant="outline"
+                className="relative mt-8 h-16 w-full justify-center gap-5 rounded-[1.05rem] border-white/16 bg-white/[.035] text-lg font-medium text-white hover:bg-white/[.07]"
+              >
+                <Map className="h-7 w-7" />
+                Explorar mapa de impacto
+              </Button>
+            </div>
+          </div>
+
+          <div className="reveal mt-6 overflow-hidden rounded-[1.65rem] border border-white/12 bg-[#070c19]/86 shadow-[0_26px_78px_rgba(0,0,0,.44)] backdrop-blur-xl">
+            <div className="p-7 md:p-10">
+              <div className="text-[13px] font-bold uppercase tracking-[0.24em] text-primary">
+                Tokenomics
+              </div>
+              <div className="mt-5 grid gap-8 lg:grid-cols-[1.05fr_.95fr] lg:items-center">
+                <div>
+                  <h2 className="text-[2.08rem] font-black leading-tight text-white lg:text-5xl">
+                    Así generamos impacto juntos{" "}
+                    <Heart className="inline h-7 w-7 align-[-0.12em] text-primary lg:h-9 lg:w-9" />
+                  </h2>
+                  <p className="mt-5 text-xl leading-snug text-white/72">
+                    El 100% del impacto va a ONG y comunidades necesitadas.
+                  </p>
+                  <div className="mt-9 flex justify-center md:justify-start">
+                    <div className="relative h-[220px] w-[220px] rounded-full bg-[conic-gradient(#3b82f6_0_30%,#f59e0b_30%_50%,#47c765_50%_65%,#8b5cf6_65%_80%,#ef4444_80%_90%,#48b6c9_90%_100%)] shadow-[0_0_34px_rgba(251,191,36,.08)] lg:h-[300px] lg:w-[300px]">
+                      <div className="absolute inset-[48px] flex flex-col items-center justify-center rounded-full bg-[#070c19] text-center lg:inset-16">
+                        <Globe
+                          className="h-12 w-12 text-primary lg:h-20 lg:w-20"
+                          strokeWidth={1.7}
+                        />
+                        <span className="mt-1 max-w-[96px] text-xs font-semibold leading-tight text-white/82 lg:mt-2 lg:max-w-[116px] lg:text-base">
+                          Impacto real.
+                          <br />
+                          Vidas transformadas.
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="space-y-5">
+                  {tokenomics.map((item, index) => {
+                    const icons = [
+                      CircleDollarSign,
+                      Users,
+                      Sparkles,
+                      HandHeart,
+                      Shield,
+                      BadgeCheck,
+                    ];
+                    const Icon = icons[index];
+                    return (
+                      <div key={item.label} className="flex items-start gap-4">
+                        <span
+                          className={`flex h-11 w-11 shrink-0 items-center justify-center rounded-full ${item.color} text-white shadow-[0_10px_24px_rgba(0,0,0,.24)]`}
+                        >
+                          <Icon className="h-6 w-6" />
+                        </span>
+                        <div>
+                          <div className="text-2xl font-black leading-none text-white">
+                            {item.value}
+                          </div>
+                          <div className="mt-1 text-xl font-semibold leading-tight text-white">
+                            {item.label}
+                          </div>
+                          <p className="mt-1 text-base leading-snug text-white/58">{item.desc}</p>
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
+            </div>
+
+            <div className="border-t border-white/10 px-7 py-6 md:px-10">
+              <div className="flex items-start gap-4">
+                <Heart className="mt-1 h-10 w-10 shrink-0 text-primary" strokeWidth={1.9} />
+                <div>
+                  <p className="text-xl font-medium text-white/86">
+                    Transparente. Trazable. Con propósito.
+                  </p>
+                  <p className="mt-2 text-lg text-white/54">Cada token impulsa un cambio real.</p>
+                </div>
+              </div>
+              <div className="mt-7 grid grid-cols-3 rounded-[1.05rem] bg-white/[.045] px-3 py-5">
+                {[
+                  { icon: HandHeart, value: "+50", label: "ONG apoyadas" },
+                  { icon: Users, value: "+120K", label: "Personas beneficiadas" },
+                  { icon: Globe, value: "+25", label: "Países alcanzados" },
+                ].map((metric) => (
+                  <div key={metric.label} className="flex flex-col items-center text-center">
+                    <metric.icon className="h-9 w-9 text-primary" strokeWidth={1.8} />
+                    <div className="mt-2 text-2xl font-black leading-none text-white">
+                      {metric.value}
+                    </div>
+                    <div className="mt-1 text-sm leading-tight text-white/62">{metric.label}</div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+
+          <div className="reveal mx-auto mt-5 flex h-16 max-w-[260px] flex-col items-center justify-center rounded-[1.25rem] border border-white/12 bg-white/[.035] text-center text-lg text-white/86">
+            <span>impact-hope-spark.lovable.app</span>
+            <Heart className="mt-1 h-5 w-5 text-primary" />
+          </div>
+        </div>
+        <div className="hidden">
           <div className="mb-10 flex flex-col justify-between gap-6 md:flex-row md:items-end">
             <div>
               <span className="text-sm font-semibold uppercase tracking-[0.22em] text-primary">
@@ -652,26 +791,41 @@ function Index() {
               <div className="text-xs font-bold uppercase tracking-[0.2em] text-primary">
                 Tokenomics
               </div>
-              <h3 className="mt-2 text-2xl font-bold">Así generamos impacto</h3>
+              <h3 className="mt-2 text-2xl font-bold">
+                Así generamos impacto juntos <Heart className="inline h-5 w-5 text-primary" />
+              </h3>
+              <p className="mt-2 text-sm text-white/58">
+                El 100% del impacto va a ONG y comunidades necesitadas.
+              </p>
               <div className="mt-5 flex items-center justify-center">
                 <div className="relative h-44 w-44 rounded-full bg-[conic-gradient(#22d3ee_0_30%,#f59e0b_30%_50%,#34d399_50%_65%,#a78bfa_65%_80%,#fb7185_80%_90%,#7dd3fc_90%_100%)]">
-                  <div className="absolute inset-9 flex items-center justify-center rounded-full bg-[#07101d]">
-                    <PieChart className="h-10 w-10 text-primary" />
+                  <div className="absolute inset-9 flex flex-col items-center justify-center rounded-full bg-[#07101d] text-center">
+                    <Globe className="h-7 w-7 text-primary" />
+                    <span className="mt-1 text-[10px] font-semibold leading-tight text-white/70">
+                      Impacto real.
+                      <br />
+                      Vidas transformadas.
+                    </span>
                   </div>
                 </div>
               </div>
               <div className="mt-5 space-y-3">
                 {tokenomics.map((item) => (
-                  <div
-                    key={item.label}
-                    className="grid grid-cols-[auto_44px_1fr] items-center gap-3 text-sm"
-                  >
-                    <span className={`h-2.5 w-2.5 rounded-full ${item.color}`} />
-                    <span className="font-bold">{item.value}</span>
-                    <span className="text-white/62">{item.label}</span>
+                  <div key={item.label} className="flex items-start gap-3 text-sm">
+                    <span className={`mt-1 h-2.5 w-2.5 shrink-0 rounded-full ${item.color}`} />
+                    <div>
+                      <span className="font-bold">
+                        {item.value} {item.label}
+                      </span>
+                      <p className="text-xs text-white/50">{item.desc}</p>
+                    </div>
                   </div>
                 ))}
               </div>
+              <p className="mt-5 border-t border-white/10 pt-4 text-xs text-white/50">
+                <Heart className="mr-1 inline h-3 w-3 text-primary" />
+                Transparente. Trazable. Con propósito. Cada token impulsa un cambio real.
+              </p>
             </div>
           </div>
 
