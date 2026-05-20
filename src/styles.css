@@ -63,7 +63,7 @@
 
 :root {
   --radius: 0.875rem;
-  --background: oklch(0.16 0.04 265);
+  --background: oklch(0.052 0.021 265);
   --foreground: oklch(0.98 0.01 90);
   --card: oklch(0.22 0.05 265 / 0.6);
   --card-foreground: oklch(0.98 0.01 90);
@@ -147,6 +147,17 @@
 }
 
 @layer utilities {
+  .hero-orbit-ring {
+    animation: hero-orbit-spin 28s linear infinite;
+    transform: translate(-50%, -50%) rotate(0deg);
+  }
+
+  @keyframes hero-orbit-spin {
+    to {
+      transform: translate(-50%, -50%) rotate(360deg);
+    }
+  }
+
   .network-node {
     animation: network-node-drift 7s ease-in-out infinite;
   }
@@ -163,6 +174,9 @@
 
   @media (prefers-reduced-motion: reduce) {
     .network-node,
+    .hero-orbit-ring,
+    .hero-heart-glow,
+    .signal-chip,
     .coin-motion,
     .coin-core,
     .network-link,

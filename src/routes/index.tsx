@@ -31,7 +31,7 @@ import {
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import heroImg from "@/assets/hero-children.jpg";
+import networkHero from "@/assets/impact-network-hero.jpeg";
 import impact1 from "@/assets/impact-1.jpg";
 import impact2 from "@/assets/impact-2.jpg";
 import impact3 from "@/assets/impact-3.jpg";
@@ -158,32 +158,6 @@ function Index() {
         ease: "out(2)",
       });
 
-      animate(".coin-motion", {
-        translateY: [-18, 18],
-        rotate: [-3, 3],
-        duration: 3600,
-        ease: "inOut(2)",
-        alternate: true,
-        loop: true,
-      });
-
-      animate(".network-link", {
-        strokeDashoffset: [120, 0],
-        opacity: [0.24, 0.78, 0.24],
-        duration: 4200,
-        delay: stagger(220),
-        ease: "inOut(2)",
-        loop: true,
-      });
-
-      animate(".pulse-dot", {
-        scale: [0.8, 1.35, 0.8],
-        opacity: [0.35, 1, 0.35],
-        duration: 2600,
-        delay: stagger(180),
-        ease: "inOut(2)",
-        loop: true,
-      });
     });
 
     const observer = new IntersectionObserver(
@@ -252,21 +226,11 @@ function Index() {
   return (
     <div
       ref={rootRef}
-      className="relative min-h-screen overflow-x-hidden bg-background text-foreground"
+      className="relative min-h-screen overflow-x-hidden bg-[#050914] text-foreground"
     >
-      <div className="fixed inset-0 -z-10">
-        <img
-          src={heroImg}
-          alt="Niños felices del mundo"
-          className="h-full w-full object-cover opacity-30"
-          width={1920}
-          height={1080}
-        />
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_70%_20%,rgba(251,177,35,.24),transparent_34%),radial-gradient(circle_at_78%_58%,rgba(20,184,166,.18),transparent_28%),linear-gradient(180deg,rgba(4,8,18,.84),rgba(4,8,18,.96)_48%,rgba(4,8,18,1))]" />
-        <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,.035)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,.035)_1px,transparent_1px)] bg-[size:72px_72px] opacity-20" />
-      </div>
+      <div className="fixed inset-0 -z-10 bg-[#050914]" />
 
-      <header className="sticky top-0 z-50 border-b border-white/10 bg-[#050914]/70 backdrop-blur-xl">
+      <header className="sticky top-0 z-50 bg-[#050914]/82 shadow-[0_1px_0_rgba(255,255,255,.06)] backdrop-blur-xl">
         <div className="mx-auto flex max-w-7xl items-center justify-between px-5 py-4 md:px-6">
           <a href="#top" className="flex items-center gap-2.5">
             <img
@@ -302,10 +266,25 @@ function Index() {
         </div>
       </header>
 
-      <section id="top" className="relative overflow-hidden">
-        <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-amber-300/70 to-transparent" />
-        <div className="mx-auto grid min-h-[calc(100vh-72px)] max-w-7xl items-center gap-8 px-5 pb-10 pt-14 md:px-6 md:py-16 lg:grid-cols-[.84fr_1.16fr] lg:gap-10 lg:py-10">
-          <div className="relative z-10 max-w-2xl">
+      <section id="top" className="relative min-h-[calc(100svh-72px)] overflow-hidden bg-[#050914]">
+        <div className="absolute inset-0 bg-[#050914]" />
+        <div className="pointer-events-none absolute bottom-0 right-0 top-0 z-[2] hidden w-[61vw] lg:block">
+          <div className="absolute inset-0 overflow-hidden rounded-l-[3rem] shadow-[-36px_0_90px_rgba(0,0,0,.3)]">
+            <img
+              src={networkHero}
+              alt=""
+              className="h-full w-full scale-[1.03] object-cover object-[48%_center] brightness-[1.04] contrast-[1.03] saturate-[1.06]"
+              width={1461}
+              height={1024}
+            />
+            <div className="absolute inset-0 bg-[radial-gradient(circle_at_42%_45%,rgba(251,191,36,.08),transparent_36%),linear-gradient(90deg,rgba(5,9,20,.5)_0%,rgba(5,9,20,.16)_20%,rgba(5,9,20,0)_54%,rgba(5,9,20,.14)_100%)]" />
+            <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(5,9,20,.08)_0%,rgba(5,9,20,0)_50%,rgba(5,9,20,.2)_100%)]" />
+          </div>
+          <div className="absolute inset-y-0 left-0 w-44 bg-gradient-to-r from-[#050914] via-[#050914]/64 to-transparent" />
+        </div>
+        <div className="pointer-events-none absolute inset-x-0 bottom-0 z-[3] h-20 bg-gradient-to-b from-transparent to-[#050914]" />
+        <div className="relative z-10 mx-auto grid min-h-[calc(100svh-72px)] max-w-7xl items-center gap-8 px-5 pb-10 pt-14 md:px-6 md:py-16 lg:grid-cols-[.78fr_1.22fr] lg:gap-10 lg:py-10">
+          <div className="relative z-10 max-w-[680px]">
             <div className="pointer-events-none absolute -right-16 top-16 -z-10 h-44 w-44 opacity-45 sm:hidden">
               <div className="absolute inset-0 rounded-full bg-amber-300/35 blur-3xl" />
               <img
@@ -316,29 +295,28 @@ function Index() {
                 height={176}
               />
             </div>
-            <div className="hero-reveal inline-flex items-center gap-2 rounded-full border border-amber-300/25 bg-amber-300/10 px-4 py-1.5 text-xs font-semibold text-amber-200 opacity-0 shadow-[0_0_35px_rgba(245,158,11,.18)]">
-              <Sparkles className="h-3.5 w-3.5" /> Pre-lanzamiento · Token con propósito
+            <div className="hero-reveal inline-flex items-center gap-2 rounded-full border border-amber-300/30 bg-[#07101d]/55 px-4 py-1.5 text-xs font-semibold text-amber-100 opacity-0 shadow-[0_0_35px_rgba(245,158,11,.22)] backdrop-blur-xl">
+              <Sparkles className="h-3.5 w-3.5" /> Partner-ready impact infrastructure
             </div>
-            <h1 className="mt-6 text-5xl font-black leading-[.96] tracking-tight sm:text-6xl lg:text-7xl">
-              {"Invierte con el".split(" ").map((w, i) => (
+            <h1 className="mt-6 max-w-[620px] text-5xl font-black leading-[.94] tracking-tight text-white drop-shadow-[0_8px_34px_rgba(0,0,0,.55)] sm:text-6xl lg:text-[4.9rem]">
+              {"Capital digital".split(" ").map((w, i) => (
                 <span key={`a${i}`} className="hero-word mr-[0.22em] inline-block opacity-0">
                   {w}
                 </span>
               ))}
               <span className="hero-word mr-[0.22em] inline-block bg-gradient-to-r from-amber-200 via-amber-400 to-orange-500 bg-clip-text text-transparent opacity-0">
-                corazón.
+                para
               </span>
               <br />
-              {"Transforma vidas reales.".split(" ").map((w, i) => (
+              {"impacto humano verificable.".split(" ").map((w, i) => (
                 <span key={`b${i}`} className="hero-word mr-[0.22em] inline-block opacity-0">
                   {w}
                 </span>
               ))}
             </h1>
-            <p className="hero-reveal mt-6 max-w-xl text-lg leading-relaxed text-white/78 opacity-0">
-              ImpactHope Coin une blockchain, comunidad y causas benéficas. Cada transacción activa
-              una contribución verificable para niños, familias y organizaciones que más lo
-              necesitan.
+            <p className="hero-reveal mt-6 max-w-xl text-lg leading-relaxed text-white/82 opacity-0 drop-shadow-[0_6px_24px_rgba(0,0,0,.45)]">
+              ImpactHope Coin conecta blockchain, partners y causas sociales en una red trazable:
+              cada aporte se convierte en educacion, proteccion y oportunidades medibles.
             </p>
             <div className="hero-reveal mt-8 flex flex-wrap gap-3 opacity-0">
               <Button
@@ -347,7 +325,7 @@ function Index() {
                 className="bg-gradient-to-r from-amber-300 to-orange-500 text-black shadow-[0_18px_46px_-12px_rgba(250,180,50,0.85)] hover:opacity-90"
               >
                 <a href="#donar">
-                  Donar ahora <ArrowRight className="ml-1 h-4 w-4" />
+                  Unirse como partner <ArrowRight className="ml-1 h-4 w-4" />
                 </a>
               </Button>
               <Button
@@ -356,7 +334,7 @@ function Index() {
                 asChild
                 className="border-white/18 bg-white/[.04] text-white backdrop-blur hover:bg-white/[.08]"
               >
-                <a href="#funciona">Cómo funciona</a>
+                <a href="#impacto">Ver impacto</a>
               </Button>
             </div>
             <div
@@ -364,9 +342,9 @@ function Index() {
               className="hero-reveal mt-10 grid max-w-md grid-cols-3 gap-4 opacity-0"
             >
               {[
-                { k: "3000", prefix: "$", suffix: "", v: "Inversión inicial" },
-                { k: "100", prefix: "", suffix: "%", v: "Transparente" },
-                { k: null, raw: "∞", v: "Vidas posibles" },
+                { k: "3000", prefix: "$", suffix: "", v: "Capital inicial" },
+                { k: "100", prefix: "", suffix: "%", v: "Trazable" },
+                { k: null, raw: "24/7", v: "Impacto visible" },
               ].map((s) => (
                 <div
                   key={s.v}
@@ -387,9 +365,24 @@ function Index() {
                 </div>
               ))}
             </div>
+            <div className="hero-reveal mt-8 flex max-w-xl flex-wrap gap-3 opacity-0">
+              {[
+                { icon: Shield, label: "On-chain transparency" },
+                { icon: Handshake, label: "Partner ecosystem" },
+                { icon: GraduationCap, label: "Measurable education impact" },
+              ].map((item) => (
+                <div
+                  key={item.label}
+                  className="signal-chip inline-flex items-center gap-2 rounded-full border border-cyan-200/20 bg-[#06111f]/55 px-3 py-2 text-xs font-semibold text-cyan-50 shadow-[0_0_26px_rgba(34,211,238,.12)] backdrop-blur-xl"
+                >
+                  <item.icon className="h-4 w-4 text-amber-200" />
+                  {item.label}
+                </div>
+              ))}
+            </div>
           </div>
 
-          <div className="hero-reveal relative mx-auto h-[560px] w-full max-w-[690px] opacity-0 max-lg:-mt-4 max-sm:h-[360px]">
+          <div className="hero-reveal pointer-events-none relative mx-auto hidden h-[560px] w-full max-w-[690px] opacity-0 max-lg:-mt-4 max-sm:h-[360px]">
             <div className="absolute inset-0 rounded-full bg-[radial-gradient(circle_at_52%_48%,rgba(251,191,36,.22),transparent_48%),radial-gradient(circle_at_62%_42%,rgba(34,211,238,.18),transparent_58%)] blur-2xl" />
             <div className="coin-motion absolute left-1/2 top-1/2 h-[500px] w-[500px] -translate-x-1/2 -translate-y-1/2 rounded-full border border-cyan-300/18 shadow-[0_0_90px_rgba(34,211,238,.12)] max-sm:h-[330px] max-sm:w-[330px]" />
             <div className="coin-motion absolute left-1/2 top-1/2 h-[360px] w-[360px] -translate-x-1/2 -translate-y-1/2 rounded-full border border-amber-300/15 max-sm:h-[250px] max-sm:w-[250px]" />
