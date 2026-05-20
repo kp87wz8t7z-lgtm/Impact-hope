@@ -292,6 +292,7 @@ function Index() {
           width={1672}
           height={941}
         />
+        <div className="pointer-events-none absolute inset-x-0 bottom-0 z-[1] h-44 bg-gradient-to-b from-transparent via-[#050914]/72 to-[#050914] md:h-56" />
         <div className="relative z-10 mx-auto grid min-h-[calc(100svh-72px)] max-w-7xl items-center px-5 pb-14 pt-14 md:px-6 md:py-16 lg:py-10">
           <div className="relative z-10 max-w-[680px]">
             <div className="pointer-events-none absolute -right-16 top-16 -z-10 h-44 w-44 opacity-45 sm:hidden">
