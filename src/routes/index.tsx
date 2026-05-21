@@ -37,6 +37,7 @@ import impact1 from "@/assets/impact-1.jpg";
 import impact2 from "@/assets/impact-2.jpg";
 import impact3 from "@/assets/impact-3.jpg";
 import coinImg from "@/assets/coin.png";
+import roadmapBg from "../../references/2/roadmap.png";
 
 export const Route = createFileRoute("/")({
   component: Index,
@@ -288,7 +289,7 @@ function Index() {
         <img
           src={networkHero}
           alt=""
-          className="absolute inset-0 h-full w-full object-cover object-center"
+          className="absolute inset-0 h-full w-full object-cover object-center lg:object-fill"
           width={1672}
           height={941}
         />
@@ -343,7 +344,7 @@ function Index() {
                 size="lg"
                 variant="outline"
                 asChild
-                className="border-white/18 bg-white/[.04] text-white backdrop-blur hover:bg-white/[.08]"
+                className="border-white/18 bg-white/[.04] text-white backdrop-blur hover:bg-white/[.08] hover:text-white"
               >
                 <a href="#funciona">Cómo funciona</a>
               </Button>
@@ -596,7 +597,7 @@ function Index() {
                 height={1024}
                 className="absolute inset-y-0 right-0 h-full w-[70%] object-cover object-center opacity-95 brightness-110 [mask-image:linear-gradient(90deg,transparent,black_18%)]"
               />
-              <div className="absolute inset-0 bg-[radial-gradient(circle_at_78%_48%,rgba(251,191,36,.34),transparent_24%),linear-gradient(90deg,#070c19_0%,rgba(7,12,25,.82)_42%,rgba(7,12,25,.1)_100%)]" />
+              <div className="absolute inset-0 bg-[linear-gradient(90deg,#070c19_0%,rgba(7,12,25,.82)_42%,rgba(7,12,25,.1)_100%)]" />
               <div className="relative max-w-[270px]">
                 <h2 className="text-[2.45rem] font-black leading-[.98] tracking-normal text-white lg:text-6xl">
                   Tu token,
@@ -608,7 +609,7 @@ function Index() {
               </div>
               <Button
                 variant="outline"
-                className="relative mt-8 h-16 w-full justify-center gap-5 rounded-[1.05rem] border-white/16 bg-white/[.035] text-lg font-medium text-white hover:bg-white/[.07]"
+                className="relative mt-8 h-16 w-full justify-center gap-5 rounded-[1.05rem] border-white/16 bg-white/[.035] text-lg font-medium text-white hover:bg-white/[.07] hover:text-white"
               >
                 <Map className="h-7 w-7" />
                 Explorar mapa de impacto
@@ -754,7 +755,7 @@ function Index() {
               </div>
               <Button
                 variant="outline"
-                className="mt-4 border-white/15 bg-white/[.03] text-white hover:bg-white/[.07]"
+                className="mt-4 border-white/15 bg-white/[.03] text-white hover:bg-white/[.07] hover:text-white"
               >
                 Ver todas las transacciones <ArrowRight className="ml-2 h-4 w-4" />
               </Button>
@@ -859,27 +860,36 @@ function Index() {
         </div>
       </section>
 
-      <section id="roadmap" className="relative py-20">
-        <div className="mx-auto max-w-7xl px-5 md:px-6">
-          <div>
+      <section
+        id="roadmap"
+        className="relative min-h-[900px] overflow-hidden bg-cover bg-center bg-no-repeat py-16 md:py-20 lg:bg-[length:100%_100%]"
+        style={{ backgroundImage: `url(${roadmapBg})` }}
+      >
+        <div className="absolute inset-0 bg-[#020713]/10" />
+        <div className="absolute inset-0 bg-gradient-to-b from-[#020713]/10 via-transparent to-[#020713]/15" />
+
+        <div className="relative mx-auto max-w-7xl px-5 md:px-6">
+          <div className="max-w-[560px]">
             <span className="text-sm font-semibold uppercase tracking-[0.22em] text-primary">
               Roadmap
             </span>
-            <h2 className="mt-3 text-4xl font-black md:text-5xl">El camino hacia el impacto</h2>
-            <p className="mt-4 max-w-2xl text-lg text-white/68">
+            <h2 className="mt-3 text-4xl font-black leading-tight md:text-6xl">
+              El camino hacia el impacto
+            </h2>
+            <p className="mt-4 text-lg leading-relaxed text-white/78 md:text-xl">
               Nuestro roadmap estratégico para construir un ecosistema transparente, sostenible y
               con impacto real.
             </p>
           </div>
-          <div className="relative mt-14 grid gap-5 lg:grid-cols-5">
-            <div className="absolute left-8 right-8 top-16 hidden h-1 rounded-full bg-gradient-to-r from-amber-300 via-orange-400 to-cyan-300 shadow-[0_0_26px_rgba(251,191,36,.6)] lg:block" />
+          <div className="relative mt-12 grid gap-5 lg:grid-cols-5">
             {[
               {
                 q: "Q1 2026",
                 icon: Rocket,
                 f: "Fase 1",
                 t: "Fundamentos",
-                d: ["Branding", "Estructura legal", "Sitio web"],
+                d: ["Branding", "Estructura legal", "Sitio web", "Mensaje inicial"],
+                offset: "lg:mt-44",
               },
               {
                 q: "Q2 2026",
@@ -887,6 +897,7 @@ function Index() {
                 f: "Fase 2",
                 t: "Comunidad",
                 d: ["Redes sociales", "Lista de interesados", "Contenido educativo"],
+                offset: "lg:mt-32",
               },
               {
                 q: "Q3 2026",
@@ -894,6 +905,7 @@ function Index() {
                 f: "Fase 3",
                 t: "Alianzas",
                 d: ["ONG aliadas", "Acuerdos preliminares", "Criterios de donación"],
+                offset: "lg:mt-20",
               },
               {
                 q: "Q4 2026",
@@ -901,6 +913,7 @@ function Index() {
                 f: "Fase 4",
                 t: "Lanzamiento",
                 d: ["Activación de mercado", "Métricas", "Informes de impacto"],
+                offset: "lg:mt-10",
               },
               {
                 q: "Q5 2026",
@@ -908,14 +921,15 @@ function Index() {
                 f: "Fase 5",
                 t: "Expansión",
                 d: ["Integración de IA", "Automatización", "Nuevas alianzas"],
+                offset: "lg:mt-0",
               },
             ].map((r, i) => (
               <div
                 key={r.f}
-                className="reveal relative rounded-2xl border border-amber-300/20 bg-[#07101d]/78 p-5 backdrop-blur-xl"
+                className={`reveal relative rounded-2xl border border-amber-300/25 bg-[#05101b]/72 p-5 shadow-[0_18px_50px_rgba(0,0,0,.38)] backdrop-blur-md lg:border-transparent lg:bg-transparent lg:shadow-none lg:backdrop-blur-0 ${r.offset}`}
               >
                 <div className="relative z-10 mb-5">
-                  <div className="text-sm font-bold text-primary">{r.q}</div>
+                  <div className="text-sm font-black text-primary md:text-base">{r.q}</div>
                   <div className="mt-3 flex h-16 w-16 items-center justify-center rounded-full border border-amber-300/40 bg-amber-300/10 text-2xl font-black text-white shadow-[0_0_35px_rgba(251,191,36,.38)]">
                     {String(i + 1).padStart(2, "0")}
                   </div>
@@ -936,6 +950,39 @@ function Index() {
                 </ul>
               </div>
             ))}
+          </div>
+
+          <div className="mt-10 grid gap-3 md:grid-cols-5">
+            {[
+              { icon: Users, label: "Comunidad", value: "25,842+", desc: "Personas unidas" },
+              { icon: Globe, label: "Alcance global", value: "54+", desc: "Países conectados" },
+              { icon: Heart, label: "Vidas transformadas", value: "1,245+", desc: "Impactos reales" },
+              { icon: Coins, label: "Fondos para impacto", value: "$3.2M+", desc: "Destinados a causas" },
+              { icon: Shield, label: "Transparencia", value: "100%", desc: "On-chain verificable" },
+            ].map((m) => (
+              <div
+                key={m.label}
+                className="reveal flex items-center gap-4 rounded-2xl border border-amber-300/25 bg-[#05101b]/70 p-4 backdrop-blur-md lg:border-transparent lg:bg-transparent lg:backdrop-blur-0"
+              >
+                <m.icon className="h-9 w-9 shrink-0 text-primary" />
+                <div>
+                  <div className="text-sm text-primary">{m.label}</div>
+                  <div className="text-2xl font-black leading-none md:text-3xl">{m.value}</div>
+                  <div className="mt-1 text-xs text-white/72">{m.desc}</div>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          <div className="reveal mt-4 flex flex-col gap-4 rounded-2xl border border-amber-300/25 bg-[#05101b]/70 p-5 backdrop-blur-md md:flex-row md:items-center md:justify-between lg:border-transparent lg:bg-transparent lg:backdrop-blur-0">
+            <div className="flex items-center gap-4">
+              <Heart className="h-9 w-9 shrink-0 text-primary" />
+              <p className="text-lg text-white/82">
+                Cada paso nos acerca a un mundo más justo, transparente y lleno de oportunidades
+                para todos.
+              </p>
+            </div>
+            <span className="font-black text-primary">Sé parte del cambio.</span>
           </div>
         </div>
       </section>
