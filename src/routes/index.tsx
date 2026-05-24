@@ -38,6 +38,7 @@ import impact2 from "@/assets/impact-2.jpg";
 import impact3 from "@/assets/impact-3.jpg";
 import coinImg from "@/assets/coin.png";
 import roadmapBg from "../../references/2/roadmap.png";
+import handsImg from "../../references/2/hands.png";
 
 export const Route = createFileRoute("/")({
   component: Index,
@@ -590,12 +591,12 @@ function Index() {
           <div className="reveal overflow-hidden rounded-[1.65rem] border border-white/12 bg-[#070c19]/86 shadow-[0_26px_78px_rgba(0,0,0,.44)] backdrop-blur-xl">
             <div className="relative min-h-[232px] p-7 lg:min-h-[280px] lg:p-10">
               <img
-                src={impact2}
-                alt="Manos cuidando a un niño"
+                src={handsImg}
+                alt="Manos sosteniendo un corazón luminoso"
                 loading="lazy"
                 width={1024}
                 height={1024}
-                className="absolute inset-y-0 right-0 h-full w-[70%] object-cover object-center opacity-95 brightness-110 [mask-image:linear-gradient(90deg,transparent,black_18%)]"
+                className="absolute inset-y-0 right-0 h-full w-[65%] object-cover object-center opacity-90 brightness-105 [mask-image:linear-gradient(90deg,transparent,black_22%)]"
               />
               <div className="absolute inset-0 bg-[linear-gradient(90deg,#070c19_0%,rgba(7,12,25,.82)_42%,rgba(7,12,25,.1)_100%)]" />
               <div className="relative max-w-[270px]">
