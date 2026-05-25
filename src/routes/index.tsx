@@ -1017,6 +1017,31 @@ function Index() {
                   </li>
                 ))}
               </ul>
+
+              <div className="mt-8 rounded-2xl border border-white/10 bg-[#050914]/60 p-4 backdrop-blur-sm">
+                <div className="mb-3 flex items-center gap-2 text-xs font-semibold uppercase tracking-widest text-primary">
+                  <span className="relative flex h-2 w-2">
+                    <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-primary opacity-75" />
+                    <span className="relative inline-flex h-2 w-2 rounded-full bg-primary" />
+                  </span>
+                  Transferencias recientes
+                </div>
+                <ul className="space-y-2">
+                  {[
+                    { from: "0x3f…a12c", amount: "$50", cause: "Agua limpia · Kenya", time: "hace 2 min" },
+                    { from: "0x7b…e491", amount: "$100", cause: "Educación · Bolivia", time: "hace 5 min" },
+                    { from: "0xd2…8f30", amount: "$25", cause: "Salud · Guatemala", time: "hace 9 min" },
+                    { from: "0x1a…c7f2", amount: "$200", cause: "Vivienda · Honduras", time: "hace 14 min" },
+                  ].map((tx) => (
+                    <li key={tx.from + tx.time} className="flex items-center justify-between gap-3 rounded-xl border border-white/[.07] bg-white/[.04] px-3 py-2.5 text-xs">
+                      <span className="font-mono text-white/50">{tx.from}</span>
+                      <span className="flex-1 truncate text-white/70">{tx.cause}</span>
+                      <span className="font-bold text-primary">{tx.amount}</span>
+                      <span className="text-white/38">{tx.time}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
             </div>
 
             <div className="rounded-3xl border border-white/12 bg-[#050914]/72 p-5 md:p-7">
