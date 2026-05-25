@@ -505,9 +505,9 @@ function Index() {
               src={worldMapImg}
               alt=""
               aria-hidden="true"
-              className="absolute inset-0 h-full w-full object-cover object-center opacity-40"
+              className="absolute inset-0 h-full w-full object-cover object-center opacity-65"
             />
-            <div className="absolute inset-0 bg-[#07101d]/78" />
+            <div className="absolute inset-0 bg-[#07101d]/60" />
             <div className="relative z-10">
               <span className="text-sm font-semibold uppercase tracking-[0.22em] text-primary">
                 Nuestra Misión
