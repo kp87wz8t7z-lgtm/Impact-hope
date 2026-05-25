@@ -39,6 +39,7 @@ import impact3 from "@/assets/impact-3.jpg";
 import coinImg from "@/assets/coin.png";
 import roadmapBg from "../../references/2/roadmap.png";
 import handsImg from "../../references/2/hands.png";
+import worldMapImg from "../../references/4/world map.jpeg";
 
 export const Route = createFileRoute("/")({
   component: Index,
@@ -295,6 +296,7 @@ function Index() {
           height={941}
         />
         <div className="pointer-events-none absolute inset-x-0 bottom-0 z-[1] h-44 bg-gradient-to-b from-transparent via-[#050914]/72 to-[#050914] md:h-56" />
+        <div className="pointer-events-none absolute inset-y-0 left-0 z-[1] w-full bg-[linear-gradient(to_right,rgba(5,9,20,.78)_0%,rgba(5,9,20,.62)_38%,rgba(5,9,20,.18)_62%,transparent_100%)]" />
         <div className="relative z-10 mx-auto grid min-h-[calc(100svh-72px)] max-w-7xl items-center px-5 pb-14 pt-14 md:px-6 md:py-16 lg:py-10">
           <div className="relative z-10 max-w-[680px]">
             <div className="pointer-events-none absolute -right-16 top-16 -z-10 h-44 w-44 opacity-45 sm:hidden">
@@ -326,7 +328,7 @@ function Index() {
                 </span>
               ))}
             </h1>
-            <p className="hero-reveal mt-6 max-w-xl text-lg leading-relaxed text-white/82 opacity-0 drop-shadow-[0_6px_24px_rgba(0,0,0,.45)]">
+            <p className="hero-reveal mt-6 max-w-xl rounded-xl bg-black/50 px-4 py-3 text-lg leading-relaxed text-white/90 opacity-0 backdrop-blur-sm">
               ImpactHope Coin une blockchain, comunidad y causas benéficas. Cada transacción genera
               una contribución verificable para niños, familias y organizaciones que más lo
               necesitan.
@@ -495,8 +497,15 @@ function Index() {
 
       <section id="mision" className="relative py-20">
         <div className="mx-auto max-w-7xl px-5 md:px-6">
-          <div className="reveal grid gap-8 rounded-[2rem] border border-amber-300/18 bg-[#07101d]/72 p-7 shadow-[0_28px_90px_rgba(0,0,0,.36)] backdrop-blur-xl md:grid-cols-[1.05fr_.95fr] md:p-10 lg:p-14">
-            <div>
+          <div className="reveal relative grid gap-8 overflow-hidden rounded-[2rem] border border-amber-300/18 p-7 shadow-[0_28px_90px_rgba(0,0,0,.36)] md:p-10 lg:grid-cols-[1.05fr_.95fr] lg:p-14">
+            <img
+              src={worldMapImg}
+              alt=""
+              aria-hidden="true"
+              className="absolute inset-0 h-full w-full object-cover object-center opacity-40"
+            />
+            <div className="absolute inset-0 bg-[#07101d]/78" />
+            <div className="relative z-10">
               <span className="text-sm font-semibold uppercase tracking-[0.22em] text-primary">
                 Nuestra Misión
               </span>
@@ -510,7 +519,7 @@ function Index() {
                 blockchain con responsabilidad social verificable.
               </p>
             </div>
-            <div className="grid content-center gap-3">
+            <div className="relative z-10 grid content-center gap-3">
               {impactMetrics.map((metric) => (
                 <div
                   key={metric.label}
@@ -536,7 +545,7 @@ function Index() {
             </span>
             <h2 className="mt-3 text-4xl font-black md:text-5xl">Tres pasos. Impacto real.</h2>
           </div>
-          <div className="mt-14 grid gap-6 md:grid-cols-3">
+          <div className="mt-14 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
             {[
               {
                 icon: Link2,
@@ -587,8 +596,8 @@ function Index() {
       </section>
 
       <section id="impacto" className="relative py-20">
-        <div className="mx-auto max-w-[430px] px-5 lg:max-w-5xl lg:px-6">
-          <div className="reveal overflow-hidden rounded-[1.65rem] border border-white/12 bg-[#070c19]/86 shadow-[0_26px_78px_rgba(0,0,0,.44)] backdrop-blur-xl">
+        <div className="mx-auto px-4 sm:px-5 md:max-w-2xl lg:max-w-5xl lg:px-6">
+          <div className="reveal overflow-hidden rounded-[1.65rem] border border-white/12 bg-[#070c19]/20 shadow-[0_26px_78px_rgba(0,0,0,.44)]">
             <div className="relative min-h-[232px] p-7 lg:min-h-[280px] lg:p-10">
               <img
                 src={handsImg}
@@ -596,10 +605,11 @@ function Index() {
                 loading="lazy"
                 width={1024}
                 height={1024}
-                className="absolute inset-y-0 right-0 h-full w-[65%] object-cover object-center opacity-90 brightness-105 [mask-image:linear-gradient(90deg,transparent,black_22%)]"
+                className="absolute inset-y-0 right-0 h-full w-[72%] object-cover object-center opacity-95 brightness-110 [mask-image:linear-gradient(90deg,transparent,black_15%)]"
               />
-              <div className="absolute inset-0 bg-[linear-gradient(90deg,#070c19_0%,rgba(7,12,25,.82)_42%,rgba(7,12,25,.1)_100%)]" />
-              <div className="relative max-w-[270px]">
+              <div className="absolute inset-0 bg-[linear-gradient(90deg,#070c19_0%,#070c19_22%,rgba(7,12,25,.55)_48%,rgba(7,12,25,.1)_100%)]" />
+              <div className="relative max-w-[70%] sm:max-w-[320px]">
+                <div className="inline-block rounded-2xl bg-[#070c19]/55 px-4 pb-4 pt-3 backdrop-blur-md">
                 <h2 className="text-[2.45rem] font-black leading-[.98] tracking-normal text-white lg:text-6xl">
                   Tu token,
                   <span className="block text-primary">su esperanza.</span>
@@ -859,6 +869,7 @@ function Index() {
             ))}
           </div>
         </div>
+        </div>
       </section>
 
       <section
@@ -866,8 +877,8 @@ function Index() {
         className="relative min-h-[900px] overflow-hidden bg-cover bg-center bg-no-repeat py-16 md:py-20 lg:bg-[length:100%_100%]"
         style={{ backgroundImage: `url(${roadmapBg})` }}
       >
-        <div className="absolute inset-0 bg-[#020713]/10" />
-        <div className="absolute inset-0 bg-gradient-to-b from-[#020713]/10 via-transparent to-[#020713]/15" />
+        <div className="absolute inset-0 bg-[#020713]/45" />
+        <div className="absolute inset-0 bg-gradient-to-b from-[#020713]/30 via-transparent to-[#020713]/50" />
 
         <div className="relative mx-auto max-w-7xl px-5 md:px-6">
           <div className="max-w-[560px]">
@@ -953,7 +964,7 @@ function Index() {
             ))}
           </div>
 
-          <div className="mt-10 grid gap-3 md:grid-cols-5">
+          <div className="mt-10 grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-5">
             {[
               { icon: Users, label: "Comunidad", value: "25,842+", desc: "Personas unidas" },
               { icon: Globe, label: "Alcance global", value: "54+", desc: "Países conectados" },
@@ -990,7 +1001,7 @@ function Index() {
 
       <section id="donar" className="relative py-20">
         <div className="mx-auto max-w-7xl px-5 md:px-6">
-          <div className="reveal grid gap-10 rounded-[2rem] border border-white/10 bg-[#07101d]/82 p-7 shadow-[0_30px_90px_rgba(0,0,0,.42)] backdrop-blur-xl md:grid-cols-[.95fr_1.05fr] md:p-12">
+          <div className="reveal grid gap-10 rounded-[2rem] border border-white/10 bg-[#07101d]/82 p-7 shadow-[0_30px_90px_rgba(0,0,0,.42)] backdrop-blur-xl md:p-10 lg:grid-cols-[.95fr_1.05fr] lg:p-12">
             <div>
               <span className="inline-flex items-center gap-2 rounded-full bg-primary/15 px-3 py-1 text-xs font-semibold text-primary">
                 <Heart className="h-3.5 w-3.5" /> Tu aporte importa
@@ -1013,7 +1024,7 @@ function Index() {
 
             <div className="rounded-3xl border border-white/12 bg-[#050914]/72 p-5 md:p-7">
               <div className="text-2xl font-bold">Selecciona tu donación</div>
-              <div className="mt-5 grid grid-cols-4 gap-3">
+              <div className="mt-5 grid grid-cols-2 gap-3 sm:grid-cols-4">
                 {[10, 25, 50, 100].map((v) => (
                   <button
                     key={v}
@@ -1064,7 +1075,7 @@ function Index() {
                 <p className="mt-1 text-sm text-white/56">
                   Apoya el desarrollo y crecimiento de la organización.
                 </p>
-                <div className="mt-4 grid grid-cols-4 gap-3">
+                <div className="mt-4 grid grid-cols-2 gap-3 sm:grid-cols-4">
                   {[5, 10, 20, 0].map((v) => (
                     <button
                       key={v}
@@ -1123,7 +1134,7 @@ function Index() {
       </section>
 
       <section className="relative py-16">
-        <div className="mx-auto grid max-w-7xl gap-4 px-5 sm:grid-cols-2 md:px-6 lg:grid-cols-5">
+        <div className="mx-auto grid max-w-7xl gap-4 px-4 sm:grid-cols-2 sm:px-5 md:px-6 lg:grid-cols-5">
           {[
             { i: Shield, t: "Seguridad", d: "Smart contracts auditados." },
             { i: BrainCircuit, t: "IA transparente", d: "Verificación de proyectos." },
@@ -1133,7 +1144,7 @@ function Index() {
           ].map((v) => (
             <div
               key={v.t}
-              className="reveal border border-white/10 bg-[#07101d]/76 p-5 backdrop-blur-xl first:rounded-l-2xl last:rounded-r-2xl max-lg:rounded-2xl"
+              className="reveal rounded-2xl border border-white/10 bg-[#07101d]/76 p-5 backdrop-blur-xl lg:rounded-none lg:first:rounded-l-2xl lg:last:rounded-r-2xl"
             >
               <v.i className="h-9 w-9 text-primary" />
               <div className="mt-3 font-bold text-primary">{v.t}</div>
