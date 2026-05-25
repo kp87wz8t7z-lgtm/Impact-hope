@@ -1157,7 +1157,12 @@ function Index() {
             <img src={coinImg} alt="" className="h-6 w-6" width={24} height={24} />
             <span>© 2026 ImpactHope Coin LLC</span>
           </div>
-          <p>Fundadora: Alicia Rivas · Etapa inicial de desarrollo</p>
+          <nav className="flex flex-wrap items-center gap-4">
+            <a href="#" className="hover:text-white/80 transition-colors">Términos de uso</a>
+            <a href="#" className="hover:text-white/80 transition-colors">Política de privacidad</a>
+            <a href="#" className="hover:text-white/80 transition-colors">Aviso legal</a>
+            <a href="#" className="hover:text-white/80 transition-colors">Contacto</a>
+          </nav>
         </div>
       </footer>
     </div>
