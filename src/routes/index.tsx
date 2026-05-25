@@ -913,18 +913,18 @@ function Index() {
               },
               {
                 q: "Q3 2026",
-                icon: Handshake,
+                icon: TrendingUp,
                 f: "Fase 3",
-                t: "Alianzas",
-                d: ["ONG aliadas", "Acuerdos preliminares", "Criterios de donación"],
+                t: "Lanzamiento",
+                d: ["Activación de mercado", "Métricas", "Informes de impacto"],
                 offset: "lg:mt-20",
               },
               {
                 q: "Q4 2026",
-                icon: TrendingUp,
+                icon: Handshake,
                 f: "Fase 4",
-                t: "Lanzamiento",
-                d: ["Activación de mercado", "Métricas", "Informes de impacto"],
+                t: "Alianzas",
+                d: ["ONG aliadas", "Acuerdos preliminares", "Criterios de donación"],
                 offset: "lg:mt-10",
               },
               {
@@ -935,16 +935,13 @@ function Index() {
                 d: ["Integración de IA", "Automatización", "Nuevas alianzas"],
                 offset: "lg:mt-0",
               },
-            ].map((r, i) => (
+            ].map((r) => (
               <div
                 key={r.f}
                 className={`reveal relative rounded-2xl border border-amber-300/25 bg-[#05101b]/72 p-5 shadow-[0_18px_50px_rgba(0,0,0,.38)] backdrop-blur-md lg:border-transparent lg:bg-transparent lg:shadow-none lg:backdrop-blur-0 ${r.offset}`}
               >
                 <div className="relative z-10 mb-5">
                   <div className="text-sm font-black text-primary md:text-base">{r.q}</div>
-                  <div className="mt-3 flex h-16 w-16 items-center justify-center rounded-full border border-amber-300/40 bg-amber-300/10 text-2xl font-black text-white shadow-[0_0_35px_rgba(251,191,36,.38)]">
-                    {String(i + 1).padStart(2, "0")}
-                  </div>
                 </div>
                 <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-full border border-primary/30 text-primary">
                   <r.icon className="h-6 w-6" />
