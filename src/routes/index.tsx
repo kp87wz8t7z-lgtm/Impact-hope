@@ -9,12 +9,14 @@ import {
   CircleDollarSign,
   Coins,
   CreditCard,
+  Droplets,
   Globe,
   GraduationCap,
   HandHeart,
   Handshake,
   Heart,
   Landmark,
+  Leaf,
   Link2,
   LockKeyhole,
   Mail,
@@ -58,6 +60,7 @@ export const Route = createFileRoute("/")({
 const nav = [
   { label: "Misión", href: "#mision" },
   { label: "Cómo funciona", href: "#funciona" },
+  { label: "Token", href: "#token" },
   { label: "Impacto", href: "#impacto" },
   { label: "Roadmap", href: "#roadmap" },
   { label: "Donar", href: "#donar" },
@@ -251,7 +254,7 @@ function Index() {
     >
       <div className="fixed inset-0 -z-10 bg-[#050914]" />
 
-      <header className="sticky top-0 z-50 bg-[#050914]/82 shadow-[0_1px_0_rgba(255,255,255,.06)] backdrop-blur-xl">
+      <header className="fixed inset-x-0 top-0 z-50 bg-[#050914]/82 shadow-[0_1px_0_rgba(255,255,255,.06)] backdrop-blur-xl">
         <div className="mx-auto flex max-w-7xl items-center justify-between px-5 py-4 md:px-6">
           <a href="#top" className="flex items-center gap-2.5">
             <img
@@ -287,7 +290,7 @@ function Index() {
         </div>
       </header>
 
-      <section id="top" className="relative min-h-[calc(100svh-72px)] overflow-hidden bg-[#050914]">
+      <section id="top" className="relative min-h-[calc(100svh-72px)] overflow-hidden bg-[#050914] pt-[72px]">
         <img
           src={networkHero}
           alt=""
@@ -592,6 +595,229 @@ function Index() {
               </div>
             ))}
           </div>
+        </div>
+      </section>
+
+      <section id="token" className="relative py-16">
+        <div className="mx-auto max-w-7xl px-5 md:px-6">
+
+          {/* Header + supply */}
+          <div className="reveal mb-8 flex flex-col gap-6 lg:flex-row lg:items-start lg:justify-between">
+            <div>
+              <span className="text-sm font-semibold uppercase tracking-[0.22em] text-primary">Token</span>
+              <h2 className="mt-3 max-w-xl text-4xl font-black leading-tight md:text-5xl">
+                El movimiento del <span className="text-primary">Token IHC</span> en el mercado.
+              </h2>
+              <p className="mt-3 text-lg text-white/68">
+                Transparente. Trazable. Con propósito.<br />Cada token impulsa un cambio real.
+              </p>
+            </div>
+            <div className="shrink-0 rounded-2xl border border-white/12 bg-[#07101d]/80 p-5 backdrop-blur-xl">
+              <div className="flex items-center gap-3">
+                <img src={coinImg} className="h-12 w-12 drop-shadow-[0_0_18px_rgba(250,200,80,0.65)]" alt="" width={48} height={48} />
+                <div>
+                  <div className="text-xs text-white/50">Supply inicial (Circulación inicial)</div>
+                  <div className="text-2xl font-black text-white">1,000,000,000 <span className="text-primary">IHC</span></div>
+                  <div className="text-sm text-white/50">1B coins</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Stat cards */}
+          <div className="reveal mb-6 grid grid-cols-2 gap-4 lg:grid-cols-4">
+            {[
+              { icon: HandHeart, value: "+50", label: "ONG apoyadas", bar: "#f59e0b" },
+              { icon: Users, value: "+120K", label: "Personas beneficiadas", bar: "#22d3ee" },
+              { icon: Globe, value: "+25", label: "Países alcanzados", bar: "#fb923c" },
+              { icon: Coins, value: "$IHC", label: "Token con propósito", bar: "#34d399" },
+            ].map((s) => (
+              <div key={s.label} className="rounded-2xl border border-white/10 bg-[#07101d]/78 p-5 backdrop-blur-xl">
+                <s.icon className="h-8 w-8" style={{ color: s.bar }} />
+                <div className="mt-3 text-3xl font-black text-white">{s.value}</div>
+                <div className="mt-1 text-sm text-white/58">{s.label}</div>
+                <div
+                  className="mt-3 h-0.5 w-full rounded-full"
+                  style={{ background: `linear-gradient(to right, ${s.bar}, transparent)` }}
+                />
+              </div>
+            ))}
+          </div>
+
+          {/* Price chart + Distribution */}
+          <div className="reveal mb-6 grid gap-6 lg:grid-cols-2">
+            {/* Price chart */}
+            <div className="rounded-2xl border border-white/10 bg-[#07101d]/78 p-5 backdrop-blur-xl">
+              <div className="mb-4 flex items-start justify-between">
+                <div>
+                  <div className="text-sm text-white/50">Precio del token (IHC)</div>
+                  <div className="mt-1 flex items-end gap-3">
+                    <div className="text-4xl font-black text-white">$0.8425</div>
+                    <div className="mb-1 flex items-center gap-1 text-sm font-semibold text-emerald-400">
+                      <TrendingUp className="h-4 w-4" /> +8.45% últimas 24h
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <svg viewBox="0 0 400 120" className="w-full" preserveAspectRatio="none" aria-hidden="true">
+                <defs>
+                  <linearGradient id="chartFill" x1="0" x2="0" y1="0" y2="1">
+                    <stop offset="0%" stopColor="#f59e0b" stopOpacity=".28" />
+                    <stop offset="100%" stopColor="#f59e0b" stopOpacity="0" />
+                  </linearGradient>
+                </defs>
+                {[24, 60, 96].map((y) => (
+                  <line key={y} x1="0" y1={y} x2="400" y2={y} stroke="white" strokeOpacity=".06" strokeWidth="1" />
+                ))}
+                <path
+                  d="M0,97 C18,90 28,84 48,80 C68,76 73,87 90,82 C107,77 117,66 132,61 C147,56 157,70 172,63 C187,57 197,46 217,43 C237,40 247,54 262,49 C277,44 287,35 307,30 C327,25 337,18 360,14 C378,11 390,16 400,14 L400,120 L0,120 Z"
+                  fill="url(#chartFill)"
+                />
+                <path
+                  d="M0,97 C18,90 28,84 48,80 C68,76 73,87 90,82 C107,77 117,66 132,61 C147,56 157,70 172,63 C187,57 197,46 217,43 C237,40 247,54 262,49 C277,44 287,35 307,30 C327,25 337,18 360,14 C378,11 390,16 400,14"
+                  fill="none"
+                  stroke="#f59e0b"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                />
+                <circle cx="400" cy="14" r="4" fill="#f59e0b" />
+                <circle cx="400" cy="14" r="8" fill="#f59e0b" fillOpacity=".25" />
+                <text x="3" y="13" fill="white" fillOpacity=".38" fontSize="9">$0.90</text>
+                <text x="3" y="62" fill="white" fillOpacity=".38" fontSize="9">$0.70</text>
+                <text x="3" y="115" fill="white" fillOpacity=".38" fontSize="9">$0.50</text>
+              </svg>
+              <div className="mt-3 flex gap-1.5">
+                {["1D", "7D", "1M", "3M", "1A", "Todo"].map((t) => (
+                  <button
+                    key={t}
+                    type="button"
+                    className={`rounded-lg px-2.5 py-1 text-xs font-semibold transition-colors ${t === "1D" ? "bg-primary/20 text-primary" : "text-white/40 hover:text-white/70"}`}
+                  >
+                    {t}
+                  </button>
+                ))}
+              </div>
+              <div className="mt-4 grid grid-cols-2 gap-3 rounded-xl border border-white/[.06] bg-white/[.025] p-3 sm:grid-cols-4">
+                {[
+                  { label: "Capitalización", value: "$12.4M" },
+                  { label: "Volumen 24h", value: "$1.8M" },
+                  { label: "Suministro total", value: "1,000M IHC" },
+                  { label: "En circulación", value: "652M IHC" },
+                ].map((s) => (
+                  <div key={s.label} className="text-center">
+                    <div className="text-[11px] text-white/45">{s.label}</div>
+                    <div className="mt-0.5 text-sm font-bold text-white">{s.value}</div>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* Token distribution */}
+            <div className="rounded-2xl border border-white/10 bg-[#07101d]/78 p-5 backdrop-blur-xl">
+              <div className="mb-4 text-sm text-white/50">Distribución real del token (1B IHC)</div>
+              <div className="flex flex-col items-center gap-5 lg:flex-row lg:items-start">
+                <div className="relative h-[160px] w-[160px] shrink-0 rounded-full bg-[conic-gradient(#22d3ee_0_30%,#f59e0b_30%_50%,#34d399_50%_65%,#8b5cf6_65%_80%,#fb7185_80%_90%,#7dd3fc_90%_100%)]">
+                  <div className="absolute inset-[36px] flex flex-col items-center justify-center rounded-full bg-[#07101d] text-center">
+                    <div className="text-lg font-black text-white leading-none">1,000M</div>
+                    <div className="mt-1 text-[10px] text-white/55 leading-tight">Suministro<br/>total</div>
+                  </div>
+                </div>
+                <div className="space-y-2.5">
+                  {tokenomics.map((item) => (
+                    <div key={item.label} className="flex items-start gap-2.5 text-sm">
+                      <span className={`mt-[3px] h-2.5 w-2.5 shrink-0 rounded-full ${item.color}`} />
+                      <div>
+                        <span className="font-bold text-white">{item.value}</span>{" "}
+                        <span className="text-white/72">{item.label}</span>
+                        <p className="text-xs text-white/42">{item.desc}</p>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+              <div className="mt-5 flex items-start gap-2.5 rounded-xl border border-white/[.06] bg-white/[.025] p-3 text-xs text-white/55">
+                <Heart className="mt-0.5 h-4 w-4 shrink-0 text-primary" />
+                Cada transacción impulsa el cambio. El 10% de las operaciones se destina a impacto social real.
+              </div>
+            </div>
+          </div>
+
+          {/* Transactions + Exchanges */}
+          <div className="reveal mb-6 grid gap-6 lg:grid-cols-2">
+            {/* Live transactions */}
+            <div className="rounded-2xl border border-white/10 bg-[#07101d]/78 p-5 backdrop-blur-xl">
+              <div className="mb-4 flex items-center gap-2">
+                <span className="relative flex h-2 w-2">
+                  <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-primary opacity-75" />
+                  <span className="relative inline-flex h-2 w-2 rounded-full bg-primary" />
+                </span>
+                <span className="text-xs font-semibold uppercase tracking-widest text-primary">Transacciones en tiempo real</span>
+              </div>
+              <div className="space-y-2">
+                {[
+                  { addr: "0x7f3d…a8b2", type: "Compra", typeColor: "bg-cyan-400/20 text-cyan-300", amount: "+2,500 IHC", time: "Hace 1 min" },
+                  { addr: "0x2a9c…d4e1", type: "Recompensa", typeColor: "bg-violet-400/20 text-violet-300", amount: "+150 IHC", time: "Hace 2 min" },
+                  { addr: "0x9b1e…f7c3", type: "Donación", typeColor: "bg-amber-400/20 text-amber-300", amount: "-1,000 IHC", time: "Hace 3 min" },
+                  { addr: "0x4d2f…b6a9", type: "Compra", typeColor: "bg-cyan-400/20 text-cyan-300", amount: "+5,000 IHC", time: "Hace 4 min" },
+                  { addr: "0x8c7a…e3b1", type: "Recompensa", typeColor: "bg-violet-400/20 text-violet-300", amount: "+300 IHC", time: "Hace 5 min" },
+                ].map((tx) => (
+                  <div key={tx.addr + tx.time} className="flex items-center gap-2 rounded-xl border border-white/[.07] bg-white/[.03] px-3 py-2.5 text-xs">
+                    <span className="font-mono text-white/50">{tx.addr}</span>
+                    <span className={`shrink-0 rounded-full px-2 py-0.5 text-[10px] font-semibold ${tx.typeColor}`}>{tx.type}</span>
+                    <span className="ml-auto font-bold text-white">{tx.amount}</span>
+                    <span className="shrink-0 text-white/38">{tx.time}</span>
+                  </div>
+                ))}
+              </div>
+              <button type="button" className="mt-4 flex w-full items-center justify-center gap-1.5 text-xs font-semibold text-primary hover:underline">
+                Ver todas las transacciones <ArrowRight className="h-3 w-3" />
+              </button>
+            </div>
+
+            {/* Exchanges */}
+            <div className="rounded-2xl border border-white/10 bg-[#07101d]/78 p-5 backdrop-blur-xl">
+              <div className="mb-4 text-xs font-semibold uppercase tracking-widest text-primary">Dónde puedes conseguir $IHC</div>
+              <div className="grid grid-cols-2 gap-3">
+                {[
+                  { name: "Uniswap", abbr: "UNI" },
+                  { name: "PancakeSwap", abbr: "CAKE" },
+                  { name: "MEXC", abbr: "MEXC" },
+                  { name: "Gate.io", abbr: "GT" },
+                  { name: "BitMart", abbr: "BMX" },
+                  { name: "Próximamente...", abbr: "···" },
+                ].map((ex) => (
+                  <div key={ex.name} className="flex items-center gap-3 rounded-xl border border-white/[.07] bg-white/[.03] px-3 py-3">
+                    <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-primary/15 text-xs font-black text-primary">
+                      {ex.abbr}
+                    </span>
+                    <span className="text-sm font-semibold text-white/80">{ex.name}</span>
+                  </div>
+                ))}
+              </div>
+              <button type="button" className="mt-4 flex w-full items-center justify-center gap-1.5 text-xs font-semibold text-primary hover:underline">
+                Ver todos los mercados <ArrowRight className="h-3 w-3" />
+              </button>
+            </div>
+          </div>
+
+          {/* Impact metrics strip */}
+          <div className="reveal grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-5">
+            {[
+              { icon: Droplets, label: "Agua potable", value: "+2.5M", unit: "litros entregados", color: "text-cyan-300" },
+              { icon: GraduationCap, label: "Educación", value: "+15K", unit: "niños educados", color: "text-amber-300" },
+              { icon: Leaf, label: "Medio ambiente", value: "+8K", unit: "árboles plantados", color: "text-emerald-300" },
+              { icon: Users, label: "Comunidad", value: "+120K", unit: "familias ayudadas", color: "text-violet-300" },
+              { icon: HandHeart, label: "Salud", value: "+18K", unit: "personas atendidas", color: "text-rose-300" },
+            ].map((m) => (
+              <div key={m.label} className="rounded-2xl border border-white/10 bg-[#07101d]/78 p-4 text-center backdrop-blur-xl">
+                <m.icon className={`mx-auto h-8 w-8 ${m.color}`} />
+                <div className="mt-2 text-[11px] font-semibold text-white/55">{m.label}</div>
+                <div className="mt-1 text-2xl font-black text-white">{m.value}</div>
+                <div className="mt-0.5 text-xs text-white/42">{m.unit}</div>
+              </div>
+            ))}
+          </div>
+
         </div>
       </section>
 
