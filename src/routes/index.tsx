@@ -581,20 +581,6 @@ function Index() {
               </div>
             ))}
           </div>
-          <div className="reveal mt-6 grid gap-4 rounded-2xl border border-amber-300/25 bg-[#07101d]/70 p-5 backdrop-blur-xl md:grid-cols-3">
-            {impactMetrics.map((metric) => (
-              <div
-                key={metric.label}
-                className="flex items-center gap-3 border-white/10 md:border-r md:last:border-r-0"
-              >
-                <metric.icon className={`h-9 w-9 ${metric.color}`} />
-                <div>
-                  <div className="text-xl font-black">{metric.value}</div>
-                  <div className="text-xs text-white/58">{metric.label}</div>
-                </div>
-              </div>
-            ))}
-          </div>
         </div>
       </section>
 
@@ -853,105 +839,8 @@ function Index() {
               </Button>
             </div>
           </div>
-
-          <div className="reveal mt-6 overflow-hidden rounded-[1.65rem] border border-white/12 bg-[#070c19]/86 shadow-[0_26px_78px_rgba(0,0,0,.44)] backdrop-blur-xl">
-            <div className="p-7 md:p-10">
-              <div className="text-[13px] font-bold uppercase tracking-[0.24em] text-primary">
-                Tokenomics
-              </div>
-              <div className="mt-5 grid gap-8 lg:grid-cols-[1.05fr_.95fr] lg:items-center">
-                <div>
-                  <h2 className="text-[2.08rem] font-black leading-tight text-white lg:text-5xl">
-                    Así generamos impacto juntos{" "}
-                    <Heart className="inline h-7 w-7 align-[-0.12em] text-primary lg:h-9 lg:w-9" />
-                  </h2>
-                  <p className="mt-5 text-xl leading-snug text-white/72">
-                    El 100% del impacto va a ONG y comunidades necesitadas.
-                  </p>
-                  <div className="mt-9 flex justify-center md:justify-start">
-                    <div className="relative h-[220px] w-[220px] rounded-full bg-[conic-gradient(#3b82f6_0_30%,#f59e0b_30%_50%,#47c765_50%_65%,#8b5cf6_65%_80%,#ef4444_80%_90%,#48b6c9_90%_100%)] shadow-[0_0_34px_rgba(251,191,36,.08)] lg:h-[300px] lg:w-[300px]">
-                      <div className="absolute inset-[48px] flex flex-col items-center justify-center rounded-full bg-[#070c19] text-center lg:inset-16">
-                        <Globe
-                          className="h-12 w-12 text-primary lg:h-20 lg:w-20"
-                          strokeWidth={1.7}
-                        />
-                        <span className="mt-1 max-w-[96px] text-xs font-semibold leading-tight text-white/82 lg:mt-2 lg:max-w-[116px] lg:text-base">
-                          Impacto real.
-                          <br />
-                          Vidas transformadas.
-                        </span>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-                <div className="space-y-5">
-                  {tokenomics.map((item, index) => {
-                    const icons = [
-                      CircleDollarSign,
-                      Users,
-                      Sparkles,
-                      HandHeart,
-                      Shield,
-                      BadgeCheck,
-                    ];
-                    const Icon = icons[index];
-                    return (
-                      <div key={item.label} className="flex items-start gap-4">
-                        <span
-                          className={`flex h-11 w-11 shrink-0 items-center justify-center rounded-full ${item.color} text-white shadow-[0_10px_24px_rgba(0,0,0,.24)]`}
-                        >
-                          <Icon className="h-6 w-6" />
-                        </span>
-                        <div>
-                          <div className="text-2xl font-black leading-none text-white">
-                            {item.value}
-                          </div>
-                          <div className="mt-1 text-xl font-semibold leading-tight text-white">
-                            {item.label}
-                          </div>
-                          <p className="mt-1 text-base leading-snug text-white/58">{item.desc}</p>
-                        </div>
-                      </div>
-                    );
-                  })}
-                </div>
-              </div>
-            </div>
-
-            <div className="border-t border-white/10 px-7 py-6 md:px-10">
-              <div className="flex items-start gap-4">
-                <Heart className="mt-1 h-10 w-10 shrink-0 text-primary" strokeWidth={1.9} />
-                <div>
-                  <p className="text-xl font-medium text-white/86">
-                    Transparente. Trazable. Con propósito.
-                  </p>
-                  <p className="mt-2 text-lg text-white/54">Cada token impulsa un cambio real.</p>
-                </div>
-              </div>
-              <div className="mt-7 grid grid-cols-3 rounded-[1.05rem] bg-white/[.045] px-3 py-5">
-                {[
-                  { icon: HandHeart, value: "+50", label: "ONG apoyadas" },
-                  { icon: Users, value: "+120K", label: "Personas beneficiadas" },
-                  { icon: Globe, value: "+25", label: "Países alcanzados" },
-                ].map((metric) => (
-                  <div key={metric.label} className="flex flex-col items-center text-center">
-                    <metric.icon className="h-9 w-9 text-primary" strokeWidth={1.8} />
-                    <div className="mt-2 text-2xl font-black leading-none text-white">
-                      {metric.value}
-                    </div>
-                    <div className="mt-1 text-sm leading-tight text-white/62">{metric.label}</div>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </div>
-
-          <div className="reveal mx-auto mt-5 flex h-16 max-w-[260px] flex-col items-center justify-center rounded-[1.25rem] border border-white/12 bg-white/[.035] text-center text-lg text-white/86">
-            <span>impact-hope-spark.lovable.app</span>
-            <Heart className="mt-1 h-5 w-5 text-primary" />
-          </div>
         </div>
+
         <div className="hidden">
           <div className="mb-10 flex flex-col justify-between gap-6 md:flex-row md:items-end">
             <div>
@@ -1244,30 +1133,6 @@ function Index() {
                 ))}
               </ul>
 
-              <div className="mt-8 rounded-2xl border border-white/10 bg-[#050914]/60 p-4 backdrop-blur-sm">
-                <div className="mb-3 flex items-center gap-2 text-xs font-semibold uppercase tracking-widest text-primary">
-                  <span className="relative flex h-2 w-2">
-                    <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-primary opacity-75" />
-                    <span className="relative inline-flex h-2 w-2 rounded-full bg-primary" />
-                  </span>
-                  Transferencias recientes
-                </div>
-                <ul className="space-y-2">
-                  {[
-                    { from: "0x3f…a12c", amount: "$50", cause: "Agua limpia · Kenya", time: "hace 2 min" },
-                    { from: "0x7b…e491", amount: "$100", cause: "Educación · Bolivia", time: "hace 5 min" },
-                    { from: "0xd2…8f30", amount: "$25", cause: "Salud · Guatemala", time: "hace 9 min" },
-                    { from: "0x1a…c7f2", amount: "$200", cause: "Vivienda · Honduras", time: "hace 14 min" },
-                  ].map((tx) => (
-                    <li key={tx.from + tx.time} className="flex items-center justify-between gap-3 rounded-xl border border-white/[.07] bg-white/[.04] px-3 py-2.5 text-xs">
-                      <span className="font-mono text-white/50">{tx.from}</span>
-                      <span className="flex-1 truncate text-white/70">{tx.cause}</span>
-                      <span className="font-bold text-primary">{tx.amount}</span>
-                      <span className="text-white/38">{tx.time}</span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
             </div>
 
             <div className="rounded-3xl border border-white/12 bg-[#050914]/72 p-5 md:p-7">
