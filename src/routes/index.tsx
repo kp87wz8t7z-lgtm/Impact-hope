@@ -34,7 +34,7 @@ import {
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import networkHero from "@/assets/impact-network-hero-vertical.png";
+import networkHero from "@/assets/impact-network-hero-vertical.webp";
 import impact1 from "@/assets/impact-1.jpg";
 import impact2 from "@/assets/impact-2.jpg";
 import impact3 from "@/assets/impact-3.jpg";
