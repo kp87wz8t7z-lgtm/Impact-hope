@@ -69,7 +69,7 @@ const nav = [
 const orbitNodes = [
   {
     title: "Educación",
-    value: "1,245+",
+    value: "0",
     caption: "vidas transformadas",
     icon: GraduationCap,
     className: "left-[6%] top-[16%]",
@@ -77,7 +77,7 @@ const orbitNodes = [
   },
   {
     title: "On-chain",
-    value: "100%",
+    value: "0%",
     caption: "transparencia",
     icon: LockKeyhole,
     className: "right-[4%] top-[18%]",
@@ -85,7 +85,7 @@ const orbitNodes = [
   },
   {
     title: "Alimentos",
-    value: "54+",
+    value: "0",
     caption: "países conectados",
     icon: Utensils,
     className: "left-[1%] bottom-[24%]",
@@ -93,7 +93,7 @@ const orbitNodes = [
   },
   {
     title: "Comunidad",
-    value: "25K+",
+    value: "0",
     caption: "personas unidas",
     icon: Users,
     className: "right-[3%] bottom-[23%]",
@@ -101,7 +101,7 @@ const orbitNodes = [
   },
   {
     title: "Impacto",
-    value: "$3.2M+",
+    value: "$0",
     caption: "fondos donados",
     icon: HandHeart,
     className: "left-[36%] bottom-[12%]",
@@ -110,16 +110,16 @@ const orbitNodes = [
 ];
 
 const impactMetrics = [
-  { icon: HandHeart, value: "+50", label: "ONG apoyadas", color: "text-amber-300" },
-  { icon: Users, value: "+120K", label: "Personas beneficiadas", color: "text-cyan-300" },
-  { icon: Globe, value: "+25", label: "Países alcanzados", color: "text-orange-300" },
+  { icon: HandHeart, value: "0", label: "ONG apoyadas", color: "text-amber-300" },
+  { icon: Users, value: "0", label: "Personas beneficiadas", color: "text-cyan-300" },
+  { icon: Globe, value: "0", label: "Países alcanzados", color: "text-orange-300" },
 ];
 
 const transactions = [
-  { id: "0x8A...92F", org: "Save Children", amount: "$250 USDC", chain: "Ethereum" },
-  { id: "0x7C...11B", org: "UNICEF", amount: "$500 USDC", chain: "Polygon" },
-  { id: "0x3F...7E9", org: "Educa a un Niño", amount: "$120 USDC", chain: "Ethereum" },
-  { id: "0x9D...4AA", org: "World Vision", amount: "$300 USDC", chain: "Polygon" },
+  { id: "0x00...000", org: "Pendiente", amount: "$0 USDC", chain: "Ethereum" },
+  { id: "0x00...001", org: "Pendiente", amount: "$0 USDC", chain: "Polygon" },
+  { id: "0x00...002", org: "Pendiente", amount: "$0 USDC", chain: "Ethereum" },
+  { id: "0x00...003", org: "Pendiente", amount: "$0 USDC", chain: "Polygon" },
 ];
 
 const tokenomics = [
@@ -360,9 +360,9 @@ function Index() {
               className="hero-reveal mt-10 grid max-w-md grid-cols-3 gap-4 opacity-0"
             >
               {[
-                { k: "3000", prefix: "$", suffix: "", v: "Inversión inicial" },
-                { k: "100", prefix: "", suffix: "%", v: "Transparente" },
-                { k: null, raw: "∞", v: "Vidas posibles" },
+                { k: "0", prefix: "$", suffix: "", v: "Inversión inicial" },
+                { k: "0", prefix: "", suffix: "%", v: "Transparente" },
+                { k: "0", prefix: "", suffix: "", v: "Vidas posibles" },
               ].map((s) => (
                 <div
                   key={s.v}
@@ -592,7 +592,7 @@ function Index() {
             <div>
               <span className="text-sm font-semibold uppercase tracking-[0.22em] text-primary">Token</span>
               <h2 className="mt-3 max-w-xl text-4xl font-black leading-tight md:text-5xl">
-                El movimiento del <span className="text-primary">Token IHC</span> en el mercado.
+                El movimiento del <span className="text-primary">Token IHN</span> en el mercado.
               </h2>
               <p className="mt-3 text-lg text-white/68">
                 Transparente. Trazable. Con propósito.<br />Cada token impulsa un cambio real.
@@ -603,8 +603,8 @@ function Index() {
                 <img src={coinImg} className="h-12 w-12 drop-shadow-[0_0_18px_rgba(250,200,80,0.65)]" alt="" width={48} height={48} />
                 <div>
                   <div className="text-xs text-white/50">Supply inicial (Circulación inicial)</div>
-                  <div className="text-2xl font-black text-white">1,000,000,000 <span className="text-primary">IHC</span></div>
-                  <div className="text-sm text-white/50">1B coins</div>
+                  <div className="text-2xl font-black text-white">0 <span className="text-primary">IHN</span></div>
+                  <div className="text-sm text-white/50">0 coins</div>
                 </div>
               </div>
             </div>
@@ -613,10 +613,10 @@ function Index() {
           {/* Stat cards */}
           <div className="reveal mb-6 grid grid-cols-2 gap-4 lg:grid-cols-4">
             {[
-              { icon: HandHeart, value: "+50", label: "ONG apoyadas", bar: "#f59e0b" },
-              { icon: Users, value: "+120K", label: "Personas beneficiadas", bar: "#22d3ee" },
-              { icon: Globe, value: "+25", label: "Países alcanzados", bar: "#fb923c" },
-              { icon: Coins, value: "$IHC", label: "Token con propósito", bar: "#34d399" },
+              { icon: HandHeart, value: "0", label: "ONG apoyadas", bar: "#f59e0b" },
+              { icon: Users, value: "0", label: "Personas beneficiadas", bar: "#22d3ee" },
+              { icon: Globe, value: "0", label: "Países alcanzados", bar: "#fb923c" },
+              { icon: Coins, value: "$IHN", label: "Token con propósito", bar: "#34d399" },
             ].map((s) => (
               <div key={s.label} className="rounded-2xl border border-white/10 bg-[#07101d]/78 p-5 backdrop-blur-xl">
                 <s.icon className="h-8 w-8" style={{ color: s.bar }} />
@@ -636,11 +636,11 @@ function Index() {
             <div className="rounded-2xl border border-white/10 bg-[#07101d]/78 p-5 backdrop-blur-xl">
               <div className="mb-4 flex items-start justify-between">
                 <div>
-                  <div className="text-sm text-white/50">Precio del token (IHC)</div>
+                  <div className="text-sm text-white/50">Precio del token (IHN)</div>
                   <div className="mt-1 flex items-end gap-3">
-                    <div className="text-4xl font-black text-white">$0.8425</div>
+                    <div className="text-4xl font-black text-white">$0.0000</div>
                     <div className="mb-1 flex items-center gap-1 text-sm font-semibold text-emerald-400">
-                      <TrendingUp className="h-4 w-4" /> +8.45% últimas 24h
+                      <TrendingUp className="h-4 w-4" /> 0.00% últimas 24h
                     </div>
                   </div>
                 </div>
@@ -668,9 +668,9 @@ function Index() {
                 />
                 <circle cx="400" cy="14" r="4" fill="#f59e0b" />
                 <circle cx="400" cy="14" r="8" fill="#f59e0b" fillOpacity=".25" />
-                <text x="3" y="13" fill="white" fillOpacity=".38" fontSize="9">$0.90</text>
-                <text x="3" y="62" fill="white" fillOpacity=".38" fontSize="9">$0.70</text>
-                <text x="3" y="115" fill="white" fillOpacity=".38" fontSize="9">$0.50</text>
+                <text x="3" y="13" fill="white" fillOpacity=".38" fontSize="9">$0.00</text>
+                <text x="3" y="62" fill="white" fillOpacity=".38" fontSize="9">$0.00</text>
+                <text x="3" y="115" fill="white" fillOpacity=".38" fontSize="9">$0.00</text>
               </svg>
               <div className="mt-3 flex gap-1.5">
                 {["1D", "7D", "1M", "3M", "1A", "Todo"].map((t) => (
@@ -685,10 +685,10 @@ function Index() {
               </div>
               <div className="mt-4 grid grid-cols-2 gap-3 rounded-xl border border-white/[.06] bg-white/[.025] p-3 sm:grid-cols-4">
                 {[
-                  { label: "Capitalización", value: "$12.4M" },
-                  { label: "Volumen 24h", value: "$1.8M" },
-                  { label: "Suministro total", value: "1,000M IHC" },
-                  { label: "En circulación", value: "652M IHC" },
+                  { label: "Capitalización", value: "$0" },
+                  { label: "Volumen 24h", value: "$0" },
+                  { label: "Suministro total", value: "0 IHN" },
+                  { label: "En circulación", value: "0 IHN" },
                 ].map((s) => (
                   <div key={s.label} className="text-center">
                     <div className="text-[11px] text-white/45">{s.label}</div>
@@ -700,11 +700,11 @@ function Index() {
 
             {/* Token distribution */}
             <div className="rounded-2xl border border-white/10 bg-[#07101d]/78 p-5 backdrop-blur-xl">
-              <div className="mb-4 text-sm text-white/50">Distribución real del token (1B IHC)</div>
+              <div className="mb-4 text-sm text-white/50">Distribución real del token (0 IHN)</div>
               <div className="flex flex-col items-center gap-5 lg:flex-row lg:items-start">
                 <div className="relative h-[160px] w-[160px] shrink-0 rounded-full bg-[conic-gradient(#22d3ee_0_30%,#f59e0b_30%_50%,#34d399_50%_65%,#8b5cf6_65%_80%,#fb7185_80%_90%,#7dd3fc_90%_100%)]">
                   <div className="absolute inset-[36px] flex flex-col items-center justify-center rounded-full bg-[#07101d] text-center">
-                    <div className="text-lg font-black text-white leading-none">1,000M</div>
+                    <div className="text-lg font-black text-white leading-none">0</div>
                     <div className="mt-1 text-[10px] text-white/55 leading-tight">Suministro<br/>total</div>
                   </div>
                 </div>
@@ -741,11 +741,11 @@ function Index() {
               </div>
               <div className="space-y-2">
                 {[
-                  { addr: "0x7f3d…a8b2", type: "Compra", typeColor: "bg-cyan-400/20 text-cyan-300", amount: "+2,500 IHC", time: "Hace 1 min" },
-                  { addr: "0x2a9c…d4e1", type: "Recompensa", typeColor: "bg-violet-400/20 text-violet-300", amount: "+150 IHC", time: "Hace 2 min" },
-                  { addr: "0x9b1e…f7c3", type: "Donación", typeColor: "bg-amber-400/20 text-amber-300", amount: "-1,000 IHC", time: "Hace 3 min" },
-                  { addr: "0x4d2f…b6a9", type: "Compra", typeColor: "bg-cyan-400/20 text-cyan-300", amount: "+5,000 IHC", time: "Hace 4 min" },
-                  { addr: "0x8c7a…e3b1", type: "Recompensa", typeColor: "bg-violet-400/20 text-violet-300", amount: "+300 IHC", time: "Hace 5 min" },
+                  { addr: "0x00…0000", type: "Compra", typeColor: "bg-cyan-400/20 text-cyan-300", amount: "0 IHN", time: "Pendiente" },
+                  { addr: "0x00…0001", type: "Recompensa", typeColor: "bg-violet-400/20 text-violet-300", amount: "0 IHN", time: "Pendiente" },
+                  { addr: "0x00…0002", type: "Donación", typeColor: "bg-amber-400/20 text-amber-300", amount: "0 IHN", time: "Pendiente" },
+                  { addr: "0x00…0003", type: "Compra", typeColor: "bg-cyan-400/20 text-cyan-300", amount: "0 IHN", time: "Pendiente" },
+                  { addr: "0x00…0004", type: "Recompensa", typeColor: "bg-violet-400/20 text-violet-300", amount: "0 IHN", time: "Pendiente" },
                 ].map((tx) => (
                   <div key={tx.addr + tx.time} className="flex items-center gap-2 rounded-xl border border-white/[.07] bg-white/[.03] px-3 py-2.5 text-xs">
                     <span className="font-mono text-white/50">{tx.addr}</span>
@@ -762,7 +762,7 @@ function Index() {
 
             {/* Exchanges */}
             <div className="rounded-2xl border border-white/10 bg-[#07101d]/78 p-5 backdrop-blur-xl">
-              <div className="mb-4 text-xs font-semibold uppercase tracking-widest text-primary">Dónde puedes conseguir $IHC</div>
+              <div className="mb-4 text-xs font-semibold uppercase tracking-widest text-primary">Dónde puedes conseguir $IHN</div>
               <div className="grid grid-cols-2 gap-3">
                 {[
                   { name: "Uniswap", abbr: "UNI" },
@@ -789,11 +789,11 @@ function Index() {
           {/* Impact metrics strip */}
           <div className="reveal grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-5">
             {[
-              { icon: Droplets, label: "Agua potable", value: "+2.5M", unit: "litros entregados", color: "text-cyan-300" },
-              { icon: GraduationCap, label: "Educación", value: "+15K", unit: "niños educados", color: "text-amber-300" },
-              { icon: Leaf, label: "Medio ambiente", value: "+8K", unit: "árboles plantados", color: "text-emerald-300" },
-              { icon: Users, label: "Comunidad", value: "+120K", unit: "familias ayudadas", color: "text-violet-300" },
-              { icon: HandHeart, label: "Salud", value: "+18K", unit: "personas atendidas", color: "text-rose-300" },
+              { icon: Droplets, label: "Agua potable", value: "0", unit: "litros entregados", color: "text-cyan-300" },
+              { icon: GraduationCap, label: "Educación", value: "0", unit: "niños educados", color: "text-amber-300" },
+              { icon: Leaf, label: "Medio ambiente", value: "0", unit: "árboles plantados", color: "text-emerald-300" },
+              { icon: Users, label: "Comunidad", value: "0", unit: "familias ayudadas", color: "text-violet-300" },
+              { icon: HandHeart, label: "Salud", value: "0", unit: "personas atendidas", color: "text-rose-300" },
             ].map((m) => (
               <div key={m.label} className="rounded-2xl border border-white/10 bg-[#07101d]/78 p-4 text-center backdrop-blur-xl">
                 <m.icon className={`mx-auto h-8 w-8 ${m.color}`} />
@@ -910,7 +910,7 @@ function Index() {
                   </div>
                 ))}
                 <div className="absolute bottom-4 left-4 rounded-full border border-cyan-300/20 bg-cyan-300/10 px-3 py-1 text-xs text-cyan-100">
-                  54 países conectados
+                  0 países conectados
                 </div>
               </div>
             </div>
@@ -923,7 +923,7 @@ function Index() {
                 Así generamos impacto juntos <Heart className="inline h-5 w-5 text-primary" />
               </h3>
               <p className="mt-2 text-sm text-white/58">
-                El 100% del impacto va a ONG y comunidades necesitadas.
+                El impacto destinado a ONG y comunidades necesitadas se reportará desde 0.
               </p>
               <div className="mt-5 flex items-center justify-center">
                 <div className="relative h-44 w-44 rounded-full bg-[conic-gradient(#22d3ee_0_30%,#f59e0b_30%_50%,#34d399_50%_65%,#a78bfa_65%_80%,#fb7185_80%_90%,#7dd3fc_90%_100%)]">
@@ -1078,11 +1078,11 @@ function Index() {
 
           <div className="mt-10 grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-5">
             {[
-              { icon: Users, label: "Comunidad", value: "25,842+", desc: "Personas unidas" },
-              { icon: Globe, label: "Alcance global", value: "54+", desc: "Países conectados" },
-              { icon: Heart, label: "Vidas transformadas", value: "1,245+", desc: "Impactos reales" },
-              { icon: Coins, label: "Fondos para impacto", value: "$3.2M+", desc: "Destinados a causas" },
-              { icon: Shield, label: "Transparencia", value: "100%", desc: "On-chain verificable" },
+              { icon: Users, label: "Comunidad", value: "0", desc: "Personas unidas" },
+              { icon: Globe, label: "Alcance global", value: "0", desc: "Países conectados" },
+              { icon: Heart, label: "Vidas transformadas", value: "0", desc: "Impactos reales" },
+              { icon: Coins, label: "Fondos para impacto", value: "$0", desc: "Destinados a causas" },
+              { icon: Shield, label: "Transparencia", value: "0%", desc: "On-chain verificable" },
             ].map((m) => (
               <div
                 key={m.label}
@@ -1126,7 +1126,7 @@ function Index() {
                 comunidad.
               </p>
               <ul className="mt-8 space-y-4">
-                {["100% transparente", "Reportes verificables", "Impacto medible"].map((b) => (
+                {["Transparencia verificable", "Reportes verificables", "Impacto medible"].map((b) => (
                   <li key={b} className="flex items-center gap-3 text-lg text-white/86">
                     <CheckCircle2 className="h-6 w-6 text-primary" /> {b}
                   </li>
