@@ -1,4 +1,5 @@
 import { Link } from "@tanstack/react-router";
+import type { ReactNode } from "react";
 import { ArrowLeft, BadgeCheck, Heart, Shield, Sparkles } from "lucide-react";
 
 import coinImg from "@/assets/coin.png";
@@ -24,6 +25,38 @@ const policyLinks = [
   { label: "Aviso legal", to: "/legal" },
   { label: "Contacto", to: "/contact" },
 ] as const;
+
+function renderLinkedText(text: string) {
+  const emailPattern = /[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}/gi;
+  const parts: ReactNode[] = [];
+  let lastIndex = 0;
+
+  for (const match of text.matchAll(emailPattern)) {
+    const email = match[0];
+    const index = match.index ?? 0;
+
+    if (index > lastIndex) {
+      parts.push(text.slice(lastIndex, index));
+    }
+
+    parts.push(
+      <a
+        key={`${email}-${index}`}
+        href={`mailto:${email}`}
+        className="font-semibold text-primary hover:underline"
+      >
+        {email}
+      </a>,
+    );
+    lastIndex = index + email.length;
+  }
+
+  if (lastIndex < text.length) {
+    parts.push(text.slice(lastIndex));
+  }
+
+  return parts.length ? parts : text;
+}
 
 export function LegalPage({
   eyebrow,
@@ -97,7 +130,7 @@ export function LegalPage({
                 </div>
                 <div className="space-y-3 text-[15px] leading-relaxed text-white/70">
                   {section.body.map((paragraph) => (
-                    <p key={paragraph}>{paragraph}</p>
+                    <p key={paragraph}>{renderLinkedText(paragraph)}</p>
                   ))}
                 </div>
               </section>
@@ -124,9 +157,9 @@ export function LegalPage({
             </nav>
           </div>
           <div className="mt-4 rounded-2xl border border-cyan-300/16 bg-cyan-300/8 p-5 text-sm leading-relaxed text-cyan-50/76">
-            Estas páginas resumen políticas operativas para usuarios, aliados y posibles participantes
-            del ecosistema. Deben revisarse con asesoría profesional antes de cualquier lanzamiento
-            formal de token o captación de fondos.
+            Estas páginas resumen políticas operativas para usuarios, aliados y posibles
+            participantes del ecosistema. Deben revisarse con asesoría profesional antes de
+            cualquier lanzamiento formal de token o captación de fondos.
           </div>
         </aside>
       </section>

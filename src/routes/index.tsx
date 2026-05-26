@@ -1,4 +1,4 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { Link, createFileRoute } from "@tanstack/react-router";
 import { useEffect, useRef, useState } from "react";
 import { animate, createScope, stagger, type Scope } from "animejs";
 import {
@@ -34,14 +34,14 @@ import {
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import networkHero from "@/assets/impact-network-hero.jpeg";
+import networkHero from "@/assets/impact-network-hero-vertical.png";
 import impact1 from "@/assets/impact-1.jpg";
 import impact2 from "@/assets/impact-2.jpg";
 import impact3 from "@/assets/impact-3.jpg";
 import coinImg from "@/assets/coin.png";
 import roadmapBg from "../../references/2/roadmap.png";
 import handsImg from "../../references/2/hands.png";
-import worldMapImg from "../../references/4/world map.jpeg";
+import worldMapImg from "../../references/4/world map.png";
 
 export const Route = createFileRoute("/")({
   component: Index,
@@ -65,6 +65,15 @@ const nav = [
   { label: "Roadmap", href: "#roadmap" },
   { label: "Donar", href: "#donar" },
 ];
+
+const chartRanges = ["1D", "7D", "1M", "3M", "1A", "Todo"] as const;
+
+const paymentMethods = [
+  { icon: CreditCard, label: "Tarjeta de credito / debito", detail: "Stripe" },
+  { icon: CircleDollarSign, label: "Criptomonedas", detail: "BTC - ETH - USDC" },
+  { icon: Wifi, label: "Zelle", detail: "Transferencia directa" },
+  { icon: Landmark, label: "Cuenta de banco", detail: "ACH" },
+] as const;
 
 const orbitNodes = [
   {
@@ -157,8 +166,11 @@ function Index() {
   const [email, setEmail] = useState("");
   const [sent, setSent] = useState(false);
   const [displayDonation, setDisplayDonation] = useState(50);
+  const [selectedRange, setSelectedRange] = useState<(typeof chartRanges)[number]>("1D");
+  const [selectedPayment, setSelectedPayment] = useState(paymentMethods[0].label);
 
   const rootRef = useRef<HTMLDivElement>(null);
+  const backgroundRef = useRef<HTMLDivElement>(null);
   const scopeRef = useRef<Scope | null>(null);
   const statsRef = useRef<HTMLDivElement>(null);
 
@@ -247,12 +259,47 @@ function Index() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [donation]);
 
+  useEffect(() => {
+    const background = backgroundRef.current;
+    if (!background) return;
+
+    let frame = 0;
+    const updateBackgroundPosition = () => {
+      frame = 0;
+      const scrollable = document.documentElement.scrollHeight - window.innerHeight;
+      const progress = scrollable > 0 ? window.scrollY / scrollable : 0;
+      background.style.backgroundPosition = `center ${Math.min(100, Math.max(0, progress * 100))}%`;
+    };
+
+    const scheduleUpdate = () => {
+      if (frame) return;
+      frame = window.requestAnimationFrame(updateBackgroundPosition);
+    };
+
+    updateBackgroundPosition();
+    window.addEventListener("scroll", scheduleUpdate, { passive: true });
+    window.addEventListener("resize", scheduleUpdate);
+
+    return () => {
+      if (frame) window.cancelAnimationFrame(frame);
+      window.removeEventListener("scroll", scheduleUpdate);
+      window.removeEventListener("resize", scheduleUpdate);
+    };
+  }, []);
+
   return (
     <div
       ref={rootRef}
-      className="relative min-h-screen overflow-x-hidden bg-[#050914] text-foreground"
+      className="isolate relative min-h-screen overflow-x-hidden bg-[#050914] text-foreground"
     >
-      <div className="fixed inset-0 -z-10 bg-[#050914]" />
+      <div className="fixed inset-0 -z-20 bg-[#050914]" />
+      <div
+        ref={backgroundRef}
+        className="pointer-events-none fixed inset-0 -z-10 bg-cover bg-top bg-no-repeat brightness-[1.08] contrast-[1.04] saturate-[1.06]"
+        style={{ backgroundImage: `url(${networkHero})` }}
+      >
+        <div className="absolute inset-0 bg-[linear-gradient(to_bottom,rgba(5,9,20,.06)_0%,rgba(5,9,20,.02)_18%,rgba(5,9,20,.18)_46%,rgba(5,9,20,.38)_100%)]" />
+      </div>
 
       <header className="fixed inset-x-0 top-0 z-50 bg-[#050914]/82 shadow-[0_1px_0_rgba(255,255,255,.06)] backdrop-blur-xl">
         <div className="mx-auto flex max-w-7xl items-center justify-between px-5 py-4 md:px-6">
@@ -290,16 +337,11 @@ function Index() {
         </div>
       </header>
 
-      <section id="top" className="relative min-h-[calc(100svh-72px)] overflow-hidden bg-[#050914] pt-[72px]">
-        <img
-          src={networkHero}
-          alt=""
-          className="absolute inset-0 h-full w-full object-cover object-center lg:object-fill"
-          width={1672}
-          height={941}
-        />
-        <div className="pointer-events-none absolute inset-x-0 bottom-0 z-[1] h-44 bg-gradient-to-b from-transparent via-[#050914]/72 to-[#050914] md:h-56" />
-        <div className="pointer-events-none absolute inset-y-0 left-0 z-[1] w-full bg-[linear-gradient(to_right,rgba(5,9,20,.78)_0%,rgba(5,9,20,.62)_38%,rgba(5,9,20,.18)_62%,transparent_100%)]" />
+      <section
+        id="top"
+        className="relative min-h-[calc(100svh-72px)] overflow-hidden pt-[72px]"
+      >
+        <div className="pointer-events-none absolute inset-y-0 left-0 z-[1] w-full bg-[linear-gradient(to_right,rgba(5,9,20,.68)_0%,rgba(5,9,20,.52)_38%,rgba(5,9,20,.12)_62%,transparent_100%)]" />
         <div className="relative z-10 mx-auto grid min-h-[calc(100svh-72px)] max-w-7xl items-center px-5 pb-14 pt-14 md:px-6 md:py-16 lg:py-10">
           <div className="relative z-10 max-w-[680px]">
             <div className="pointer-events-none absolute -right-16 top-16 -z-10 h-44 w-44 opacity-45 sm:hidden">
@@ -312,7 +354,7 @@ function Index() {
                 height={176}
               />
             </div>
-            <div className="hero-reveal inline-flex items-center gap-2 rounded-full border border-amber-300/30 bg-[#07101d]/55 px-4 py-1.5 text-xs font-semibold text-amber-100 opacity-0 shadow-[0_0_35px_rgba(245,158,11,.22)] backdrop-blur-xl">
+            <div className="hero-reveal inline-flex items-center gap-2 rounded-full border border-amber-300/30 bg-[#07101d]/66 px-4 py-1.5 text-xs font-semibold text-amber-100 opacity-0 shadow-[0_0_35px_rgba(245,158,11,.22)] backdrop-blur-xl">
               <Sparkles className="h-3.5 w-3.5" /> Partner-ready impact infrastructure
             </div>
             <h1 className="mt-6 max-w-[620px] text-5xl font-black leading-[.94] tracking-tight text-white drop-shadow-[0_8px_34px_rgba(0,0,0,.55)] sm:text-6xl lg:text-[4.9rem]">
@@ -331,9 +373,9 @@ function Index() {
                 </span>
               ))}
             </h1>
-            <p className="hero-reveal mt-6 max-w-xl rounded-xl bg-black/50 px-4 py-3 text-lg leading-relaxed text-white/90 opacity-0 backdrop-blur-sm">
-              ImpactHope Network une blockchain, comunidad y causas benéficas. Cada transacción genera
-              una contribución verificable para niños, familias y organizaciones que más lo
+            <p className="hero-reveal mt-6 max-w-xl rounded-xl bg-black/64 px-4 py-3 text-lg leading-relaxed text-white/92 opacity-0 backdrop-blur-sm">
+              ImpactHope Network une blockchain, comunidad y causas benéficas. Cada transacción
+              genera una contribución verificable para niños, familias y organizaciones que más lo
               necesitan.
             </p>
             <div className="hero-reveal mt-8 flex flex-wrap gap-3 opacity-0">
@@ -361,7 +403,7 @@ function Index() {
             >
               {[
                 { k: "0", prefix: "$", suffix: "", v: "Inversión inicial" },
-                { k: "0", prefix: "", suffix: "%", v: "Transparente" },
+                { k: null, raw: "On-chain", prefix: "", suffix: "", v: "Transparencia" },
                 { k: "0", prefix: "", suffix: "", v: "Vidas posibles" },
               ].map((s) => (
                 <div
@@ -391,7 +433,7 @@ function Index() {
               ].map((item) => (
                 <div
                   key={item.label}
-                  className="signal-chip inline-flex items-center gap-2 rounded-full border border-cyan-200/20 bg-[#06111f]/55 px-3 py-2 text-xs font-semibold text-cyan-50 shadow-[0_0_26px_rgba(34,211,238,.12)] backdrop-blur-xl"
+                  className="signal-chip inline-flex items-center gap-2 rounded-full border border-cyan-200/20 bg-[#06111f]/68 px-3 py-2 text-xs font-semibold text-cyan-50 shadow-[0_0_26px_rgba(34,211,238,.12)] backdrop-blur-xl"
                 >
                   <item.icon className="h-4 w-4 text-amber-200" />
                   {item.label}
@@ -401,6 +443,7 @@ function Index() {
           </div>
 
           <div className="hero-reveal pointer-events-none relative mx-auto hidden h-[560px] w-full max-w-[690px] opacity-0 max-lg:-mt-4 max-sm:h-[360px]">
+            <div className="absolute inset-[14px_18px_14px_18px] rounded-[2.4rem] border border-white/10 bg-[#07101d]/24 shadow-[0_18px_60px_rgba(0,0,0,.22)] backdrop-blur-[1px] max-sm:inset-[10px] max-sm:rounded-[2rem]" />
             <div className="absolute inset-0 rounded-full bg-[radial-gradient(circle_at_52%_48%,rgba(251,191,36,.22),transparent_48%),radial-gradient(circle_at_62%_42%,rgba(34,211,238,.18),transparent_58%)] blur-2xl" />
             <div className="coin-motion absolute left-1/2 top-1/2 h-[500px] w-[500px] -translate-x-1/2 -translate-y-1/2 rounded-full border border-cyan-300/18 shadow-[0_0_90px_rgba(34,211,238,.12)] max-sm:h-[330px] max-sm:w-[330px]" />
             <div className="coin-motion absolute left-1/2 top-1/2 h-[360px] w-[360px] -translate-x-1/2 -translate-y-1/2 rounded-full border border-amber-300/15 max-sm:h-[250px] max-sm:w-[250px]" />
@@ -476,7 +519,7 @@ function Index() {
             {orbitNodes.map((node) => (
               <div
                 key={node.title}
-                className={`network-node absolute z-30 hidden w-[178px] rounded-2xl border border-cyan-200/14 bg-[#07111f]/78 p-4 shadow-[0_20px_60px_rgba(0,0,0,.38),0_0_34px_rgba(34,211,238,.08)] backdrop-blur-xl sm:block ${node.className}`}
+                className={`network-node absolute z-30 hidden w-[178px] rounded-2xl border border-white/12 bg-[#08131f]/92 p-4 shadow-[0_20px_60px_rgba(0,0,0,.46),0_0_24px_rgba(34,211,238,.06)] backdrop-blur-2xl sm:block ${node.className}`}
                 style={{ animationDelay: node.delay }}
               >
                 <div className="mb-3 flex items-center gap-2">
@@ -490,7 +533,7 @@ function Index() {
               </div>
             ))}
 
-            <div className="absolute bottom-4 left-1/2 z-30 flex -translate-x-1/2 items-center gap-2 rounded-full border border-cyan-300/20 bg-cyan-300/10 px-4 py-2 text-xs font-semibold text-cyan-100 backdrop-blur-xl">
+            <div className="absolute bottom-4 left-1/2 z-30 flex -translate-x-1/2 items-center gap-2 rounded-full border border-cyan-300/20 bg-cyan-300/16 px-4 py-2 text-xs font-semibold text-cyan-100 backdrop-blur-xl">
               <Network className="h-4 w-4" />
               Ecosistema de impacto conectado al token
             </div>
@@ -586,24 +629,35 @@ function Index() {
 
       <section id="token" className="relative py-16">
         <div className="mx-auto max-w-7xl px-5 md:px-6">
-
           {/* Header + supply */}
           <div className="reveal mb-8 flex flex-col gap-6 lg:flex-row lg:items-start lg:justify-between">
             <div>
-              <span className="text-sm font-semibold uppercase tracking-[0.22em] text-primary">Token</span>
+              <span className="text-sm font-semibold uppercase tracking-[0.22em] text-primary">
+                Token
+              </span>
               <h2 className="mt-3 max-w-xl text-4xl font-black leading-tight md:text-5xl">
                 El movimiento del <span className="text-primary">Token IHN</span> en el mercado.
               </h2>
               <p className="mt-3 text-lg text-white/68">
-                Transparente. Trazable. Con propósito.<br />Cada token impulsa un cambio real.
+                Transparente. Trazable. Con propósito.
+                <br />
+                Cada token impulsa un cambio real.
               </p>
             </div>
             <div className="shrink-0 rounded-2xl border border-white/12 bg-[#07101d]/80 p-5 backdrop-blur-xl">
               <div className="flex items-center gap-3">
-                <img src={coinImg} className="h-12 w-12 drop-shadow-[0_0_18px_rgba(250,200,80,0.65)]" alt="" width={48} height={48} />
+                <img
+                  src={coinImg}
+                  className="h-12 w-12 drop-shadow-[0_0_18px_rgba(250,200,80,0.65)]"
+                  alt=""
+                  width={48}
+                  height={48}
+                />
                 <div>
                   <div className="text-xs text-white/50">Supply inicial (Circulación inicial)</div>
-                  <div className="text-2xl font-black text-white">0 <span className="text-primary">IHN</span></div>
+                  <div className="text-2xl font-black text-white">
+                    0 <span className="text-primary">IHN</span>
+                  </div>
                   <div className="text-sm text-white/50">0 coins</div>
                 </div>
               </div>
@@ -618,7 +672,10 @@ function Index() {
               { icon: Globe, value: "0", label: "Países alcanzados", bar: "#fb923c" },
               { icon: Coins, value: "$IHN", label: "Token con propósito", bar: "#34d399" },
             ].map((s) => (
-              <div key={s.label} className="rounded-2xl border border-white/10 bg-[#07101d]/78 p-5 backdrop-blur-xl">
+              <div
+                key={s.label}
+                className="rounded-2xl border border-white/10 bg-[#07101d]/78 p-5 backdrop-blur-xl"
+              >
                 <s.icon className="h-8 w-8" style={{ color: s.bar }} />
                 <div className="mt-3 text-3xl font-black text-white">{s.value}</div>
                 <div className="mt-1 text-sm text-white/58">{s.label}</div>
@@ -645,7 +702,12 @@ function Index() {
                   </div>
                 </div>
               </div>
-              <svg viewBox="0 0 400 120" className="w-full" preserveAspectRatio="none" aria-hidden="true">
+              <svg
+                viewBox="0 0 400 120"
+                className="w-full"
+                preserveAspectRatio="none"
+                aria-hidden="true"
+              >
                 <defs>
                   <linearGradient id="chartFill" x1="0" x2="0" y1="0" y2="1">
                     <stop offset="0%" stopColor="#f59e0b" stopOpacity=".28" />
@@ -653,7 +715,16 @@ function Index() {
                   </linearGradient>
                 </defs>
                 {[24, 60, 96].map((y) => (
-                  <line key={y} x1="0" y1={y} x2="400" y2={y} stroke="white" strokeOpacity=".06" strokeWidth="1" />
+                  <line
+                    key={y}
+                    x1="0"
+                    y1={y}
+                    x2="400"
+                    y2={y}
+                    stroke="white"
+                    strokeOpacity=".06"
+                    strokeWidth="1"
+                  />
                 ))}
                 <path
                   d="M0,97 C18,90 28,84 48,80 C68,76 73,87 90,82 C107,77 117,66 132,61 C147,56 157,70 172,63 C187,57 197,46 217,43 C237,40 247,54 262,49 C277,44 287,35 307,30 C327,25 337,18 360,14 C378,11 390,16 400,14 L400,120 L0,120 Z"
@@ -668,16 +739,28 @@ function Index() {
                 />
                 <circle cx="400" cy="14" r="4" fill="#f59e0b" />
                 <circle cx="400" cy="14" r="8" fill="#f59e0b" fillOpacity=".25" />
-                <text x="3" y="13" fill="white" fillOpacity=".38" fontSize="9">$0.00</text>
-                <text x="3" y="62" fill="white" fillOpacity=".38" fontSize="9">$0.00</text>
-                <text x="3" y="115" fill="white" fillOpacity=".38" fontSize="9">$0.00</text>
+                <text x="3" y="13" fill="white" fillOpacity=".38" fontSize="9">
+                  $0.00
+                </text>
+                <text x="3" y="62" fill="white" fillOpacity=".38" fontSize="9">
+                  $0.00
+                </text>
+                <text x="3" y="115" fill="white" fillOpacity=".38" fontSize="9">
+                  $0.00
+                </text>
               </svg>
               <div className="mt-3 flex gap-1.5">
-                {["1D", "7D", "1M", "3M", "1A", "Todo"].map((t) => (
+                {chartRanges.map((t) => (
                   <button
                     key={t}
                     type="button"
-                    className={`rounded-lg px-2.5 py-1 text-xs font-semibold transition-colors ${t === "1D" ? "bg-primary/20 text-primary" : "text-white/40 hover:text-white/70"}`}
+                    onClick={() => setSelectedRange(t)}
+                    aria-pressed={selectedRange === t}
+                    className={`rounded-lg px-2.5 py-1 text-xs font-semibold transition-colors ${
+                      selectedRange === t
+                        ? "bg-primary/20 text-primary"
+                        : "text-white/40 hover:text-white/70"
+                    }`}
                   >
                     {t}
                   </button>
@@ -699,19 +782,28 @@ function Index() {
             </div>
 
             {/* Token distribution */}
-            <div className="rounded-2xl border border-white/10 bg-[#07101d]/78 p-5 backdrop-blur-xl">
+            <div
+              id="token-transacciones"
+              className="rounded-2xl border border-white/10 bg-[#07101d]/78 p-5 backdrop-blur-xl"
+            >
               <div className="mb-4 text-sm text-white/50">Distribución real del token (0 IHN)</div>
               <div className="flex flex-col items-center gap-5 lg:flex-row lg:items-start">
                 <div className="relative h-[160px] w-[160px] shrink-0 rounded-full bg-[conic-gradient(#22d3ee_0_30%,#f59e0b_30%_50%,#34d399_50%_65%,#8b5cf6_65%_80%,#fb7185_80%_90%,#7dd3fc_90%_100%)]">
                   <div className="absolute inset-[36px] flex flex-col items-center justify-center rounded-full bg-[#07101d] text-center">
                     <div className="text-lg font-black text-white leading-none">0</div>
-                    <div className="mt-1 text-[10px] text-white/55 leading-tight">Suministro<br/>total</div>
+                    <div className="mt-1 text-[10px] text-white/55 leading-tight">
+                      Suministro
+                      <br />
+                      total
+                    </div>
                   </div>
                 </div>
                 <div className="space-y-2.5">
                   {tokenomics.map((item) => (
                     <div key={item.label} className="flex items-start gap-2.5 text-sm">
-                      <span className={`mt-[3px] h-2.5 w-2.5 shrink-0 rounded-full ${item.color}`} />
+                      <span
+                        className={`mt-[3px] h-2.5 w-2.5 shrink-0 rounded-full ${item.color}`}
+                      />
                       <div>
                         <span className="font-bold text-white">{item.value}</span>{" "}
                         <span className="text-white/72">{item.label}</span>
@@ -723,7 +815,8 @@ function Index() {
               </div>
               <div className="mt-5 flex items-start gap-2.5 rounded-xl border border-white/[.06] bg-white/[.025] p-3 text-xs text-white/55">
                 <Heart className="mt-0.5 h-4 w-4 shrink-0 text-primary" />
-                Cada transacción impulsa el cambio. El 10% de las operaciones se destina a impacto social real.
+                Cada transacción impulsa el cambio. El 10% de las operaciones se destina a impacto
+                social real.
               </div>
             </div>
           </div>
@@ -737,32 +830,79 @@ function Index() {
                   <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-primary opacity-75" />
                   <span className="relative inline-flex h-2 w-2 rounded-full bg-primary" />
                 </span>
-                <span className="text-xs font-semibold uppercase tracking-widest text-primary">Transacciones en tiempo real</span>
+                <span className="text-xs font-semibold uppercase tracking-widest text-primary">
+                  Transacciones en tiempo real
+                </span>
               </div>
               <div className="space-y-2">
                 {[
-                  { addr: "0x00…0000", type: "Compra", typeColor: "bg-cyan-400/20 text-cyan-300", amount: "0 IHN", time: "Pendiente" },
-                  { addr: "0x00…0001", type: "Recompensa", typeColor: "bg-violet-400/20 text-violet-300", amount: "0 IHN", time: "Pendiente" },
-                  { addr: "0x00…0002", type: "Donación", typeColor: "bg-amber-400/20 text-amber-300", amount: "0 IHN", time: "Pendiente" },
-                  { addr: "0x00…0003", type: "Compra", typeColor: "bg-cyan-400/20 text-cyan-300", amount: "0 IHN", time: "Pendiente" },
-                  { addr: "0x00…0004", type: "Recompensa", typeColor: "bg-violet-400/20 text-violet-300", amount: "0 IHN", time: "Pendiente" },
+                  {
+                    addr: "0x00…0000",
+                    type: "Compra",
+                    typeColor: "bg-cyan-400/20 text-cyan-300",
+                    amount: "0 IHN",
+                    time: "Pendiente",
+                  },
+                  {
+                    addr: "0x00…0001",
+                    type: "Recompensa",
+                    typeColor: "bg-violet-400/20 text-violet-300",
+                    amount: "0 IHN",
+                    time: "Pendiente",
+                  },
+                  {
+                    addr: "0x00…0002",
+                    type: "Donación",
+                    typeColor: "bg-amber-400/20 text-amber-300",
+                    amount: "0 IHN",
+                    time: "Pendiente",
+                  },
+                  {
+                    addr: "0x00…0003",
+                    type: "Compra",
+                    typeColor: "bg-cyan-400/20 text-cyan-300",
+                    amount: "0 IHN",
+                    time: "Pendiente",
+                  },
+                  {
+                    addr: "0x00…0004",
+                    type: "Recompensa",
+                    typeColor: "bg-violet-400/20 text-violet-300",
+                    amount: "0 IHN",
+                    time: "Pendiente",
+                  },
                 ].map((tx) => (
-                  <div key={tx.addr + tx.time} className="flex items-center gap-2 rounded-xl border border-white/[.07] bg-white/[.03] px-3 py-2.5 text-xs">
+                  <div
+                    key={tx.addr + tx.time}
+                    className="flex items-center gap-2 rounded-xl border border-white/[.07] bg-white/[.03] px-3 py-2.5 text-xs"
+                  >
                     <span className="font-mono text-white/50">{tx.addr}</span>
-                    <span className={`shrink-0 rounded-full px-2 py-0.5 text-[10px] font-semibold ${tx.typeColor}`}>{tx.type}</span>
+                    <span
+                      className={`shrink-0 rounded-full px-2 py-0.5 text-[10px] font-semibold ${tx.typeColor}`}
+                    >
+                      {tx.type}
+                    </span>
                     <span className="ml-auto font-bold text-white">{tx.amount}</span>
                     <span className="shrink-0 text-white/38">{tx.time}</span>
                   </div>
                 ))}
               </div>
-              <button type="button" className="mt-4 flex w-full items-center justify-center gap-1.5 text-xs font-semibold text-primary hover:underline">
+              <Link
+                to="/transactions"
+                className="mt-4 flex w-full items-center justify-center gap-1.5 text-xs font-semibold text-primary hover:underline"
+              >
                 Ver todas las transacciones <ArrowRight className="h-3 w-3" />
-              </button>
+              </Link>
             </div>
 
             {/* Exchanges */}
-            <div className="rounded-2xl border border-white/10 bg-[#07101d]/78 p-5 backdrop-blur-xl">
-              <div className="mb-4 text-xs font-semibold uppercase tracking-widest text-primary">Dónde puedes conseguir $IHN</div>
+            <div
+              id="token-mercados"
+              className="rounded-2xl border border-white/10 bg-[#07101d]/78 p-5 backdrop-blur-xl"
+            >
+              <div className="mb-4 text-xs font-semibold uppercase tracking-widest text-primary">
+                Dónde puedes conseguir $IHN
+              </div>
               <div className="grid grid-cols-2 gap-3">
                 {[
                   { name: "Uniswap", abbr: "UNI" },
@@ -772,7 +912,10 @@ function Index() {
                   { name: "BitMart", abbr: "BMX" },
                   { name: "Próximamente...", abbr: "···" },
                 ].map((ex) => (
-                  <div key={ex.name} className="flex items-center gap-3 rounded-xl border border-white/[.07] bg-white/[.03] px-3 py-3">
+                  <div
+                    key={ex.name}
+                    className="flex items-center gap-3 rounded-xl border border-white/[.07] bg-white/[.03] px-3 py-3"
+                  >
                     <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-primary/15 text-xs font-black text-primary">
                       {ex.abbr}
                     </span>
@@ -780,22 +923,58 @@ function Index() {
                   </div>
                 ))}
               </div>
-              <button type="button" className="mt-4 flex w-full items-center justify-center gap-1.5 text-xs font-semibold text-primary hover:underline">
+              <Link
+                to="/markets"
+                className="mt-4 flex w-full items-center justify-center gap-1.5 text-xs font-semibold text-primary hover:underline"
+              >
                 Ver todos los mercados <ArrowRight className="h-3 w-3" />
-              </button>
+              </Link>
             </div>
           </div>
 
           {/* Impact metrics strip */}
           <div className="reveal grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-5">
             {[
-              { icon: Droplets, label: "Agua potable", value: "0", unit: "litros entregados", color: "text-cyan-300" },
-              { icon: GraduationCap, label: "Educación", value: "0", unit: "niños educados", color: "text-amber-300" },
-              { icon: Leaf, label: "Medio ambiente", value: "0", unit: "árboles plantados", color: "text-emerald-300" },
-              { icon: Users, label: "Comunidad", value: "0", unit: "familias ayudadas", color: "text-violet-300" },
-              { icon: HandHeart, label: "Salud", value: "0", unit: "personas atendidas", color: "text-rose-300" },
+              {
+                icon: Droplets,
+                label: "Agua potable",
+                value: "0",
+                unit: "litros entregados",
+                color: "text-cyan-300",
+              },
+              {
+                icon: GraduationCap,
+                label: "Educación",
+                value: "0",
+                unit: "niños educados",
+                color: "text-amber-300",
+              },
+              {
+                icon: Leaf,
+                label: "Medio ambiente",
+                value: "0",
+                unit: "árboles plantados",
+                color: "text-emerald-300",
+              },
+              {
+                icon: Users,
+                label: "Comunidad",
+                value: "0",
+                unit: "familias ayudadas",
+                color: "text-violet-300",
+              },
+              {
+                icon: HandHeart,
+                label: "Salud",
+                value: "0",
+                unit: "personas atendidas",
+                color: "text-rose-300",
+              },
             ].map((m) => (
-              <div key={m.label} className="rounded-2xl border border-white/10 bg-[#07101d]/78 p-4 text-center backdrop-blur-xl">
+              <div
+                key={m.label}
+                className="rounded-2xl border border-white/10 bg-[#07101d]/78 p-4 text-center backdrop-blur-xl"
+              >
                 <m.icon className={`mx-auto h-8 w-8 ${m.color}`} />
                 <div className="mt-2 text-[11px] font-semibold text-white/55">{m.label}</div>
                 <div className="mt-1 text-2xl font-black text-white">{m.value}</div>
@@ -803,7 +982,6 @@ function Index() {
               </div>
             ))}
           </div>
-
         </div>
       </section>
 
@@ -822,168 +1000,175 @@ function Index() {
               <div className="absolute inset-0 bg-[linear-gradient(90deg,#070c19_0%,#070c19_22%,rgba(7,12,25,.55)_48%,rgba(7,12,25,.1)_100%)]" />
               <div className="relative max-w-[70%] sm:max-w-[320px]">
                 <div className="inline-block rounded-2xl bg-[#070c19]/55 px-4 pb-4 pt-3 backdrop-blur-md">
-                <h2 className="text-[2.45rem] font-black leading-[.98] tracking-normal text-white lg:text-6xl">
-                  Tu token,
-                  <span className="block text-primary">su esperanza.</span>
+                  <h2 className="text-[2.45rem] font-black leading-[.98] tracking-normal text-white lg:text-6xl">
+                    Tu token,
+                    <span className="block text-primary">su esperanza.</span>
+                  </h2>
+                  <p className="mt-5 text-xl leading-snug text-white/78 lg:text-2xl">
+                    Cada transacción genera impacto real para ONG y comunidades que más lo
+                    necesitan.
+                  </p>
+                </div>
+                <Button
+                  variant="outline"
+                  asChild
+                  className="relative mt-8 h-16 w-full justify-center gap-5 rounded-[1.05rem] border-white/16 bg-white/[.035] text-lg font-medium text-white hover:bg-white/[.07] hover:text-white"
+                >
+                  <Link to="/impact-map">
+                    <Map className="h-7 w-7" />
+                    Explorar mapa de impacto
+                  </Link>
+                </Button>
+              </div>
+            </div>
+          </div>
+
+          <div className="hidden">
+            <div className="mb-10 flex flex-col justify-between gap-6 md:flex-row md:items-end">
+              <div>
+                <span className="text-sm font-semibold uppercase tracking-[0.22em] text-primary">
+                  Transparencia en tiempo real
+                </span>
+                <h2 className="mt-3 max-w-2xl text-4xl font-black md:text-5xl">
+                  Donde cada moneda se convierte en sonrisas.
                 </h2>
-                <p className="mt-5 text-xl leading-snug text-white/78 lg:text-2xl">
-                  Cada transacción genera impacto real para ONG y comunidades que más lo necesitan.
+              </div>
+              <p className="max-w-md text-white/68">
+                Apoyamos educación, alimentación y desarrollo comunitario con reportes visibles,
+                trazables y medibles.
+              </p>
+            </div>
+            <div className="grid gap-5 lg:grid-cols-[.95fr_1fr_.95fr]">
+              <div className="reveal rounded-2xl border border-white/10 bg-[#07101d]/78 p-5 backdrop-blur-xl">
+                <div className="text-xs font-bold uppercase tracking-[0.2em] text-primary">
+                  Transacciones recientes
+                </div>
+                <div className="mt-4 divide-y divide-white/10">
+                  {transactions.map((tx) => (
+                    <div key={tx.id} className="grid grid-cols-[1fr_auto] gap-4 py-4 text-sm">
+                      <div>
+                        <div className="flex items-center gap-2">
+                          <span className="flex h-6 w-6 items-center justify-center rounded-full border border-white/20 text-xs">
+                            →
+                          </span>
+                          <span className="font-semibold">{tx.id}</span>
+                          <span className="text-white/40">→</span>
+                          <span className="text-white/82">{tx.org}</span>
+                        </div>
+                        <div className="mt-1 text-xs text-white/46">{tx.chain} · Confirmada</div>
+                      </div>
+                      <div className="text-right font-semibold">{tx.amount}</div>
+                    </div>
+                  ))}
+                </div>
+                <Button
+                  variant="outline"
+                  asChild
+                  className="mt-4 border-white/15 bg-white/[.03] text-white hover:bg-white/[.07] hover:text-white"
+                >
+                  <Link to="/transactions">
+                    Ver todas las transacciones <ArrowRight className="ml-2 h-4 w-4" />
+                  </Link>
+                </Button>
+              </div>
+
+              <div className="reveal overflow-hidden rounded-2xl border border-white/10 bg-[#07101d]/78 backdrop-blur-xl">
+                <div className="p-5">
+                  <div className="text-xs font-bold uppercase tracking-[0.2em] text-primary">
+                    Mapa de impacto
+                  </div>
+                  <h3 className="mt-2 text-2xl font-bold">Nuestras causas en el mundo</h3>
+                </div>
+                <div className="relative mx-5 mb-5 h-[288px] overflow-hidden rounded-xl bg-[radial-gradient(circle_at_48%_45%,rgba(251,191,36,.2),transparent_32%),linear-gradient(145deg,rgba(14,165,233,.16),rgba(0,0,0,.1))]">
+                  <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,.045)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,.045)_1px,transparent_1px)] bg-[size:38px_38px] opacity-30" />
+                  {[
+                    ["left-[18%] top-[36%]", "Lima"],
+                    ["left-[30%] top-[49%]", "Bogotá"],
+                    ["left-[49%] top-[33%]", "Madrid"],
+                    ["left-[58%] top-[54%]", "Lagos"],
+                    ["left-[72%] top-[42%]", "Nairobi"],
+                    ["left-[82%] top-[62%]", "Manila"],
+                  ].map(([pos, label]) => (
+                    <div key={label} className={`absolute ${pos}`}>
+                      <span className="absolute h-9 w-9 -translate-x-1/2 -translate-y-1/2 rounded-full bg-amber-300/20 blur-md" />
+                      <MapPin className="relative h-6 w-6 -translate-x-1/2 -translate-y-1/2 text-amber-300 drop-shadow-[0_0_14px_rgba(251,191,36,.75)]" />
+                    </div>
+                  ))}
+                  <div className="absolute bottom-4 left-4 rounded-full border border-cyan-300/20 bg-cyan-300/10 px-3 py-1 text-xs text-cyan-100">
+                    0 países conectados
+                  </div>
+                </div>
+              </div>
+
+              <div className="reveal rounded-2xl border border-white/10 bg-[#07101d]/78 p-5 backdrop-blur-xl">
+                <div className="text-xs font-bold uppercase tracking-[0.2em] text-primary">
+                  Tokenomics
+                </div>
+                <h3 className="mt-2 text-2xl font-bold">
+                  Así generamos impacto juntos <Heart className="inline h-5 w-5 text-primary" />
+                </h3>
+                <p className="mt-2 text-sm text-white/58">
+                  El impacto destinado a ONG y comunidades necesitadas se reportará desde 0.
+                </p>
+                <div className="mt-5 flex items-center justify-center">
+                  <div className="relative h-44 w-44 rounded-full bg-[conic-gradient(#22d3ee_0_30%,#f59e0b_30%_50%,#34d399_50%_65%,#a78bfa_65%_80%,#fb7185_80%_90%,#7dd3fc_90%_100%)]">
+                    <div className="absolute inset-9 flex flex-col items-center justify-center rounded-full bg-[#07101d] text-center">
+                      <Globe className="h-7 w-7 text-primary" />
+                      <span className="mt-1 text-[10px] font-semibold leading-tight text-white/70">
+                        Impacto real.
+                        <br />
+                        Vidas transformadas.
+                      </span>
+                    </div>
+                  </div>
+                </div>
+                <div className="mt-5 space-y-3">
+                  {tokenomics.map((item) => (
+                    <div key={item.label} className="flex items-start gap-3 text-sm">
+                      <span className={`mt-1 h-2.5 w-2.5 shrink-0 rounded-full ${item.color}`} />
+                      <div>
+                        <span className="font-bold">
+                          {item.value} {item.label}
+                        </span>
+                        <p className="text-xs text-white/50">{item.desc}</p>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+                <p className="mt-5 border-t border-white/10 pt-4 text-xs text-white/50">
+                  <Heart className="mr-1 inline h-3 w-3 text-primary" />
+                  Transparente. Trazable. Con propósito. Cada token impulsa un cambio real.
                 </p>
               </div>
-              <Button
-                variant="outline"
-                className="relative mt-8 h-16 w-full justify-center gap-5 rounded-[1.05rem] border-white/16 bg-white/[.035] text-lg font-medium text-white hover:bg-white/[.07] hover:text-white"
-              >
-                <Map className="h-7 w-7" />
-                Explorar mapa de impacto
-              </Button>
-            </div>
-          </div>
-        </div>
-
-        <div className="hidden">
-          <div className="mb-10 flex flex-col justify-between gap-6 md:flex-row md:items-end">
-            <div>
-              <span className="text-sm font-semibold uppercase tracking-[0.22em] text-primary">
-                Transparencia en tiempo real
-              </span>
-              <h2 className="mt-3 max-w-2xl text-4xl font-black md:text-5xl">
-                Donde cada moneda se convierte en sonrisas.
-              </h2>
-            </div>
-            <p className="max-w-md text-white/68">
-              Apoyamos educación, alimentación y desarrollo comunitario con reportes visibles,
-              trazables y medibles.
-            </p>
-          </div>
-          <div className="grid gap-5 lg:grid-cols-[.95fr_1fr_.95fr]">
-            <div className="reveal rounded-2xl border border-white/10 bg-[#07101d]/78 p-5 backdrop-blur-xl">
-              <div className="text-xs font-bold uppercase tracking-[0.2em] text-primary">
-                Transacciones recientes
-              </div>
-              <div className="mt-4 divide-y divide-white/10">
-                {transactions.map((tx) => (
-                  <div key={tx.id} className="grid grid-cols-[1fr_auto] gap-4 py-4 text-sm">
-                    <div>
-                      <div className="flex items-center gap-2">
-                        <span className="flex h-6 w-6 items-center justify-center rounded-full border border-white/20 text-xs">
-                          →
-                        </span>
-                        <span className="font-semibold">{tx.id}</span>
-                        <span className="text-white/40">→</span>
-                        <span className="text-white/82">{tx.org}</span>
-                      </div>
-                      <div className="mt-1 text-xs text-white/46">{tx.chain} · Confirmada</div>
-                    </div>
-                    <div className="text-right font-semibold">{tx.amount}</div>
-                  </div>
-                ))}
-              </div>
-              <Button
-                variant="outline"
-                className="mt-4 border-white/15 bg-white/[.03] text-white hover:bg-white/[.07] hover:text-white"
-              >
-                Ver todas las transacciones <ArrowRight className="ml-2 h-4 w-4" />
-              </Button>
             </div>
 
-            <div className="reveal overflow-hidden rounded-2xl border border-white/10 bg-[#07101d]/78 backdrop-blur-xl">
-              <div className="p-5">
-                <div className="text-xs font-bold uppercase tracking-[0.2em] text-primary">
-                  Mapa de impacto
-                </div>
-                <h3 className="mt-2 text-2xl font-bold">Nuestras causas en el mundo</h3>
-              </div>
-              <div className="relative mx-5 mb-5 h-[288px] overflow-hidden rounded-xl bg-[radial-gradient(circle_at_48%_45%,rgba(251,191,36,.2),transparent_32%),linear-gradient(145deg,rgba(14,165,233,.16),rgba(0,0,0,.1))]">
-                <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,.045)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,.045)_1px,transparent_1px)] bg-[size:38px_38px] opacity-30" />
-                {[
-                  ["left-[18%] top-[36%]", "Lima"],
-                  ["left-[30%] top-[49%]", "Bogotá"],
-                  ["left-[49%] top-[33%]", "Madrid"],
-                  ["left-[58%] top-[54%]", "Lagos"],
-                  ["left-[72%] top-[42%]", "Nairobi"],
-                  ["left-[82%] top-[62%]", "Manila"],
-                ].map(([pos, label]) => (
-                  <div key={label} className={`absolute ${pos}`}>
-                    <span className="absolute h-9 w-9 -translate-x-1/2 -translate-y-1/2 rounded-full bg-amber-300/20 blur-md" />
-                    <MapPin className="relative h-6 w-6 -translate-x-1/2 -translate-y-1/2 text-amber-300 drop-shadow-[0_0_14px_rgba(251,191,36,.75)]" />
-                  </div>
-                ))}
-                <div className="absolute bottom-4 left-4 rounded-full border border-cyan-300/20 bg-cyan-300/10 px-3 py-1 text-xs text-cyan-100">
-                  0 países conectados
-                </div>
-              </div>
-            </div>
-
-            <div className="reveal rounded-2xl border border-white/10 bg-[#07101d]/78 p-5 backdrop-blur-xl">
-              <div className="text-xs font-bold uppercase tracking-[0.2em] text-primary">
-                Tokenomics
-              </div>
-              <h3 className="mt-2 text-2xl font-bold">
-                Así generamos impacto juntos <Heart className="inline h-5 w-5 text-primary" />
-              </h3>
-              <p className="mt-2 text-sm text-white/58">
-                El impacto destinado a ONG y comunidades necesitadas se reportará desde 0.
-              </p>
-              <div className="mt-5 flex items-center justify-center">
-                <div className="relative h-44 w-44 rounded-full bg-[conic-gradient(#22d3ee_0_30%,#f59e0b_30%_50%,#34d399_50%_65%,#a78bfa_65%_80%,#fb7185_80%_90%,#7dd3fc_90%_100%)]">
-                  <div className="absolute inset-9 flex flex-col items-center justify-center rounded-full bg-[#07101d] text-center">
-                    <Globe className="h-7 w-7 text-primary" />
-                    <span className="mt-1 text-[10px] font-semibold leading-tight text-white/70">
-                      Impacto real.
-                      <br />
-                      Vidas transformadas.
-                    </span>
+            <div className="mt-6 grid gap-6 md:grid-cols-3">
+              {[
+                { img: impact1, t: "Comunidad", d: "Niños unidos por la esperanza" },
+                { img: impact2, t: "Alimentación", d: "Llevamos comida a quien la necesita" },
+                { img: impact3, t: "Educación", d: "Construyendo el futuro con conocimiento" },
+              ].map((c) => (
+                <div
+                  key={c.t}
+                  className="reveal group relative aspect-[4/5] overflow-hidden rounded-2xl border border-white/10"
+                >
+                  <img
+                    src={c.img}
+                    alt={c.t}
+                    loading="lazy"
+                    width={1024}
+                    height={1280}
+                    className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 group-hover:scale-110"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-[#050914] via-[#050914]/40 to-transparent" />
+                  <div className="absolute bottom-0 left-0 right-0 p-6">
+                    <h3 className="text-2xl font-bold">{c.t}</h3>
+                    <p className="mt-1 text-white/78">{c.d}</p>
                   </div>
                 </div>
-              </div>
-              <div className="mt-5 space-y-3">
-                {tokenomics.map((item) => (
-                  <div key={item.label} className="flex items-start gap-3 text-sm">
-                    <span className={`mt-1 h-2.5 w-2.5 shrink-0 rounded-full ${item.color}`} />
-                    <div>
-                      <span className="font-bold">
-                        {item.value} {item.label}
-                      </span>
-                      <p className="text-xs text-white/50">{item.desc}</p>
-                    </div>
-                  </div>
-                ))}
-              </div>
-              <p className="mt-5 border-t border-white/10 pt-4 text-xs text-white/50">
-                <Heart className="mr-1 inline h-3 w-3 text-primary" />
-                Transparente. Trazable. Con propósito. Cada token impulsa un cambio real.
-              </p>
+              ))}
             </div>
           </div>
-
-          <div className="mt-6 grid gap-6 md:grid-cols-3">
-            {[
-              { img: impact1, t: "Comunidad", d: "Niños unidos por la esperanza" },
-              { img: impact2, t: "Alimentación", d: "Llevamos comida a quien la necesita" },
-              { img: impact3, t: "Educación", d: "Construyendo el futuro con conocimiento" },
-            ].map((c) => (
-              <div
-                key={c.t}
-                className="reveal group relative aspect-[4/5] overflow-hidden rounded-2xl border border-white/10"
-              >
-                <img
-                  src={c.img}
-                  alt={c.t}
-                  loading="lazy"
-                  width={1024}
-                  height={1280}
-                  className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 group-hover:scale-110"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-[#050914] via-[#050914]/40 to-transparent" />
-                <div className="absolute bottom-0 left-0 right-0 p-6">
-                  <h3 className="text-2xl font-bold">{c.t}</h3>
-                  <p className="mt-1 text-white/78">{c.d}</p>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
         </div>
       </section>
 
@@ -1081,7 +1266,12 @@ function Index() {
               { icon: Users, label: "Comunidad", value: "0", desc: "Personas unidas" },
               { icon: Globe, label: "Alcance global", value: "0", desc: "Países conectados" },
               { icon: Heart, label: "Vidas transformadas", value: "0", desc: "Impactos reales" },
-              { icon: Coins, label: "Fondos para impacto", value: "$0", desc: "Destinados a causas" },
+              {
+                icon: Coins,
+                label: "Fondos para impacto",
+                value: "$0",
+                desc: "Destinados a causas",
+              },
               { icon: Shield, label: "Transparencia", value: "0%", desc: "On-chain verificable" },
             ].map((m) => (
               <div
@@ -1126,13 +1316,14 @@ function Index() {
                 comunidad.
               </p>
               <ul className="mt-8 space-y-4">
-                {["Transparencia verificable", "Reportes verificables", "Impacto medible"].map((b) => (
-                  <li key={b} className="flex items-center gap-3 text-lg text-white/86">
-                    <CheckCircle2 className="h-6 w-6 text-primary" /> {b}
-                  </li>
-                ))}
+                {["Transparencia verificable", "Reportes verificables", "Impacto medible"].map(
+                  (b) => (
+                    <li key={b} className="flex items-center gap-3 text-lg text-white/86">
+                      <CheckCircle2 className="h-6 w-6 text-primary" /> {b}
+                    </li>
+                  ),
+                )}
               </ul>
-
             </div>
 
             <div className="rounded-3xl border border-white/12 bg-[#050914]/72 p-5 md:p-7">
@@ -1172,7 +1363,17 @@ function Index() {
                   <button
                     key={method.label}
                     type="button"
-                    className="flex w-full items-center justify-between rounded-xl border border-white/10 bg-white/[.045] p-4 text-left transition-colors hover:border-primary/40 hover:bg-white/[.07]"
+                    onClick={() => setSelectedPayment(method.label)}
+                    aria-pressed={
+                      selectedPayment === method.label ||
+                      (selectedPayment === paymentMethods[0].label && method.detail === "Stripe")
+                    }
+                    className={`flex w-full items-center justify-between rounded-xl border p-4 text-left transition-colors ${
+                      selectedPayment === method.label ||
+                      (selectedPayment === paymentMethods[0].label && method.detail === "Stripe")
+                        ? "border-primary/55 bg-primary/12"
+                        : "border-white/10 bg-white/[.045] hover:border-primary/40 hover:bg-white/[.07]"
+                    }`}
                   >
                     <span className="flex items-center gap-3">
                       <method.icon className="h-6 w-6 text-white/72" />
@@ -1200,7 +1401,7 @@ function Index() {
                           : "border border-white/10 bg-white/[.04] text-white/70 hover:bg-white/[.08]"
                       }`}
                     >
-                      {v === 0 ? "Otro" : `$${v}`}
+                      {v === 0 ? "Sin tip" : `$${v}`}
                     </button>
                   ))}
                 </div>
@@ -1214,7 +1415,14 @@ function Index() {
                 <form
                   onSubmit={(e) => {
                     e.preventDefault();
-                    if (email) setSent(true);
+                    if (!email) return;
+                    setSent(true);
+                    const total = displayDonation + tip;
+                    const subject = encodeURIComponent(`Aporte ImpactHope Network - $${total}`);
+                    const body = encodeURIComponent(
+                      `Hola ImpactHope Network,\n\nQuiero coordinar un aporte de $${total}.\n\nDonacion: $${displayDonation}\nTip: $${tip}\nMetodo preferido: ${selectedPayment}\nCorreo: ${email}\n\nGracias.`,
+                    );
+                    window.location.href = `mailto:contact@impacthopenetwork.org?subject=${subject}&body=${body}`;
                   }}
                   className="mt-5 space-y-3"
                 >
@@ -1274,11 +1482,21 @@ function Index() {
             <span>© 2026 ImpactHope Network LLC</span>
           </div>
           <nav className="flex flex-wrap items-center gap-4">
-            <a href="/terms" className="hover:text-white/80 transition-colors">Términos de uso</a>
-            <a href="/privacy" className="hover:text-white/80 transition-colors">Política de privacidad</a>
-            <a href="/risk" className="hover:text-white/80 transition-colors">Riesgos</a>
-            <a href="/legal" className="hover:text-white/80 transition-colors">Aviso legal</a>
-            <a href="/contact" className="hover:text-white/80 transition-colors">Contacto</a>
+            <a href="/terms" className="hover:text-white/80 transition-colors">
+              Términos de uso
+            </a>
+            <a href="/privacy" className="hover:text-white/80 transition-colors">
+              Política de privacidad
+            </a>
+            <a href="/risk" className="hover:text-white/80 transition-colors">
+              Riesgos
+            </a>
+            <a href="/legal" className="hover:text-white/80 transition-colors">
+              Aviso legal
+            </a>
+            <a href="/contact" className="hover:text-white/80 transition-colors">
+              Contacto
+            </a>
           </nav>
         </div>
       </footer>
