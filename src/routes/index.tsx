@@ -47,11 +47,11 @@ export const Route = createFileRoute("/")({
   component: Index,
   head: () => ({
     meta: [
-      { title: "ImpactHope Coin - Inversión digital con impacto social real" },
+      { title: "ImpactHope Network - Inversión digital con impacto social real" },
       {
         name: "description",
         content:
-          "ImpactHope Coin conecta blockchain, inversión y causas benéficas. Cada transacción genera impacto social real, con transparencia total.",
+          "ImpactHope Network conecta blockchain, inversión y causas benéficas. Cada transacción genera impacto social real, con transparencia total.",
       },
     ],
   }),
@@ -265,7 +265,7 @@ function Index() {
               height={36}
             />
             <span className="text-lg font-bold tracking-tight">
-              ImpactHope<span className="text-primary"> Coin</span>
+              ImpactHope<span className="text-primary"> Network</span>
             </span>
           </a>
           <nav className="hidden items-center gap-7 text-sm md:flex">
@@ -332,7 +332,7 @@ function Index() {
               ))}
             </h1>
             <p className="hero-reveal mt-6 max-w-xl rounded-xl bg-black/50 px-4 py-3 text-lg leading-relaxed text-white/90 opacity-0 backdrop-blur-sm">
-              ImpactHope Coin une blockchain, comunidad y causas benéficas. Cada transacción genera
+              ImpactHope Network une blockchain, comunidad y causas benéficas. Cada transacción genera
               una contribución verificable para niños, familias y organizaciones que más lo
               necesitan.
             </p>
@@ -466,7 +466,7 @@ function Index() {
               <div className="absolute inset-7 rounded-full border border-amber-200/30 shadow-[0_0_80px_rgba(251,191,36,.36)]" />
               <img
                 src={coinImg}
-                alt="Token ImpactHope Coin"
+                alt="Token ImpactHope Network"
                 className="relative z-10 w-full drop-shadow-[0_34px_80px_rgba(251,146,60,.58)]"
                 width={260}
                 height={260}
@@ -518,7 +518,7 @@ function Index() {
               </h2>
               <p className="mt-6 max-w-3xl text-lg leading-relaxed text-white/72">
                 Las donaciones tradicionales sufren de falta de transparencia. Los activos digitales
-                carecen de propósito. ImpactHope Coin une lo mejor de ambos mundos: tecnología
+                carecen de propósito. ImpactHope Network une lo mejor de ambos mundos: tecnología
                 blockchain con responsabilidad social verificable.
               </p>
             </div>
@@ -553,7 +553,7 @@ function Index() {
               {
                 icon: Link2,
                 t: "Adquiere el token",
-                d: "Compra ImpactHope Coin y forma parte de una comunidad global comprometida.",
+                d: "Compra ImpactHope Network y forma parte de una comunidad global comprometida.",
               },
               {
                 icon: TrendingUp,
@@ -1271,13 +1271,14 @@ function Index() {
         <div className="mx-auto flex max-w-7xl flex-col items-center justify-between gap-4 px-5 text-sm text-white/52 md:flex-row md:px-6">
           <div className="flex items-center gap-2">
             <img src={coinImg} alt="" className="h-6 w-6" width={24} height={24} />
-            <span>© 2026 ImpactHope Coin LLC</span>
+            <span>© 2026 ImpactHope Network LLC</span>
           </div>
           <nav className="flex flex-wrap items-center gap-4">
-            <a href="#" className="hover:text-white/80 transition-colors">Términos de uso</a>
-            <a href="#" className="hover:text-white/80 transition-colors">Política de privacidad</a>
-            <a href="#" className="hover:text-white/80 transition-colors">Aviso legal</a>
-            <a href="#" className="hover:text-white/80 transition-colors">Contacto</a>
+            <a href="/terms" className="hover:text-white/80 transition-colors">Términos de uso</a>
+            <a href="/privacy" className="hover:text-white/80 transition-colors">Política de privacidad</a>
+            <a href="/risk" className="hover:text-white/80 transition-colors">Riesgos</a>
+            <a href="/legal" className="hover:text-white/80 transition-colors">Aviso legal</a>
+            <a href="/contact" className="hover:text-white/80 transition-colors">Contacto</a>
           </nav>
         </div>
       </footer>

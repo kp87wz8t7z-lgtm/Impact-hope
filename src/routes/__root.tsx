@@ -72,27 +72,27 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "ImpactHope Coin" },
+      { title: "ImpactHope Network" },
       {
         name: "description",
         content:
-          "ImpactHope Connect is an interactive web platform for the ImpactHope Coin, designed to attract donations and drive social impact.",
+          "ImpactHope Connect is an interactive web platform for ImpactHope Network, designed to attract donations and drive social impact.",
       },
-      { name: "author", content: "ImpactHope Coin LLC" },
-      { property: "og:title", content: "ImpactHope Coin" },
+      { name: "author", content: "ImpactHope Network LLC" },
+      { property: "og:title", content: "ImpactHope Network" },
       {
         property: "og:description",
         content:
-          "ImpactHope Connect is an interactive web platform for the ImpactHope Coin, designed to attract donations and drive social impact.",
+          "ImpactHope Connect is an interactive web platform for ImpactHope Network, designed to attract donations and drive social impact.",
       },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },
-      { name: "twitter:site", content: "@ImpactHopeCoin" },
-      { name: "twitter:title", content: "ImpactHope Coin" },
+      { name: "twitter:site", content: "@ImpactHopeNetwork" },
+      { name: "twitter:title", content: "ImpactHope Network" },
       {
         name: "twitter:description",
         content:
-          "ImpactHope Connect is an interactive web platform for the ImpactHope Coin, designed to attract donations and drive social impact.",
+          "ImpactHope Connect is an interactive web platform for ImpactHope Network, designed to attract donations and drive social impact.",
       },
       {
         property: "og:image",
