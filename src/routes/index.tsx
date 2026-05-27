@@ -543,14 +543,14 @@ function Index() {
 
       <section id="mision" className="relative py-20">
         <div className="mx-auto max-w-7xl px-5 md:px-6">
-          <div className="reveal relative grid gap-8 overflow-hidden rounded-[2rem] border border-amber-300/18 p-7 shadow-[0_28px_90px_rgba(0,0,0,.36)] md:p-10 lg:grid-cols-[1.05fr_.95fr] lg:p-14">
+          <div className="reveal relative grid gap-8 overflow-hidden rounded-[2rem] border border-amber-300/18 p-7 shadow-[0_28px_90px_rgba(0,0,0,.36)] backdrop-blur-sm md:p-10 lg:grid-cols-[1.05fr_.95fr] lg:p-14">
             <img
               src={worldMapImg}
               alt=""
               aria-hidden="true"
-              className="absolute inset-0 h-full w-full object-cover object-center opacity-65"
+              className="absolute inset-0 h-full w-full object-cover object-center opacity-30"
             />
-            <div className="absolute inset-0 bg-[#07101d]/60" />
+            <div className="absolute inset-0 bg-[#07101d]/20" />
             <div className="relative z-10">
               <span className="text-sm font-semibold uppercase tracking-[0.22em] text-primary">
                 Nuestra Misión
@@ -1174,8 +1174,8 @@ function Index() {
 
       <section
         id="roadmap"
-        className="relative min-h-[900px] overflow-hidden bg-cover bg-center bg-no-repeat py-16 md:py-20 lg:bg-[length:100%_100%]"
-        style={{ backgroundImage: `url(${roadmapBg})` }}
+        className="relative min-h-[900px] overflow-hidden bg-cover bg-no-repeat py-16 md:py-20 lg:bg-[length:100%_100%]"
+        style={{ backgroundImage: `url(${roadmapBg})`, backgroundPosition: "center 72%" }}
       >
         <div className="absolute inset-0 bg-[#020713]/45" />
         <div className="absolute inset-0 bg-gradient-to-b from-[#020713]/30 via-transparent to-[#020713]/50" />
@@ -1303,7 +1303,7 @@ function Index() {
 
       <section id="donar" className="relative py-20">
         <div className="mx-auto max-w-7xl px-5 md:px-6">
-          <div className="reveal grid gap-10 rounded-[2rem] border border-white/10 bg-[#07101d]/82 p-7 shadow-[0_30px_90px_rgba(0,0,0,.42)] backdrop-blur-xl md:p-10 lg:grid-cols-[.95fr_1.05fr] lg:p-12">
+          <div className="reveal grid gap-10 rounded-[2rem] border border-white/10 bg-[#07101d]/62 p-7 shadow-[0_30px_90px_rgba(0,0,0,.42)] md:p-10 lg:grid-cols-[.95fr_1.05fr] lg:p-12">
             <div>
               <span className="inline-flex items-center gap-2 rounded-full bg-primary/15 px-3 py-1 text-xs font-semibold text-primary">
                 <Heart className="h-3.5 w-3.5" /> Tu aporte importa
@@ -1326,7 +1326,7 @@ function Index() {
               </ul>
             </div>
 
-            <div className="rounded-3xl border border-white/12 bg-[#050914]/72 p-5 md:p-7">
+            <div className="rounded-3xl border border-white/12 bg-white/[.03] p-5 backdrop-blur-md md:p-7">
               <div className="text-2xl font-bold">Selecciona tu donación</div>
               <div className="mt-5 grid grid-cols-2 gap-3 sm:grid-cols-4">
                 {[10, 25, 50, 100].map((v) => (
@@ -1337,7 +1337,7 @@ function Index() {
                     className={`rounded-xl py-4 text-lg font-bold transition-all ${
                       donation === v
                         ? "bg-gradient-to-r from-amber-300 to-orange-500 text-black shadow-[0_0_28px_rgba(245,158,11,.34)]"
-                        : "bg-white/[.055] text-white hover:bg-white/[.09]"
+                        : "border border-white/10 bg-white/[.06] text-white backdrop-blur-md hover:bg-white/[.10]"
                     }`}
                   >
                     ${v}
@@ -1372,7 +1372,7 @@ function Index() {
                       selectedPayment === method.label ||
                       (selectedPayment === paymentMethods[0].label && method.detail === "Stripe")
                         ? "border-primary/55 bg-primary/12"
-                        : "border-white/10 bg-white/[.045] hover:border-primary/40 hover:bg-white/[.07]"
+                        : "border-white/10 bg-white/[.05] backdrop-blur-md hover:border-primary/40 hover:bg-white/[.09]"
                     }`}
                   >
                     <span className="flex items-center gap-3">
@@ -1398,7 +1398,7 @@ function Index() {
                       className={`rounded-xl py-3 font-bold transition-colors ${
                         tip === v
                           ? "bg-gradient-to-r from-amber-300 to-orange-500 text-black"
-                          : "border border-white/10 bg-white/[.04] text-white/70 hover:bg-white/[.08]"
+                          : "border border-white/10 bg-white/[.05] text-white/70 backdrop-blur-md hover:bg-white/[.09]"
                       }`}
                     >
                       {v === 0 ? "Sin tip" : `$${v}`}
