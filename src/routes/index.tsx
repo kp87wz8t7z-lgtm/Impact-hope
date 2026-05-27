@@ -22,6 +22,7 @@ import {
   Mail,
   Map,
   MapPin,
+  Menu,
   Network,
   PieChart,
   Rocket,
@@ -31,6 +32,7 @@ import {
   Users,
   Utensils,
   Wifi,
+  X,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -161,6 +163,7 @@ const tokenomics = [
 ];
 
 function Index() {
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [donation, setDonation] = useState(50);
   const [tip, setTip] = useState(10);
   const [email, setEmail] = useState("");
@@ -176,6 +179,7 @@ function Index() {
 
   useEffect(() => {
     if (!rootRef.current) return;
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
 
     scopeRef.current = createScope({ root: rootRef.current }).add(() => {
       animate(".hero-word", {
@@ -311,7 +315,7 @@ function Index() {
               width={36}
               height={36}
             />
-            <span className="text-lg font-bold tracking-tight">
+            <span className="font-body text-lg font-bold tracking-tight">
               ImpactHope<span className="text-primary"> Network</span>
             </span>
           </a>
@@ -326,15 +330,50 @@ function Index() {
               </a>
             ))}
           </nav>
-          <Button
-            asChild
-            className="bg-gradient-to-r from-amber-300 to-orange-500 text-black shadow-[0_10px_30px_-10px_rgba(250,180,50,0.7)] hover:opacity-90"
-          >
-            <a href="#donar">
-              <Heart className="mr-1 h-4 w-4" /> Donar
-            </a>
-          </Button>
+          <div className="flex items-center gap-3">
+            <Button
+              asChild
+              className="bg-gradient-to-r from-amber-200 via-amber-400 to-orange-500 text-gray-950 shadow-[0_10px_36px_-8px_rgba(245,158,11,0.6)] transition-all duration-200 hover:brightness-110 hover:shadow-[0_14px_44px_-8px_rgba(245,158,11,0.8)]"
+            >
+              <a href="#donar">
+                <Heart className="mr-1 h-4 w-4" /> Donar
+              </a>
+            </Button>
+            <button
+              type="button"
+              aria-label={mobileMenuOpen ? "Cerrar menú" : "Abrir menú"}
+              onClick={() => setMobileMenuOpen((o) => !o)}
+              className="flex h-10 w-10 cursor-pointer items-center justify-center rounded-xl border border-white/10 bg-white/[.05] text-white/80 transition-colors hover:bg-white/[.10] md:hidden"
+            >
+              {mobileMenuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
+            </button>
+          </div>
         </div>
+
+        {mobileMenuOpen && (
+          <div className="border-t border-white/10 bg-[#050914]/96 px-5 pb-6 pt-3 backdrop-blur-xl md:hidden">
+            <nav className="flex flex-col gap-1">
+              {nav.map((n) => (
+                <a
+                  key={n.href}
+                  href={n.href}
+                  onClick={() => setMobileMenuOpen(false)}
+                  className="rounded-xl px-4 py-3 text-base font-semibold text-white/80 transition-colors hover:bg-white/[.06] hover:text-primary"
+                >
+                  {n.label}
+                </a>
+              ))}
+            </nav>
+            <Button
+              asChild
+              className="mt-4 w-full bg-gradient-to-r from-amber-200 via-amber-400 to-orange-500 font-bold text-gray-950 shadow-[0_10px_36px_-8px_rgba(245,158,11,0.6)] transition-all duration-200 hover:brightness-110"
+            >
+              <a href="#donar" onClick={() => setMobileMenuOpen(false)}>
+                <Heart className="mr-1 h-4 w-4" /> Donar ahora
+              </a>
+            </Button>
+          </div>
+        )}
       </header>
 
       <section
@@ -357,7 +396,7 @@ function Index() {
             <div className="hero-reveal inline-flex items-center gap-2 rounded-full border border-amber-300/30 bg-[#07101d]/66 px-4 py-1.5 text-xs font-semibold text-amber-100 opacity-0 shadow-[0_0_35px_rgba(245,158,11,.22)] backdrop-blur-xl">
               <Sparkles className="h-3.5 w-3.5" /> Partner-ready impact infrastructure
             </div>
-            <h1 className="mt-6 max-w-[620px] text-5xl font-black leading-[.94] tracking-tight text-white drop-shadow-[0_8px_34px_rgba(0,0,0,.55)] sm:text-6xl lg:text-[4.9rem]">
+            <h1 className="mt-6 max-w-[620px] text-5xl font-black leading-[.94] tracking-normal text-white sm:text-6xl lg:text-[4.9rem]">
               {"Ayuda con el".split(" ").map((w, i) => (
                 <span key={`a${i}`} className="hero-word mr-[0.22em] inline-block opacity-0">
                   {w}
@@ -382,7 +421,7 @@ function Index() {
               <Button
                 size="lg"
                 asChild
-                className="bg-gradient-to-r from-amber-300 to-orange-500 text-black shadow-[0_18px_46px_-12px_rgba(250,180,50,0.85)] hover:opacity-90"
+                className="bg-gradient-to-r from-amber-200 via-amber-400 to-orange-500 !text-gray-950 font-bold shadow-[0_18px_50px_-10px_rgba(245,158,11,0.75)] transition-all duration-200 hover:brightness-110 hover:shadow-[0_22px_60px_-10px_rgba(245,158,11,0.9)]"
               >
                 <a href="#donar">
                   Donar ahora <ArrowRight className="ml-1 h-4 w-4" />
@@ -392,7 +431,7 @@ function Index() {
                 size="lg"
                 variant="outline"
                 asChild
-                className="border-white/18 bg-white/[.04] text-white backdrop-blur hover:bg-white/[.08] hover:text-white"
+                className="border-violet-500/35 bg-violet-600/10 text-violet-100 backdrop-blur transition-all duration-200 hover:border-violet-400/55 hover:bg-violet-600/22 hover:text-white"
               >
                 <a href="#funciona">Cómo funciona</a>
               </Button>
@@ -1301,6 +1340,87 @@ function Index() {
         </div>
       </section>
 
+      <section className="relative py-16">
+        <div className="mx-auto max-w-7xl px-5 md:px-6">
+          <div className="reveal text-center">
+            <span className="text-sm font-semibold uppercase tracking-[0.22em] text-primary">
+              Ecosistema
+            </span>
+            <h2 className="mt-3 text-4xl font-black md:text-5xl">
+              Construido para <span className="text-primary">alianzas reales</span>
+            </h2>
+            <p className="mx-auto mt-4 max-w-xl text-lg text-white/65">
+              Buscamos organizaciones que compartan nuestra visión: transparencia, impacto medible y
+              tecnología al servicio del bien común.
+            </p>
+          </div>
+
+          <div className="reveal mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+            {[
+              {
+                name: "ONG Educación Global",
+                category: "Educación",
+                quote:
+                  "La tecnología blockchain puede llevar transparencia real a cada donación. ImpactHope Network lo hace posible.",
+                initials: "EG",
+                color: "from-amber-400 to-orange-500",
+              },
+              {
+                name: "Fundación Agua Limpia",
+                category: "Medio ambiente",
+                quote:
+                  "Un ecosistema donde cada transacción genera impacto verificable es exactamente lo que el sector necesita.",
+                initials: "AL",
+                color: "from-cyan-400 to-sky-500",
+              },
+              {
+                name: "Red Comunitaria Latino",
+                category: "Comunidad",
+                quote:
+                  "Por fin una plataforma que une a quienes tienen recursos con quienes tienen la necesidad, con total trazabilidad.",
+                initials: "RC",
+                color: "from-violet-400 to-purple-500",
+              },
+            ].map((p) => (
+              <div
+                key={p.name}
+                className="flex flex-col gap-4 rounded-2xl border border-white/10 bg-[#07101d]/78 p-6 backdrop-blur-xl"
+              >
+                <div className="flex items-center gap-3">
+                  <div
+                    className={`flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-gradient-to-br ${p.color} text-sm font-black text-black`}
+                  >
+                    {p.initials}
+                  </div>
+                  <div>
+                    <div className="font-bold text-white">{p.name}</div>
+                    <div className="text-xs text-white/50">{p.category}</div>
+                  </div>
+                </div>
+                <p className="text-sm leading-relaxed text-white/70">"{p.quote}"</p>
+              </div>
+            ))}
+          </div>
+
+          <div className="reveal mt-10 flex flex-wrap items-center justify-center gap-3">
+            {[
+              "Transparencia on-chain",
+              "Impacto medible",
+              "Reportes verificables",
+              "Sin intermediarios",
+              "Comunidad global",
+            ].map((tag) => (
+              <span
+                key={tag}
+                className="rounded-full border border-amber-300/20 bg-amber-300/[.06] px-4 py-1.5 text-sm font-semibold text-amber-100"
+              >
+                {tag}
+              </span>
+            ))}
+          </div>
+        </div>
+      </section>
+
       <section id="donar" className="relative py-20">
         <div className="mx-auto max-w-7xl px-5 md:px-6">
           <div className="reveal grid gap-10 rounded-[2rem] border border-white/10 bg-[#07101d]/62 p-7 shadow-[0_30px_90px_rgba(0,0,0,.42)] md:p-10 lg:grid-cols-[.95fr_1.05fr] lg:p-12">
@@ -1336,7 +1456,7 @@ function Index() {
                     onClick={() => setDonation(v)}
                     className={`rounded-xl py-4 text-lg font-bold transition-all ${
                       donation === v
-                        ? "bg-gradient-to-r from-amber-300 to-orange-500 text-black shadow-[0_0_28px_rgba(245,158,11,.34)]"
+                        ? "bg-gradient-to-r from-amber-200 via-amber-400 to-orange-500 text-gray-950 shadow-[0_8px_28px_-6px_rgba(245,158,11,.65)]"
                         : "border border-white/10 bg-white/[.06] text-white backdrop-blur-md hover:bg-white/[.10]"
                     }`}
                   >
@@ -1397,7 +1517,7 @@ function Index() {
                       onClick={() => setTip(v)}
                       className={`rounded-xl py-3 font-bold transition-colors ${
                         tip === v
-                          ? "bg-gradient-to-r from-amber-300 to-orange-500 text-black"
+                          ? "bg-gradient-to-r from-amber-200 via-amber-400 to-orange-500 text-gray-950 shadow-[0_8px_24px_-6px_rgba(245,158,11,.6)]"
                           : "border border-white/10 bg-white/[.05] text-white/70 backdrop-blur-md hover:bg-white/[.09]"
                       }`}
                     >
@@ -1440,7 +1560,7 @@ function Index() {
                   <Button
                     type="submit"
                     size="lg"
-                    className="h-14 w-full bg-gradient-to-r from-amber-300 to-orange-500 text-base font-black text-black hover:opacity-90"
+                    className="h-14 w-full bg-gradient-to-r from-amber-200 via-amber-400 to-orange-500 text-base font-black text-gray-950 shadow-[0_14px_44px_-8px_rgba(245,158,11,0.65)] transition-all duration-200 hover:brightness-110 hover:shadow-[0_18px_54px_-8px_rgba(245,158,11,0.85)]"
                   >
                     Donar ${displayDonation} + ${tip} tip <Heart className="ml-2 h-4 w-4" />
                   </Button>
