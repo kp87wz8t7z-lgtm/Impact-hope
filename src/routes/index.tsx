@@ -170,7 +170,7 @@ function Index() {
   const [sent, setSent] = useState(false);
   const [displayDonation, setDisplayDonation] = useState(50);
   const [selectedRange, setSelectedRange] = useState<(typeof chartRanges)[number]>("1D");
-  const [selectedPayment, setSelectedPayment] = useState(paymentMethods[0].label);
+  const [selectedPayment, setSelectedPayment] = useState<string>(paymentMethods[0].label);
 
   const rootRef = useRef<HTMLDivElement>(null);
   const backgroundRef = useRef<HTMLDivElement>(null);
