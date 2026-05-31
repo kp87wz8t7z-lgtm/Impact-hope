@@ -1078,7 +1078,6 @@ function Index() {
         id="roadmap"
         className="relative min-h-[900px] overflow-hidden py-16 md:py-20"
       >
-        <div className="absolute inset-0 bg-[#020713]" />
         <div className="absolute inset-0 bg-gradient-to-b from-primary/5 via-transparent to-primary/10" />
 
         <div className="relative mx-auto max-w-7xl px-5 md:px-6">
@@ -1139,7 +1138,7 @@ function Index() {
             ].map((r) => (
               <div
                 key={r.f}
-                className={`reveal relative rounded-2xl border border-amber-300/25 bg-[#05101b]/72 p-5 shadow-[0_18px_50px_rgba(0,0,0,.38)] backdrop-blur-md lg:border-transparent lg:bg-transparent lg:shadow-none lg:backdrop-blur-0 ${r.offset}`}
+                className={`reveal relative rounded-2xl border border-amber-300/25 p-5 ${r.offset}`}
               >
                 <div className="relative z-10 mb-5">
                   <div className="text-sm font-black text-primary md:text-base">{r.q}</div>
@@ -1177,7 +1176,7 @@ function Index() {
             ].map((m) => (
               <div
                 key={m.label}
-                className="reveal flex items-center gap-4 rounded-2xl border border-amber-300/25 bg-[#05101b]/70 p-4 backdrop-blur-md lg:border-transparent lg:bg-transparent lg:backdrop-blur-0"
+                className="reveal flex items-center gap-4 rounded-2xl border border-amber-300/25 p-4"
               >
                 <m.icon className="h-9 w-9 shrink-0 text-primary" />
                 <div>
@@ -1189,7 +1188,7 @@ function Index() {
             ))}
           </div>
 
-          <div className="reveal mt-4 flex flex-col gap-4 rounded-2xl border border-amber-300/25 bg-[#05101b]/70 p-5 backdrop-blur-md md:flex-row md:items-center md:justify-between lg:border-transparent lg:bg-transparent lg:backdrop-blur-0">
+          <div className="reveal mt-4 flex flex-col gap-4 rounded-2xl border border-amber-300/25 p-5 md:flex-row md:items-center md:justify-between">
             <div className="flex items-center gap-4">
               <Heart className="h-9 w-9 shrink-0 text-primary" />
               <p className="text-lg text-white/82">
