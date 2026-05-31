@@ -1320,10 +1320,16 @@ function Index() {
               </div>
               <Input
                 type="number"
+                min={1}
+                max={100000}
                 value={donation}
-                onChange={(e) => setDonation(Number(e.target.value))}
+                onChange={(e) => {
+                  const n = Number(e.target.value);
+                  if (Number.isFinite(n) && n >= 0) setDonation(n);
+                }}
                 className="mt-4 h-14 border-white/15 bg-transparent text-lg"
                 placeholder="Monto personalizado"
+                aria-label="Monto de donación personalizado"
               />
 
               <div className="mt-7 text-xl font-bold">Elige tu método de pago</div>
