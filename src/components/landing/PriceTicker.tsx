@@ -83,6 +83,7 @@ export function PriceTicker() {
           </span>
         </div>
       </div>
+      )}
     </div>
   );
 }
