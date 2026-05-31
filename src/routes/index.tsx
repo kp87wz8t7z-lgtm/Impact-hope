@@ -71,8 +71,8 @@ const nav = [
 const chartRanges = ["1D", "7D", "1M", "3M", "1A", "Todo"] as const;
 
 const paymentMethods = [
-  { icon: CreditCard, label: "Tarjeta de credito / debito", detail: "Stripe" },
-  { icon: CircleDollarSign, label: "Criptomonedas", detail: "BTC - ETH - USDC" },
+  { icon: CreditCard, label: "Tarjeta de crédito / débito", detail: "Stripe" },
+  { icon: CircleDollarSign, label: "Criptomonedas", detail: "BTC · ETH · USDC" },
   { icon: Wifi, label: "Zelle", detail: "Transferencia directa" },
   { icon: Landmark, label: "Cuenta de banco", detail: "ACH" },
 ] as const;
