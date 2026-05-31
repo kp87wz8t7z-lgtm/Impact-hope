@@ -41,9 +41,9 @@ import impact1 from "@/assets/impact-1.jpg";
 import impact2 from "@/assets/impact-2.jpg";
 import impact3 from "@/assets/impact-3.jpg";
 import coinImg from "@/assets/coin.png";
-import roadmapBg from "../../references/2/roadmap.png";
-import handsImg from "../../references/2/hands.png";
-import worldMapImg from "../../references/4/world map.png";
+import roadmapBg from "@/assets/roadmap-bg.webp";
+import handsImg from "@/assets/hands.webp";
+import worldMapImg from "@/assets/world-map.webp";
 
 export const Route = createFileRoute("/")({
   component: Index,
@@ -71,8 +71,8 @@ const nav = [
 const chartRanges = ["1D", "7D", "1M", "3M", "1A", "Todo"] as const;
 
 const paymentMethods = [
-  { icon: CreditCard, label: "Tarjeta de credito / debito", detail: "Stripe" },
-  { icon: CircleDollarSign, label: "Criptomonedas", detail: "BTC - ETH - USDC" },
+  { icon: CreditCard, label: "Tarjeta de crédito / débito", detail: "Stripe" },
+  { icon: CircleDollarSign, label: "Criptomonedas", detail: "BTC · ETH · USDC" },
   { icon: Wifi, label: "Zelle", detail: "Transferencia directa" },
   { icon: Landmark, label: "Cuenta de banco", detail: "ACH" },
 ] as const;
@@ -1062,152 +1062,6 @@ function Index() {
             </div>
           </div>
 
-          <div className="hidden">
-            <div className="mb-10 flex flex-col justify-between gap-6 md:flex-row md:items-end">
-              <div>
-                <span className="text-sm font-semibold uppercase tracking-[0.22em] text-primary">
-                  Transparencia en tiempo real
-                </span>
-                <h2 className="mt-3 max-w-2xl text-4xl font-black md:text-5xl">
-                  Donde cada moneda se convierte en sonrisas.
-                </h2>
-              </div>
-              <p className="max-w-md text-white/68">
-                Apoyamos educación, alimentación y desarrollo comunitario con reportes visibles,
-                trazables y medibles.
-              </p>
-            </div>
-            <div className="grid gap-5 lg:grid-cols-[.95fr_1fr_.95fr]">
-              <div className="reveal rounded-2xl border border-white/10 bg-[#07101d]/78 p-5 backdrop-blur-xl">
-                <div className="text-xs font-bold uppercase tracking-[0.2em] text-primary">
-                  Transacciones recientes
-                </div>
-                <div className="mt-4 divide-y divide-white/10">
-                  {transactions.map((tx) => (
-                    <div key={tx.id} className="grid grid-cols-[1fr_auto] gap-4 py-4 text-sm">
-                      <div>
-                        <div className="flex items-center gap-2">
-                          <span className="flex h-6 w-6 items-center justify-center rounded-full border border-white/20 text-xs">
-                            →
-                          </span>
-                          <span className="font-semibold">{tx.id}</span>
-                          <span className="text-white/40">→</span>
-                          <span className="text-white/82">{tx.org}</span>
-                        </div>
-                        <div className="mt-1 text-xs text-white/46">{tx.chain} · Confirmada</div>
-                      </div>
-                      <div className="text-right font-semibold">{tx.amount}</div>
-                    </div>
-                  ))}
-                </div>
-                <Button
-                  variant="outline"
-                  asChild
-                  className="mt-4 border-white/15 bg-white/[.03] text-white hover:bg-white/[.07] hover:text-white"
-                >
-                  <Link to="/transactions">
-                    Ver todas las transacciones <ArrowRight className="ml-2 h-4 w-4" />
-                  </Link>
-                </Button>
-              </div>
-
-              <div className="reveal overflow-hidden rounded-2xl border border-white/10 bg-[#07101d]/78 backdrop-blur-xl">
-                <div className="p-5">
-                  <div className="text-xs font-bold uppercase tracking-[0.2em] text-primary">
-                    Mapa de impacto
-                  </div>
-                  <h3 className="mt-2 text-2xl font-bold">Nuestras causas en el mundo</h3>
-                </div>
-                <div className="relative mx-5 mb-5 h-[288px] overflow-hidden rounded-xl bg-[radial-gradient(circle_at_48%_45%,rgba(251,191,36,.2),transparent_32%),linear-gradient(145deg,rgba(14,165,233,.16),rgba(0,0,0,.1))]">
-                  <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,.045)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,.045)_1px,transparent_1px)] bg-[size:38px_38px] opacity-30" />
-                  {[
-                    ["left-[18%] top-[36%]", "Lima"],
-                    ["left-[30%] top-[49%]", "Bogotá"],
-                    ["left-[49%] top-[33%]", "Madrid"],
-                    ["left-[58%] top-[54%]", "Lagos"],
-                    ["left-[72%] top-[42%]", "Nairobi"],
-                    ["left-[82%] top-[62%]", "Manila"],
-                  ].map(([pos, label]) => (
-                    <div key={label} className={`absolute ${pos}`}>
-                      <span className="absolute h-9 w-9 -translate-x-1/2 -translate-y-1/2 rounded-full bg-amber-300/20 blur-md" />
-                      <MapPin className="relative h-6 w-6 -translate-x-1/2 -translate-y-1/2 text-amber-300 drop-shadow-[0_0_14px_rgba(251,191,36,.75)]" />
-                    </div>
-                  ))}
-                  <div className="absolute bottom-4 left-4 rounded-full border border-cyan-300/20 bg-cyan-300/10 px-3 py-1 text-xs text-cyan-100">
-                    0 países conectados
-                  </div>
-                </div>
-              </div>
-
-              <div className="reveal rounded-2xl border border-white/10 bg-[#07101d]/78 p-5 backdrop-blur-xl">
-                <div className="text-xs font-bold uppercase tracking-[0.2em] text-primary">
-                  Tokenomics
-                </div>
-                <h3 className="mt-2 text-2xl font-bold">
-                  Así generamos impacto juntos <Heart className="inline h-5 w-5 text-primary" />
-                </h3>
-                <p className="mt-2 text-sm text-white/58">
-                  El impacto destinado a ONG y comunidades necesitadas se reportará desde 0.
-                </p>
-                <div className="mt-5 flex items-center justify-center">
-                  <div className="relative h-44 w-44 rounded-full bg-[conic-gradient(#22d3ee_0_30%,#f59e0b_30%_50%,#34d399_50%_65%,#a78bfa_65%_80%,#fb7185_80%_90%,#7dd3fc_90%_100%)]">
-                    <div className="absolute inset-9 flex flex-col items-center justify-center rounded-full bg-[#07101d] text-center">
-                      <Globe className="h-7 w-7 text-primary" />
-                      <span className="mt-1 text-[10px] font-semibold leading-tight text-white/70">
-                        Impacto real.
-                        <br />
-                        Vidas transformadas.
-                      </span>
-                    </div>
-                  </div>
-                </div>
-                <div className="mt-5 space-y-3">
-                  {tokenomics.map((item) => (
-                    <div key={item.label} className="flex items-start gap-3 text-sm">
-                      <span className={`mt-1 h-2.5 w-2.5 shrink-0 rounded-full ${item.color}`} />
-                      <div>
-                        <span className="font-bold">
-                          {item.value} {item.label}
-                        </span>
-                        <p className="text-xs text-white/50">{item.desc}</p>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-                <p className="mt-5 border-t border-white/10 pt-4 text-xs text-white/50">
-                  <Heart className="mr-1 inline h-3 w-3 text-primary" />
-                  Transparente. Trazable. Con propósito. Cada token impulsa un cambio real.
-                </p>
-              </div>
-            </div>
-
-            <div className="mt-6 grid gap-6 md:grid-cols-3">
-              {[
-                { img: impact1, t: "Comunidad", d: "Niños unidos por la esperanza" },
-                { img: impact2, t: "Alimentación", d: "Llevamos comida a quien la necesita" },
-                { img: impact3, t: "Educación", d: "Construyendo el futuro con conocimiento" },
-              ].map((c) => (
-                <div
-                  key={c.t}
-                  className="reveal group relative aspect-[4/5] overflow-hidden rounded-2xl border border-white/10"
-                >
-                  <img
-                    src={c.img}
-                    alt={c.t}
-                    loading="lazy"
-                    width={1024}
-                    height={1280}
-                    className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 group-hover:scale-110"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-[#050914] via-[#050914]/40 to-transparent" />
-                  <div className="absolute bottom-0 left-0 right-0 p-6">
-                    <h3 className="text-2xl font-bold">{c.t}</h3>
-                    <p className="mt-1 text-white/78">{c.d}</p>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
         </div>
       </section>
 
@@ -1466,42 +1320,43 @@ function Index() {
               </div>
               <Input
                 type="number"
+                min={1}
+                max={100000}
                 value={donation}
-                onChange={(e) => setDonation(Number(e.target.value))}
+                onChange={(e) => {
+                  const n = Number(e.target.value);
+                  if (Number.isFinite(n) && n >= 0) setDonation(n);
+                }}
                 className="mt-4 h-14 border-white/15 bg-transparent text-lg"
                 placeholder="Monto personalizado"
+                aria-label="Monto de donación personalizado"
               />
 
               <div className="mt-7 text-xl font-bold">Elige tu método de pago</div>
-              <div className="mt-4 space-y-3">
-                {[
-                  { icon: CreditCard, label: "Tarjeta de crédito / débito", detail: "Stripe" },
-                  { icon: CircleDollarSign, label: "Criptomonedas", detail: "BTC · ETH · USDC" },
-                  { icon: Wifi, label: "Zelle", detail: "Transferencia directa" },
-                  { icon: Landmark, label: "Cuenta de banco", detail: "ACH" },
-                ].map((method) => (
-                  <button
-                    key={method.label}
-                    type="button"
-                    onClick={() => setSelectedPayment(method.label)}
-                    aria-pressed={
-                      selectedPayment === method.label ||
-                      (selectedPayment === paymentMethods[0].label && method.detail === "Stripe")
-                    }
-                    className={`flex w-full items-center justify-between rounded-xl border p-4 text-left transition-colors ${
-                      selectedPayment === method.label ||
-                      (selectedPayment === paymentMethods[0].label && method.detail === "Stripe")
-                        ? "border-primary/55 bg-primary/12"
-                        : "border-white/10 bg-white/[.05] backdrop-blur-md hover:border-primary/40 hover:bg-white/[.09]"
-                    }`}
-                  >
-                    <span className="flex items-center gap-3">
-                      <method.icon className="h-6 w-6 text-white/72" />
-                      <span className="font-semibold">{method.label}</span>
-                    </span>
-                    <span className="text-sm text-white/48">{method.detail}</span>
-                  </button>
-                ))}
+              <div className="mt-4 space-y-3" role="radiogroup" aria-label="Método de pago">
+                {paymentMethods.map((method) => {
+                  const isSelected = selectedPayment === method.label;
+                  return (
+                    <button
+                      key={method.label}
+                      type="button"
+                      role="radio"
+                      aria-checked={isSelected}
+                      onClick={() => setSelectedPayment(method.label)}
+                      className={`flex w-full items-center justify-between rounded-xl border p-4 text-left transition-colors ${
+                        isSelected
+                          ? "border-primary/55 bg-primary/12"
+                          : "border-white/10 bg-white/[.05] backdrop-blur-md hover:border-primary/40 hover:bg-white/[.09]"
+                      }`}
+                    >
+                      <span className="flex items-center gap-3">
+                        <method.icon className="h-6 w-6 text-white/72" />
+                        <span className="font-semibold">{method.label}</span>
+                      </span>
+                      <span className="text-sm text-white/48">{method.detail}</span>
+                    </button>
+                  );
+                })}
               </div>
 
               <div className="mt-6 border-t border-white/10 pt-5">
@@ -1601,22 +1456,22 @@ function Index() {
             <img src={coinImg} alt="" className="h-6 w-6" width={24} height={24} />
             <span>© 2026 ImpactHope Network LLC</span>
           </div>
-          <nav className="flex flex-wrap items-center gap-4">
-            <a href="/terms" className="hover:text-white/80 transition-colors">
+          <nav className="flex flex-wrap items-center gap-4" aria-label="Enlaces legales">
+            <Link to="/terms" className="transition-colors hover:text-white/80">
               Términos de uso
-            </a>
-            <a href="/privacy" className="hover:text-white/80 transition-colors">
+            </Link>
+            <Link to="/privacy" className="transition-colors hover:text-white/80">
               Política de privacidad
-            </a>
-            <a href="/risk" className="hover:text-white/80 transition-colors">
+            </Link>
+            <Link to="/risk" className="transition-colors hover:text-white/80">
               Riesgos
-            </a>
-            <a href="/legal" className="hover:text-white/80 transition-colors">
+            </Link>
+            <Link to="/legal" className="transition-colors hover:text-white/80">
               Aviso legal
-            </a>
-            <a href="/contact" className="hover:text-white/80 transition-colors">
+            </Link>
+            <Link to="/contact" className="transition-colors hover:text-white/80">
               Contacto
-            </a>
+            </Link>
           </nav>
         </div>
       </footer>
