@@ -65,6 +65,7 @@ const nav = [
   { label: "Misión", href: "#mision" },
   { label: "Cómo funciona", href: "#funciona" },
   { label: "Token", href: "#token" },
+  { label: "Live", href: "#onchain" },
   { label: "Impacto", href: "#impacto" },
   { label: "Roadmap", href: "#roadmap" },
   { label: "Donar", href: "#donar" },
