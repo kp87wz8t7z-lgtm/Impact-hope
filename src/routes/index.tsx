@@ -595,7 +595,7 @@ function Index() {
               aria-hidden="true"
               className="absolute inset-0 h-full w-full object-cover object-center opacity-30"
             />
-            <div className="absolute inset-0 bg-[#07101d]/20" />
+            <div className="absolute inset-0 bg-[#07101d]" />
             <div className="relative z-10">
               <span className="text-sm font-semibold uppercase tracking-[0.22em] text-primary">
                 Nuestra Misión
