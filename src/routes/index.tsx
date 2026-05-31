@@ -1029,7 +1029,10 @@ function Index() {
         </div>
       </section>
 
+      <LiveOnChain />
+
       <section id="impacto" className="relative py-20">
+
         <div className="mx-auto px-4 sm:px-5 md:max-w-2xl lg:max-w-5xl lg:px-6">
           <div className="reveal overflow-hidden rounded-[1.65rem] border border-white/12 bg-[#070c19]/20 shadow-[0_26px_78px_rgba(0,0,0,.44)]">
             <div className="relative min-h-[232px] p-7 lg:min-h-[280px] lg:p-10">
