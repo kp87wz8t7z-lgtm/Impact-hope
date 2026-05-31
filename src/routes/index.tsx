@@ -41,7 +41,7 @@ import impact1 from "@/assets/impact-1.jpg";
 import impact2 from "@/assets/impact-2.jpg";
 import impact3 from "@/assets/impact-3.jpg";
 import coinImg from "@/assets/coin.png";
-import roadmapBg from "@/assets/roadmap-bg.webp";
+
 import handsImg from "@/assets/hands.webp";
 import worldMapImg from "@/assets/world-map.webp";
 import { PriceTicker } from "@/components/landing/PriceTicker";
