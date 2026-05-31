@@ -1450,6 +1450,7 @@ function Index() {
           ))}
         </div>
       </section>
+      </main>
 
       <footer className="relative mt-8 border-t border-white/10 bg-[#050914]/78 py-10 backdrop-blur-xl">
         <div className="mx-auto flex max-w-7xl flex-col items-center justify-between gap-4 px-5 text-sm text-white/52 md:flex-row md:px-6">
