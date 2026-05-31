@@ -1176,7 +1176,7 @@ function Index() {
             ].map((m) => (
               <div
                 key={m.label}
-                className="reveal flex items-center gap-4 rounded-2xl border border-amber-300/25 bg-[#05101b]/70 p-4 backdrop-blur-md lg:border-transparent lg:bg-transparent lg:backdrop-blur-0"
+                className="reveal flex items-center gap-4 rounded-2xl border border-amber-300/25 p-4"
               >
                 <m.icon className="h-9 w-9 shrink-0 text-primary" />
                 <div>
