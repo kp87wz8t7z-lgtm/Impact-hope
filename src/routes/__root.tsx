@@ -7,6 +7,7 @@ import {
   HeadContent,
   Scripts,
 } from "@tanstack/react-router";
+import { useEffect } from "react";
 
 import appCss from "../styles.css?url";
 
@@ -140,6 +141,23 @@ function RootShell({ children }: { children: React.ReactNode }) {
 
 function RootComponent() {
   const { queryClient } = Route.useRouteContext();
+  const router = useRouter();
+
+  useEffect(() => {
+    const key = import.meta.env.VITE_POSTHOG_KEY;
+    if (!key) return;
+    import("posthog-js").then(({ default: posthog }) => {
+      posthog.init(key, {
+        api_host: import.meta.env.VITE_POSTHOG_HOST ?? "https://app.posthog.com",
+        capture_pageview: false,
+        persistence: "localStorage",
+      });
+      // track initial pageview
+      posthog.capture("$pageview");
+      // track subsequent navigations
+      return router.subscribe("onResolved", () => posthog.capture("$pageview"));
+    });
+  }, [router]);
 
   return (
     <QueryClientProvider client={queryClient}>

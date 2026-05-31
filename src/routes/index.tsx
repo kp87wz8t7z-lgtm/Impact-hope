@@ -41,7 +41,6 @@ import impact1 from "@/assets/impact-1.jpg";
 import impact2 from "@/assets/impact-2.jpg";
 import impact3 from "@/assets/impact-3.jpg";
 import coinImg from "@/assets/coin.png";
-import roadmapBg from "../../references/2/roadmap.png";
 import handsImg from "../../references/2/hands.png";
 import worldMapImg from "../../references/4/world map.png";
 
@@ -1213,11 +1212,9 @@ function Index() {
 
       <section
         id="roadmap"
-        className="relative min-h-[900px] overflow-hidden bg-cover bg-no-repeat py-16 md:py-20 lg:bg-[length:100%_100%]"
-        style={{ backgroundImage: `url(${roadmapBg})`, backgroundPosition: "center 72%" }}
+        className="relative min-h-[900px] overflow-hidden bg-[#020713] py-16 md:py-20"
       >
-        <div className="absolute inset-0 bg-[#020713]/45" />
-        <div className="absolute inset-0 bg-gradient-to-b from-[#020713]/30 via-transparent to-[#020713]/50" />
+        <div className="absolute inset-0 bg-gradient-to-b from-[#020713] via-[#060d1f] to-[#020713]" />
 
         <div className="relative mx-auto max-w-7xl px-5 md:px-6">
           <div className="max-w-[560px]">
