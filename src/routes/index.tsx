@@ -1188,7 +1188,7 @@ function Index() {
             ))}
           </div>
 
-          <div className="reveal mt-4 flex flex-col gap-4 rounded-2xl border border-amber-300/25 bg-[#05101b]/70 p-5 backdrop-blur-md md:flex-row md:items-center md:justify-between lg:border-transparent lg:bg-transparent lg:backdrop-blur-0">
+          <div className="reveal mt-4 flex flex-col gap-4 rounded-2xl border border-amber-300/25 p-5 md:flex-row md:items-center md:justify-between">
             <div className="flex items-center gap-4">
               <Heart className="h-9 w-9 shrink-0 text-primary" />
               <p className="text-lg text-white/82">
