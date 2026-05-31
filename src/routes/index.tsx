@@ -1456,22 +1456,22 @@ function Index() {
             <img src={coinImg} alt="" className="h-6 w-6" width={24} height={24} />
             <span>© 2026 ImpactHope Network LLC</span>
           </div>
-          <nav className="flex flex-wrap items-center gap-4">
-            <a href="/terms" className="hover:text-white/80 transition-colors">
+          <nav className="flex flex-wrap items-center gap-4" aria-label="Enlaces legales">
+            <Link to="/terms" className="transition-colors hover:text-white/80">
               Términos de uso
-            </a>
-            <a href="/privacy" className="hover:text-white/80 transition-colors">
+            </Link>
+            <Link to="/privacy" className="transition-colors hover:text-white/80">
               Política de privacidad
-            </a>
-            <a href="/risk" className="hover:text-white/80 transition-colors">
+            </Link>
+            <Link to="/risk" className="transition-colors hover:text-white/80">
               Riesgos
-            </a>
-            <a href="/legal" className="hover:text-white/80 transition-colors">
+            </Link>
+            <Link to="/legal" className="transition-colors hover:text-white/80">
               Aviso legal
-            </a>
-            <a href="/contact" className="hover:text-white/80 transition-colors">
+            </Link>
+            <Link to="/contact" className="transition-colors hover:text-white/80">
               Contacto
-            </a>
+            </Link>
           </nav>
         </div>
       </footer>
