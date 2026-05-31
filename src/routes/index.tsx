@@ -376,6 +376,7 @@ function Index() {
         )}
       </header>
 
+      <main id="main">
       <section
         id="top"
         className="relative min-h-[calc(100svh-72px)] overflow-hidden pt-[72px]"
