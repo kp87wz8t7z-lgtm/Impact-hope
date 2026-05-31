@@ -1473,35 +1473,30 @@ function Index() {
               />
 
               <div className="mt-7 text-xl font-bold">Elige tu método de pago</div>
-              <div className="mt-4 space-y-3">
-                {[
-                  { icon: CreditCard, label: "Tarjeta de crédito / débito", detail: "Stripe" },
-                  { icon: CircleDollarSign, label: "Criptomonedas", detail: "BTC · ETH · USDC" },
-                  { icon: Wifi, label: "Zelle", detail: "Transferencia directa" },
-                  { icon: Landmark, label: "Cuenta de banco", detail: "ACH" },
-                ].map((method) => (
-                  <button
-                    key={method.label}
-                    type="button"
-                    onClick={() => setSelectedPayment(method.label)}
-                    aria-pressed={
-                      selectedPayment === method.label ||
-                      (selectedPayment === paymentMethods[0].label && method.detail === "Stripe")
-                    }
-                    className={`flex w-full items-center justify-between rounded-xl border p-4 text-left transition-colors ${
-                      selectedPayment === method.label ||
-                      (selectedPayment === paymentMethods[0].label && method.detail === "Stripe")
-                        ? "border-primary/55 bg-primary/12"
-                        : "border-white/10 bg-white/[.05] backdrop-blur-md hover:border-primary/40 hover:bg-white/[.09]"
-                    }`}
-                  >
-                    <span className="flex items-center gap-3">
-                      <method.icon className="h-6 w-6 text-white/72" />
-                      <span className="font-semibold">{method.label}</span>
-                    </span>
-                    <span className="text-sm text-white/48">{method.detail}</span>
-                  </button>
-                ))}
+              <div className="mt-4 space-y-3" role="radiogroup" aria-label="Método de pago">
+                {paymentMethods.map((method) => {
+                  const isSelected = selectedPayment === method.label;
+                  return (
+                    <button
+                      key={method.label}
+                      type="button"
+                      role="radio"
+                      aria-checked={isSelected}
+                      onClick={() => setSelectedPayment(method.label)}
+                      className={`flex w-full items-center justify-between rounded-xl border p-4 text-left transition-colors ${
+                        isSelected
+                          ? "border-primary/55 bg-primary/12"
+                          : "border-white/10 bg-white/[.05] backdrop-blur-md hover:border-primary/40 hover:bg-white/[.09]"
+                      }`}
+                    >
+                      <span className="flex items-center gap-3">
+                        <method.icon className="h-6 w-6 text-white/72" />
+                        <span className="font-semibold">{method.label}</span>
+                      </span>
+                      <span className="text-sm text-white/48">{method.detail}</span>
+                    </button>
+                  );
+                })}
               </div>
 
               <div className="mt-6 border-t border-white/10 pt-5">
