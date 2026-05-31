@@ -1078,7 +1078,6 @@ function Index() {
         id="roadmap"
         className="relative min-h-[900px] overflow-hidden py-16 md:py-20"
       >
-        <div className="absolute inset-0 bg-[#020713]" />
         <div className="absolute inset-0 bg-gradient-to-b from-primary/5 via-transparent to-primary/10" />
 
         <div className="relative mx-auto max-w-7xl px-5 md:px-6">
