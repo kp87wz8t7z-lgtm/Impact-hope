@@ -1076,11 +1076,10 @@ function Index() {
 
       <section
         id="roadmap"
-        className="relative min-h-[900px] overflow-hidden bg-cover bg-no-repeat py-16 md:py-20 lg:bg-[length:100%_100%]"
-        style={{ backgroundImage: `url(${roadmapBg})`, backgroundPosition: "center 72%" }}
+        className="relative min-h-[900px] overflow-hidden py-16 md:py-20"
       >
-        <div className="absolute inset-0 bg-[#020713]/45" />
-        <div className="absolute inset-0 bg-gradient-to-b from-[#020713]/30 via-transparent to-[#020713]/50" />
+        <div className="absolute inset-0 bg-[#020713]" />
+        <div className="absolute inset-0 bg-gradient-to-b from-primary/5 via-transparent to-primary/10" />
 
         <div className="relative mx-auto max-w-7xl px-5 md:px-6">
           <div className="max-w-[560px]">
