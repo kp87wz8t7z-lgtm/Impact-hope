@@ -5,10 +5,12 @@ import { mockCoinPrices, mockNetworkStats } from "@/lib/mock/chain";
 // Slim, always-visible market ticker. Mock-driven; swap mockCoinPrices()
 // for a CoinGecko fetch later.
 export function PriceTicker() {
+  const [mounted, setMounted] = useState(false);
   const [prices, setPrices] = useState(() => mockCoinPrices());
   const [stats, setStats] = useState(() => mockNetworkStats());
 
   useEffect(() => {
+    setMounted(true);
     const id = setInterval(() => {
       setPrices((prev) => {
         const next = { ...prev };
