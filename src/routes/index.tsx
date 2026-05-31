@@ -1138,7 +1138,7 @@ function Index() {
             ].map((r) => (
               <div
                 key={r.f}
-                className={`reveal relative rounded-2xl border border-amber-300/25 bg-[#05101b]/72 p-5 shadow-[0_18px_50px_rgba(0,0,0,.38)] backdrop-blur-md lg:border-transparent lg:bg-transparent lg:shadow-none lg:backdrop-blur-0 ${r.offset}`}
+                className={`reveal relative rounded-2xl border border-amber-300/25 p-5 ${r.offset}`}
               >
                 <div className="relative z-10 mb-5">
                   <div className="text-sm font-black text-primary md:text-base">{r.q}</div>
