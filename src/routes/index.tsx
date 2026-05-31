@@ -588,14 +588,7 @@ function Index() {
 
       <section id="mision" className="relative py-20">
         <div className="mx-auto max-w-7xl px-5 md:px-6">
-          <div className="reveal relative grid gap-8 overflow-hidden rounded-[2rem] border border-amber-300/18 p-7 shadow-[0_28px_90px_rgba(0,0,0,.36)] backdrop-blur-sm md:p-10 lg:grid-cols-[1.05fr_.95fr] lg:p-14">
-            <img
-              src={worldMapImg}
-              alt=""
-              aria-hidden="true"
-              className="absolute inset-0 h-full w-full object-cover object-center opacity-30"
-            />
-            <div className="absolute inset-0 bg-[#07101d]/20" />
+          <div className="reveal relative grid gap-8 overflow-hidden rounded-[2rem] border border-amber-300/18 bg-[#07101d] p-7 shadow-[0_28px_90px_rgba(0,0,0,.36)] md:p-10 lg:grid-cols-[1.05fr_.95fr] lg:p-14">
             <div className="relative z-10">
               <span className="text-sm font-semibold uppercase tracking-[0.22em] text-primary">
                 Nuestra Misión
