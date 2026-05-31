@@ -40,7 +40,8 @@ export function PriceTicker() {
   ];
 
   return (
-    <div className="fixed inset-x-0 top-[72px] z-40 border-b border-white/10 bg-[#050914]/82 backdrop-blur-xl">
+    <div className="fixed inset-x-0 top-[72px] z-40 border-b border-white/10 bg-[#050914]/82 backdrop-blur-xl" suppressHydrationWarning>
+      {!mounted ? <div className="h-7" /> : (
       <div className="mx-auto flex max-w-7xl items-center justify-between gap-4 overflow-x-auto px-5 py-1.5 text-[11px] md:px-6 md:text-xs">
         <div className="flex items-center gap-4 md:gap-6">
           {items.map((i) => {
