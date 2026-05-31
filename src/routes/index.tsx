@@ -44,6 +44,8 @@ import coinImg from "@/assets/coin.png";
 import roadmapBg from "@/assets/roadmap-bg.webp";
 import handsImg from "@/assets/hands.webp";
 import worldMapImg from "@/assets/world-map.webp";
+import { PriceTicker } from "@/components/landing/PriceTicker";
+import { LiveOnChain } from "@/components/landing/LiveOnChain";
 
 export const Route = createFileRoute("/")({
   component: Index,
@@ -63,6 +65,7 @@ const nav = [
   { label: "Misión", href: "#mision" },
   { label: "Cómo funciona", href: "#funciona" },
   { label: "Token", href: "#token" },
+  { label: "Live", href: "#onchain" },
   { label: "Impacto", href: "#impacto" },
   { label: "Roadmap", href: "#roadmap" },
   { label: "Donar", href: "#donar" },
@@ -375,8 +378,10 @@ function Index() {
           </div>
         )}
       </header>
+      <PriceTicker />
 
       <main id="main">
+
       <section
         id="top"
         className="relative min-h-[calc(100svh-72px)] overflow-hidden pt-[72px]"
@@ -1025,7 +1030,10 @@ function Index() {
         </div>
       </section>
 
+      <LiveOnChain />
+
       <section id="impacto" className="relative py-20">
+
         <div className="mx-auto px-4 sm:px-5 md:max-w-2xl lg:max-w-5xl lg:px-6">
           <div className="reveal overflow-hidden rounded-[1.65rem] border border-white/12 bg-[#070c19]/20 shadow-[0_26px_78px_rgba(0,0,0,.44)]">
             <div className="relative min-h-[232px] p-7 lg:min-h-[280px] lg:p-10">
