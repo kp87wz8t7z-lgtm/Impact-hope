@@ -9,6 +9,7 @@ import {
 } from "@tanstack/react-router";
 
 import appCss from "../styles.css?url";
+import coinPng from "../assets/coin.png?url";
 import "../i18n";
 import { ThemeProvider } from "@/contexts/theme-context";
 
