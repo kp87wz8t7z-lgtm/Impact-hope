@@ -72,7 +72,13 @@ export function LegalPage({
   return (
     <main className="min-h-screen bg-[#050914] text-white">
       <div className="fixed inset-0 -z-10 bg-[#050914]" />
-      <div className="pointer-events-none fixed inset-0 -z-10 bg-[radial-gradient(circle_at_18%_8%,rgba(251,191,36,.16),transparent_30%),radial-gradient(circle_at_82%_14%,rgba(34,211,238,.12),transparent_32%),linear-gradient(180deg,rgba(5,9,20,0)_0%,#050914_68%)]" />
+      <div
+        className="pointer-events-none fixed inset-0 -z-10"
+        style={{
+          backgroundImage:
+            "radial-gradient(circle at 18% 8%, color-mix(in oklch, var(--primary) 16%, transparent), transparent 30%), radial-gradient(circle at 82% 14%, color-mix(in oklch, var(--primary) 10%, transparent), transparent 32%), linear-gradient(180deg, rgba(5,9,20,0) 0%, #050914 68%)",
+        }}
+      />
 
       <header className="border-b border-white/10 bg-[#050914]/86 backdrop-blur-xl">
         <div className="mx-auto flex max-w-6xl items-center justify-between gap-4 px-5 py-4 md:px-6">
