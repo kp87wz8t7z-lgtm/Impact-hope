@@ -969,7 +969,7 @@ function Index() {
               return (
                 <div
                   key={r.f}
-                  className={`reveal relative rounded-2xl border border-primary/25 p-5 ${roadmapOffsets[i]}`}
+                  className={`reveal relative rounded-2xl border border-primary/25 bg-background/55 p-5 backdrop-blur-md ${roadmapOffsets[i]}`}
                 >
                   <div className="relative z-10 mb-5">
                     <div className="text-sm font-black text-primary md:text-base">{roadmapQuarters[i]}</div>
