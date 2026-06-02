@@ -1231,7 +1231,8 @@ function Index() {
                   <Button
                     type="submit"
                     size="lg"
-                    className="h-14 w-full bg-gradient-to-r from-amber-200 via-amber-400 to-orange-500 text-base font-black text-gray-950 shadow-[0_14px_44px_-8px_rgba(245,158,11,0.65)] transition-all duration-200 hover:brightness-110 hover:shadow-[0_18px_54px_-8px_rgba(245,158,11,0.85)]"
+                    className="h-14 w-full text-base font-black text-gray-950 shadow-[0_14px_44px_-8px_var(--accent-glow)] transition-all duration-200 hover:brightness-110 hover:shadow-[0_18px_54px_-8px_var(--accent-glow)]"
+                    style={{ background: `linear-gradient(to right, ${config.grad.from}, ${config.grad.via}, ${config.grad.to})` }}
                   >
                     {t("donate.submit", { donation: displayDonation, tip })} <Heart className="ml-2 h-4 w-4" />
                   </Button>
