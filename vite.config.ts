@@ -12,7 +12,6 @@ const isVercel = process.env.VERCEL === "1";
 const vercelPlugins = isVercel ? [(await import("nitro/vite")).nitro()] : [];
 
 export default defineConfig({
-  cloudflare: isVercel ? false : undefined,
   plugins: vercelPlugins,
   tanstackStart: {
     server: { entry: "server" },
