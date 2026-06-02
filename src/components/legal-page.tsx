@@ -168,7 +168,7 @@ export function LegalPage({
               ))}
             </nav>
           </div>
-          <div className="mt-4 rounded-2xl border border-cyan-300/16 bg-cyan-300/8 p-5 text-sm leading-relaxed text-cyan-50/76">
+          <div className="mt-4 rounded-2xl border border-white/10 bg-white/[.04] p-5 text-sm leading-relaxed text-white/70">
             {t("common.legalDisclaimer")}
           </div>
         </aside>
