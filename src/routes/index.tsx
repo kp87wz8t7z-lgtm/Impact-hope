@@ -402,7 +402,7 @@ function Index() {
                 </span>
               ))}
             </h1>
-            <p className="hero-reveal mt-6 max-w-xl rounded-xl bg-black/64 px-4 py-3 text-lg leading-relaxed text-white/92 opacity-0 backdrop-blur-sm">
+            <p className="hero-reveal mt-6 max-w-xl text-lg leading-relaxed text-white/95 opacity-0 [text-shadow:0_2px_12px_rgba(0,0,0,0.85),0_1px_3px_rgba(0,0,0,0.9)]">
               {t("hero.description")}
             </p>
             <div className="hero-reveal mt-8 flex flex-wrap gap-3 opacity-0">
