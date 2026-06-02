@@ -10,6 +10,9 @@ import {
 import { useEffect } from "react";
 
 import appCss from "../styles.css?url";
+import coinPng from "../assets/coin.png?url";
+import "../i18n";
+import { ThemeProvider } from "@/contexts/theme-context";
 
 function NotFoundComponent() {
   return (
@@ -107,6 +110,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       },
     ],
     links: [
+      { rel: "icon", type: "image/png", href: coinPng },
       { rel: "preconnect", href: "https://fonts.googleapis.com" },
       { rel: "preconnect", href: "https://fonts.gstatic.com", crossOrigin: "anonymous" },
       {
@@ -161,7 +165,9 @@ function RootComponent() {
 
   return (
     <QueryClientProvider client={queryClient}>
-      <Outlet />
+      <ThemeProvider>
+        <Outlet />
+      </ThemeProvider>
     </QueryClientProvider>
   );
 }
