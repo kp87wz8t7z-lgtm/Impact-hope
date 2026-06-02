@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { ArrowDownLeft, ArrowUpRight, Coins, Users, Zap, Wallet } from "lucide-react";
 import { useTranslation } from "react-i18next";
+import { useAccent } from "@/contexts/theme-context";
 import {
   fmtSol,
   fmtUsd,
@@ -15,7 +16,9 @@ import {
   type HeliusTx,
 } from "@/lib/mock/chain";
 
-function Sparkline({ data, color = "#fbbf24" }: { data: number[]; color?: string }) {
+function Sparkline({ data, color }: { data: number[]; color?: string }) {
+  const { config } = useAccent();
+  const stroke = color || config.grad.via;
   const w = 120;
   const h = 36;
   const min = Math.min(...data);
@@ -30,13 +33,14 @@ function Sparkline({ data, color = "#fbbf24" }: { data: number[]; color?: string
     .join(" ");
   return (
     <svg width={w} height={h} className="block" aria-hidden>
-      <polyline points={pts} fill="none" stroke={color} strokeWidth="1.5" strokeLinecap="round" />
+      <polyline points={pts} fill="none" stroke={stroke} strokeWidth="1.5" strokeLinecap="round" />
     </svg>
   );
 }
 
 function TxRow({ tx }: { tx: HeliusTx }) {
   const { t } = useTranslation();
+  const { config } = useAccent();
   const isToken = tx.tokenTransfers.length > 0;
   const amount = isToken
     ? `${tx.tokenTransfers[0].tokenAmount} ${tx.tokenTransfers[0].symbol}`
@@ -49,7 +53,7 @@ function TxRow({ tx }: { tx: HeliusTx }) {
       <div className="flex min-w-0 items-center gap-3">
         <div
           className={`flex h-9 w-9 shrink-0 items-center justify-center rounded-full ${
-            incoming ? "bg-emerald-500/15 text-emerald-400" : "bg-amber-500/15 text-amber-400"
+            incoming ? "bg-emerald-500/15 text-emerald-400" : "bg-primary/15 text-primary"
           }`}
         >
           {incoming ? (
