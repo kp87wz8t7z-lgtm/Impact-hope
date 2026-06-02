@@ -7,11 +7,11 @@ import {
   HeadContent,
   Scripts,
 } from "@tanstack/react-router";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 import appCss from "../styles.css?url";
-import coinPng from "../assets/coin.png?url";
-import "../i18n";
+import coinPng from "../assets/favicon.png?url";
+import i18n from "../i18n";
 import { ThemeProvider } from "@/contexts/theme-context";
 
 function NotFoundComponent() {
@@ -130,8 +130,20 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
 });
 
 function RootShell({ children }: { children: React.ReactNode }) {
+  const [lang, setLang] = useState("en");
+
+  useEffect(() => {
+    const stored = localStorage.getItem("ihn-lang");
+    const browserLng = navigator.language.slice(0, 2);
+    const detected = stored === "es" || stored === "en" ? stored : browserLng === "es" ? "es" : "en";
+    setLang(detected);
+    if (i18n.language !== detected) {
+      i18n.changeLanguage(detected);
+    }
+  }, []);
+
   return (
-    <html lang="en">
+    <html lang={lang}>
       <head>
         <HeadContent />
       </head>
@@ -145,23 +157,15 @@ function RootShell({ children }: { children: React.ReactNode }) {
 
 function RootComponent() {
   const { queryClient } = Route.useRouteContext();
-  const router = useRouter();
 
   useEffect(() => {
-    const key = import.meta.env.VITE_POSTHOG_KEY;
-    if (!key) return;
-    import("posthog-js").then(({ default: posthog }) => {
-      posthog.init(key, {
-        api_host: import.meta.env.VITE_POSTHOG_HOST ?? "https://app.posthog.com",
-        capture_pageview: false,
-        persistence: "localStorage",
-      });
-      // track initial pageview
-      posthog.capture("$pageview");
-      // track subsequent navigations
-      return router.subscribe("onResolved", () => posthog.capture("$pageview"));
-    });
-  }, [router]);
+    const stored = localStorage.getItem("ihn-lang");
+    const browserLng = navigator.language.slice(0, 2);
+    const detected = stored === "es" || stored === "en" ? stored : browserLng === "es" ? "es" : "en";
+    if (i18n.language !== detected) {
+      i18n.changeLanguage(detected);
+    }
+  }, []);
 
   return (
     <QueryClientProvider client={queryClient}>

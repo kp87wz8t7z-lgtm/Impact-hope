@@ -80,8 +80,8 @@
   --accent-grad-via: #fbbf24;
   --accent-grad-to: #f97316;
   --gradient-hero: linear-gradient(135deg, oklch(0.18 0.06 265 / 0.85), oklch(0.16 0.08 320 / 0.7));
-  --gradient-gold: linear-gradient(135deg, oklch(0.85 0.18 80), oklch(0.7 0.2 35));
-  --shadow-glow: 0 20px 60px -15px oklch(0.82 0.17 75 / 0.5);
+  --gradient-gold: linear-gradient(135deg, var(--primary), color-mix(in oklch, var(--primary) 60%, oklch(0.3 0.1 30)));
+  --shadow-glow: 0 20px 60px -15px color-mix(in oklch, var(--primary) 50%, transparent);
   --secondary: oklch(0.968 0.007 247.896);
   --secondary-foreground: oklch(0.208 0.042 265.755);
   --muted: oklch(0.968 0.007 247.896);
@@ -157,14 +157,14 @@
     color: var(--color-foreground);
     font-family: var(--font-body);
     background-image:
-      radial-gradient(ellipse 80% 50% at 20% 0%, oklch(0.82 0.17 75 / 0.10), transparent 60%),
-      radial-gradient(ellipse 70% 60% at 85% 35%, oklch(0.55 0.22 295 / 0.10), transparent 65%),
-      radial-gradient(ellipse 90% 50% at 50% 100%, oklch(0.82 0.17 75 / 0.08), transparent 60%);
+      radial-gradient(ellipse 80% 50% at 20% 0%, color-mix(in oklch, var(--primary) 10%, transparent), transparent 60%),
+      radial-gradient(ellipse 70% 60% at 85% 35%, color-mix(in oklch, oklch(0.55 0.22 295) 10%, transparent), transparent 65%),
+      radial-gradient(ellipse 90% 50% at 50% 100%, color-mix(in oklch, var(--primary) 8%, transparent), transparent 60%);
     background-attachment: fixed;
   }
 
   ::selection {
-    background: oklch(0.82 0.17 75 / 0.35);
+    background: color-mix(in oklch, var(--primary) 35%, transparent);
     color: oklch(0.99 0.01 90);
   }
 
@@ -172,11 +172,11 @@
   ::-webkit-scrollbar { width: 10px; height: 10px; }
   ::-webkit-scrollbar-track { background: oklch(0.07 0.03 265); }
   ::-webkit-scrollbar-thumb {
-    background: linear-gradient(180deg, oklch(0.82 0.17 75 / 0.4), oklch(0.55 0.22 295 / 0.4));
+    background: linear-gradient(180deg, color-mix(in oklch, var(--primary) 40%, transparent), color-mix(in oklch, oklch(0.55 0.22 295) 40%, transparent));
     border-radius: 8px;
   }
   ::-webkit-scrollbar-thumb:hover {
-    background: linear-gradient(180deg, oklch(0.82 0.17 75 / 0.7), oklch(0.55 0.22 295 / 0.7));
+    background: linear-gradient(180deg, color-mix(in oklch, var(--primary) 70%, transparent), color-mix(in oklch, oklch(0.55 0.22 295) 70%, transparent));
   }
 
   h1, h2 {
@@ -190,7 +190,7 @@
 
   /* Focus visible for keyboard navigation (a11y) */
   :focus-visible {
-    outline: 2px solid oklch(0.82 0.17 75);
+    outline: 2px solid var(--primary);
     outline-offset: 3px;
     border-radius: 4px;
   }
@@ -266,13 +266,13 @@
     font-weight: 700;
     letter-spacing: 0.18em;
     text-transform: uppercase;
-    color: oklch(0.82 0.17 75);
+    color: var(--primary);
   }
   .eyebrow::before {
     content: "";
     width: 28px;
     height: 1px;
-    background: linear-gradient(90deg, oklch(0.82 0.17 75), transparent);
+    background: linear-gradient(90deg, var(--primary), transparent);
   }
 
   /* ---- Ritmo de secciones consistente ---- */
@@ -289,15 +289,15 @@
     transition: border-color .25s ease, transform .25s ease, box-shadow .25s ease;
   }
   .card-glass:hover {
-    border-color: oklch(0.82 0.17 75 / 0.35);
+    border-color: color-mix(in oklch, var(--primary) 35%, transparent);
     transform: translateY(-2px);
-    box-shadow: 0 18px 40px -22px oklch(0.82 0.17 75 / 0.45);
+    box-shadow: 0 18px 40px -22px color-mix(in oklch, var(--primary) 45%, transparent);
   }
 
   /* Sutil divisor luminoso entre secciones */
   .divider-glow {
     height: 1px;
-    background: linear-gradient(90deg, transparent, oklch(0.82 0.17 75 / 0.35), oklch(0.55 0.22 295 / 0.30), transparent);
+    background: linear-gradient(90deg, transparent, color-mix(in oklch, var(--primary) 35%, transparent), color-mix(in oklch, oklch(0.55 0.22 295) 30%, transparent), transparent);
     margin-inline: auto;
     max-width: 80rem;
   }
