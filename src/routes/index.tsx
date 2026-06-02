@@ -971,7 +971,7 @@ function Index() {
               return (
                 <div
                   key={r.f}
-                  className={`reveal relative rounded-2xl border border-amber-300/25 p-5 ${roadmapOffsets[i]}`}
+                  className={`reveal relative rounded-2xl border border-primary/25 p-5 ${roadmapOffsets[i]}`}
                 >
                   <div className="relative z-10 mb-5">
                     <div className="text-sm font-black text-primary md:text-base">{roadmapQuarters[i]}</div>
@@ -1001,7 +1001,7 @@ function Index() {
               return (
                 <div
                   key={m.label}
-                  className="reveal flex items-center gap-4 rounded-2xl border border-amber-300/25 p-4"
+                  className="reveal flex items-center gap-4 rounded-2xl border border-primary/25 p-4"
                 >
                   <Icon className="h-9 w-9 shrink-0 text-primary" />
                   <div>
@@ -1014,7 +1014,7 @@ function Index() {
             })}
           </div>
 
-          <div className="reveal mt-4 flex flex-col gap-4 rounded-2xl border border-amber-300/25 p-5 md:flex-row md:items-center md:justify-between">
+          <div className="reveal mt-4 flex flex-col gap-4 rounded-2xl border border-primary/25 p-5 md:flex-row md:items-center md:justify-between">
             <div className="flex items-center gap-4">
               <Heart className="h-9 w-9 shrink-0 text-primary" />
               <p className="text-lg text-white/82">
@@ -1064,7 +1064,7 @@ function Index() {
             {partnerTags.map((tag) => (
               <span
                 key={tag}
-                className="rounded-full border border-amber-300/20 bg-amber-300/[.06] px-4 py-1.5 text-sm font-semibold text-amber-100"
+                className="rounded-full border border-primary/20 bg-primary/[.06] px-4 py-1.5 text-sm font-semibold text-primary"
               >
                 {tag}
               </span>
