@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { ArrowDownLeft, ArrowUpRight, Coins, Users, Zap, Wallet } from "lucide-react";
+import { useTranslation } from "react-i18next";
 import {
   fmtSol,
   fmtUsd,
@@ -35,6 +36,7 @@ function Sparkline({ data, color = "#fbbf24" }: { data: number[]; color?: string
 }
 
 function TxRow({ tx }: { tx: HeliusTx }) {
+  const { t } = useTranslation();
   const isToken = tx.tokenTransfers.length > 0;
   const amount = isToken
     ? `${tx.tokenTransfers[0].tokenAmount} ${tx.tokenTransfers[0].symbol}`
@@ -65,20 +67,20 @@ function TxRow({ tx }: { tx: HeliusTx }) {
       </div>
       <div className="text-right">
         <div className="font-mono text-sm font-semibold tabular-nums text-white/95">{amount}</div>
-        <div className="text-[11px] text-white/52">hace {timeAgo(tx.timestamp)}</div>
+        <div className="text-[11px] text-white/52">{t("live.ago")} {timeAgo(tx.timestamp)}</div>
       </div>
     </div>
   );
 }
 
 export function LiveOnChain() {
+  const { t } = useTranslation();
   const [balance] = useState(() => mockHeliusBalance());
   const [holders] = useState(() => mockTokenHolders());
   const [stats, setStats] = useState(() => mockNetworkStats());
   const [txs, setTxs] = useState<HeliusTx[]>(() => mockHeliusTransactions(6));
   const spark = mockSparkline(0.018, 32, 0.08);
 
-  // Simulate live updates (tps + new tx every ~8s)
   useEffect(() => {
     const tick = setInterval(() => {
       setStats((s) => ({
@@ -105,31 +107,29 @@ export function LiveOnChain() {
         <div className="mb-10 text-center">
           <span className="eyebrow inline-flex items-center gap-2">
             <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-emerald-400" />
-            Live on Solana
+            {t("live.eyebrow")}
           </span>
-          <h2 className="display-lg mt-4">Transparencia on-chain en tiempo real</h2>
+          <h2 className="display-lg mt-4">{t("live.title")}</h2>
           <p className="mx-auto mt-4 max-w-2xl text-base text-white/72">
-            Cada movimiento de la treasury es público y verificable. Datos en vivo desde la red
-            Solana vía Helius + CoinGecko.
+            {t("live.description")}
           </p>
         </div>
 
-        {/* Top metrics row */}
         <div className="grid grid-cols-2 gap-4 md:grid-cols-4">
           <div className="card-glass rounded-2xl p-4">
             <div className="flex items-center gap-2 text-xs text-white/62">
-              <Wallet className="h-3.5 w-3.5" /> Treasury
+              <Wallet className="h-3.5 w-3.5" /> {t("live.treasury")}
             </div>
             <div className="mt-2 font-mono text-2xl font-bold tabular-nums text-white">
               {fmtUsd(totalUsd)}
             </div>
             <div className="mt-1 text-[11px] text-white/52">
-              {fmtSol(balance.nativeBalance)} SOL + tokens
+              {t("live.treasurySub", { sol: fmtSol(balance.nativeBalance) })}
             </div>
           </div>
           <div className="card-glass rounded-2xl p-4">
             <div className="flex items-center gap-2 text-xs text-white/62">
-              <Coins className="h-3.5 w-3.5" /> Precio IHN
+              <Coins className="h-3.5 w-3.5" /> {t("live.ihnPrice")}
             </div>
             <div className="mt-2 flex items-end justify-between gap-2">
               <div className="font-mono text-2xl font-bold tabular-nums text-white">$0.0200</div>
@@ -139,39 +139,38 @@ export function LiveOnChain() {
           </div>
           <div className="card-glass rounded-2xl p-4">
             <div className="flex items-center gap-2 text-xs text-white/62">
-              <Users className="h-3.5 w-3.5" /> Holders
+              <Users className="h-3.5 w-3.5" /> {t("live.holders")}
             </div>
             <div className="mt-2 font-mono text-2xl font-bold tabular-nums text-white">
               {holders.total.toLocaleString()}
             </div>
-            <div className="mt-1 text-[11px] text-white/52">+38 esta semana</div>
+            <div className="mt-1 text-[11px] text-white/52">{t("live.holdersWeek")}</div>
           </div>
           <div className="card-glass rounded-2xl p-4">
             <div className="flex items-center gap-2 text-xs text-white/62">
-              <Zap className="h-3.5 w-3.5" /> Red Solana
+              <Zap className="h-3.5 w-3.5" /> {t("live.network")}
             </div>
             <div className="mt-2 font-mono text-2xl font-bold tabular-nums text-white">
               {stats.tps.toLocaleString()}
             </div>
-            <div className="mt-1 text-[11px] text-white/52">TPS · epoch {stats.epoch}</div>
+            <div className="mt-1 text-[11px] text-white/52">{t("live.epoch", { epoch: stats.epoch })}</div>
           </div>
         </div>
 
-        {/* Tx feed + holders */}
         <div className="mt-6 grid gap-4 lg:grid-cols-3">
           <div className="card-glass overflow-hidden rounded-2xl lg:col-span-2">
             <div className="flex items-center justify-between border-b border-white/10 px-4 py-3">
               <div>
                 <div className="text-sm font-semibold text-white/95">
-                  Transacciones recientes
+                  {t("live.recentTx")}
                 </div>
                 <div className="font-mono text-[11px] text-white/52">
-                  {shortAddr(TREASURY_WALLET)} · vía Helius API
+                  {t("live.via", { addr: shortAddr(TREASURY_WALLET) })}
                 </div>
               </div>
               <span className="flex items-center gap-1.5 text-[11px] text-emerald-400">
                 <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-emerald-400" />
-                EN VIVO
+                {t("live.live")}
               </span>
             </div>
             <div>
@@ -183,9 +182,9 @@ export function LiveOnChain() {
 
           <div className="card-glass overflow-hidden rounded-2xl">
             <div className="border-b border-white/10 px-4 py-3">
-              <div className="text-sm font-semibold text-white/95">Top holders IHN</div>
+              <div className="text-sm font-semibold text-white/95">{t("live.topHolders")}</div>
               <div className="text-[11px] text-white/52">
-                {holders.total.toLocaleString()} wallets totales
+                {t("live.totalWallets", { n: holders.total.toLocaleString() })}
               </div>
             </div>
             <div className="divide-y divide-white/5">
@@ -212,8 +211,7 @@ export function LiveOnChain() {
         </div>
 
         <p className="mt-6 text-center text-[11px] text-white/40">
-          Datos mock — preparado para Helius RPC + CoinGecko v3. Conectar API keys para activar
-          datos reales.
+          {t("live.footer")}
         </p>
       </div>
     </section>
