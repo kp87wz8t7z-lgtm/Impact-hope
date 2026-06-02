@@ -270,7 +270,7 @@ function Index() {
       <div className="fixed inset-0 -z-20 bg-[#050914]" />
       <div
         ref={backgroundRef}
-        className="pointer-events-none fixed inset-0 -z-10 bg-cover bg-[85%_top] bg-no-repeat brightness-[1.08] contrast-[1.04] saturate-[1.06]"
+        className="pointer-events-none fixed inset-0 -z-10 bg-cover bg-[15%_top] bg-no-repeat brightness-[1.08] contrast-[1.04] saturate-[1.06]"
         style={{ backgroundImage: `url(${networkHero})` }}
       >
         <div className="absolute inset-0 bg-[linear-gradient(to_bottom,rgba(5,9,20,.06)_0%,rgba(5,9,20,.02)_18%,rgba(5,9,20,.18)_46%,rgba(5,9,20,.38)_100%)]" />
