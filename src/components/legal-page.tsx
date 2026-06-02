@@ -135,7 +135,7 @@ export function LegalPage({
                 className="rounded-2xl border border-white/10 bg-[#07101d]/80 p-6 shadow-[0_24px_70px_rgba(0,0,0,.28)] backdrop-blur-xl"
               >
                 <div className="mb-4 flex items-start gap-3">
-                  <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-amber-300 to-orange-500 text-sm font-black text-black">
+                  <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-primary text-sm font-black text-primary-foreground">
                     {index + 1}
                   </span>
                   <h2 className="text-2xl font-black leading-tight">{section.title}</h2>
