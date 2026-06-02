@@ -35,7 +35,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useAccent } from "@/contexts/theme-context";
-import networkHero from "@/assets/impact-network-hero-vertical.webp";
+import networkHero from "@/assets/impact-network-hero-vertical.jpg";
 import coinImg from "@/assets/coin.png";
 
 import handsImg from "@/assets/hands.webp";
