@@ -1098,20 +1098,28 @@ function Index() {
             <div className="rounded-3xl border border-white/12 bg-white/[.03] p-5 backdrop-blur-md md:p-7">
               <div className="text-2xl font-bold">{t("donate.selectAmount")}</div>
               <div className="mt-5 grid grid-cols-2 gap-3 sm:grid-cols-4">
-                {[10, 25, 50, 100].map((v) => (
-                  <button
-                    key={v}
-                    type="button"
-                    onClick={() => setDonation(v)}
-                    className={`rounded-xl py-4 text-lg font-bold transition-all ${
-                      donation === v
-                        ? "bg-gradient-to-r from-amber-200 via-amber-400 to-orange-500 text-gray-950 shadow-[0_8px_28px_-6px_rgba(245,158,11,.65)]"
-                        : "border border-white/10 bg-white/[.06] text-white backdrop-blur-md hover:bg-white/[.10]"
-                    }`}
-                  >
-                    ${v}
-                  </button>
-                ))}
+                {[10, 25, 50, 100].map((v) => {
+                  const isActive = donation === v;
+                  return (
+                    <button
+                      key={v}
+                      type="button"
+                      onClick={() => setDonation(v)}
+                      className={`rounded-xl py-4 text-lg font-bold transition-all ${
+                        isActive
+                          ? "text-gray-950 shadow-[0_8px_28px_-6px_var(--accent-glow)]"
+                          : "border border-white/10 bg-white/[.06] text-white backdrop-blur-md hover:bg-white/[.10]"
+                      }`}
+                      style={
+                        isActive
+                          ? { background: `linear-gradient(to right, ${config.grad.from}, ${config.grad.via}, ${config.grad.to})` }
+                          : undefined
+                      }
+                    >
+                      ${v}
+                    </button>
+                  );
+                })}
               </div>
               <Input
                 type="number"
