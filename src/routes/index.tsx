@@ -1167,20 +1167,28 @@ function Index() {
                 <div className="font-semibold">{t("donate.tipTitle")}</div>
                 <p className="mt-1 text-sm text-white/56">{t("donate.tipDescription")}</p>
                 <div className="mt-4 grid grid-cols-2 gap-3 sm:grid-cols-4">
-                  {[5, 10, 20, 0].map((v) => (
-                    <button
-                      key={v}
-                      type="button"
-                      onClick={() => setTip(v)}
-                      className={`rounded-xl py-3 font-bold transition-colors ${
-                        tip === v
-                          ? "bg-gradient-to-r from-amber-200 via-amber-400 to-orange-500 text-gray-950 shadow-[0_8px_24px_-6px_rgba(245,158,11,.6)]"
-                          : "border border-white/10 bg-white/[.05] text-white/70 backdrop-blur-md hover:bg-white/[.09]"
-                      }`}
-                    >
-                      {v === 0 ? t("donate.noTip") : `$${v}`}
-                    </button>
-                  ))}
+                  {[5, 10, 20, 0].map((v) => {
+                    const isActive = tip === v;
+                    return (
+                      <button
+                        key={v}
+                        type="button"
+                        onClick={() => setTip(v)}
+                        className={`rounded-xl py-3 font-bold transition-colors ${
+                          isActive
+                            ? "text-gray-950 shadow-[0_8px_24px_-6px_var(--accent-glow)]"
+                            : "border border-white/10 bg-white/[.05] text-white/70 backdrop-blur-md hover:bg-white/[.09]"
+                        }`}
+                        style={
+                          isActive
+                            ? { background: `linear-gradient(to right, ${config.grad.from}, ${config.grad.via}, ${config.grad.to})` }
+                            : undefined
+                        }
+                      >
+                        {v === 0 ? t("donate.noTip") : `$${v}`}
+                      </button>
+                    );
+                  })}
                 </div>
               </div>
 
