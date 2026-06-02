@@ -10,7 +10,7 @@ import {
 import { useEffect, useState } from "react";
 
 import appCss from "../styles.css?url";
-import coinPng from "../assets/coin.png?url";
+import coinPng from "../assets/favicon.png?url";
 import i18n from "../i18n";
 import { ThemeProvider } from "@/contexts/theme-context";
 
