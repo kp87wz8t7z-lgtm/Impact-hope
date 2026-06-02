@@ -1,8 +1,10 @@
 import { Link } from "@tanstack/react-router";
 import type { ReactNode } from "react";
 import { ArrowLeft, BadgeCheck, Heart, Shield, Sparkles } from "lucide-react";
+import { useTranslation } from "react-i18next";
 
 import coinImg from "@/assets/coin.png";
+import { LanguageThemeSwitcher } from "@/components/LanguageThemeSwitcher";
 
 type LegalSection = {
   title: string;
@@ -17,14 +19,6 @@ type LegalPageProps = {
   sections: LegalSection[];
   notice?: string;
 };
-
-const policyLinks = [
-  { label: "Términos", to: "/terms" },
-  { label: "Privacidad", to: "/privacy" },
-  { label: "Riesgos", to: "/risk" },
-  { label: "Aviso legal", to: "/legal" },
-  { label: "Contacto", to: "/contact" },
-] as const;
 
 function renderLinkedText(text: string) {
   const emailPattern = /[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}/gi;
@@ -66,6 +60,15 @@ export function LegalPage({
   sections,
   notice,
 }: LegalPageProps) {
+  const { t } = useTranslation();
+  const policyLinks = [
+    { label: t("policyLinks.terms"), to: "/terms" as const },
+    { label: t("policyLinks.privacy"), to: "/privacy" as const },
+    { label: t("policyLinks.risk"), to: "/risk" as const },
+    { label: t("policyLinks.legal"), to: "/legal" as const },
+    { label: t("policyLinks.contact"), to: "/contact" as const },
+  ];
+
   return (
     <main className="min-h-screen bg-[#050914] text-white">
       <div className="fixed inset-0 -z-10 bg-[#050914]" />
@@ -79,13 +82,16 @@ export function LegalPage({
               ImpactHope<span className="text-primary"> Network</span>
             </span>
           </Link>
-          <Link
-            to="/"
-            className="inline-flex items-center gap-2 rounded-full border border-white/12 bg-white/[.045] px-4 py-2 text-sm font-semibold text-white/78 transition-colors hover:border-primary/45 hover:text-primary"
-          >
-            <ArrowLeft className="h-4 w-4" />
-            Inicio
-          </Link>
+          <div className="flex items-center gap-3">
+            <LanguageThemeSwitcher />
+            <Link
+              to="/"
+              className="inline-flex items-center gap-2 rounded-full border border-white/12 bg-white/[.045] px-4 py-2 text-sm font-semibold text-white/78 transition-colors hover:border-primary/45 hover:text-primary"
+            >
+              <ArrowLeft className="h-4 w-4" />
+              {t("common.home")}
+            </Link>
+          </div>
         </div>
       </header>
 
@@ -102,11 +108,11 @@ export function LegalPage({
           <div className="mt-6 flex flex-wrap gap-3 text-sm text-white/56">
             <span className="inline-flex items-center gap-2 rounded-full border border-cyan-300/16 bg-cyan-300/8 px-3 py-1.5">
               <BadgeCheck className="h-4 w-4 text-cyan-200" />
-              Actualizado: {updated}
+              {t("common.updated")}: {updated}
             </span>
             <span className="inline-flex items-center gap-2 rounded-full border border-amber-300/16 bg-amber-300/8 px-3 py-1.5">
               <Shield className="h-4 w-4 text-amber-200" />
-              Documento informativo
+              {t("common.informativeDocument")}
             </span>
           </div>
 
@@ -142,7 +148,7 @@ export function LegalPage({
           <div className="rounded-2xl border border-white/10 bg-[#07101d]/78 p-5 backdrop-blur-xl">
             <div className="mb-4 flex items-center gap-2 text-sm font-bold text-primary">
               <Heart className="h-4 w-4" />
-              Documentos
+              {t("common.documents")}
             </div>
             <nav className="grid gap-2">
               {policyLinks.map((link) => (
@@ -157,9 +163,7 @@ export function LegalPage({
             </nav>
           </div>
           <div className="mt-4 rounded-2xl border border-cyan-300/16 bg-cyan-300/8 p-5 text-sm leading-relaxed text-cyan-50/76">
-            Estas páginas resumen políticas operativas para usuarios, aliados y posibles
-            participantes del ecosistema. Deben revisarse con asesoría profesional antes de
-            cualquier lanzamiento formal de token o captación de fondos.
+            {t("common.legalDisclaimer")}
           </div>
         </aside>
       </section>
