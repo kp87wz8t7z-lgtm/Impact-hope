@@ -999,7 +999,7 @@ function Index() {
               return (
                 <div
                   key={m.label}
-                  className="reveal flex items-center gap-4 rounded-2xl border border-primary/25 p-4"
+                  className="reveal flex items-center gap-4 rounded-2xl border border-primary/25 bg-background/55 p-4 backdrop-blur-md"
                 >
                   <Icon className="h-9 w-9 shrink-0 text-primary" />
                   <div>
