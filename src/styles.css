@@ -71,8 +71,14 @@
   --card-foreground: oklch(0.98 0.01 90);
   --popover: oklch(0.18 0.04 265);
   --popover-foreground: oklch(0.98 0.01 90);
+  /* --primary and --primary-foreground are set dynamically by ThemeProvider.
+     The values below are sane defaults (amber) used during SSR / before hydration. */
   --primary: oklch(0.82 0.17 75);
   --primary-foreground: oklch(0.18 0.04 265);
+  --accent-glow: rgba(245,158,11,0.65);
+  --accent-grad-from: #fde68a;
+  --accent-grad-via: #fbbf24;
+  --accent-grad-to: #f97316;
   --gradient-hero: linear-gradient(135deg, oklch(0.18 0.06 265 / 0.85), oklch(0.16 0.08 320 / 0.7));
   --gradient-gold: linear-gradient(135deg, oklch(0.85 0.18 80), oklch(0.7 0.2 35));
   --shadow-glow: 0 20px 60px -15px oklch(0.82 0.17 75 / 0.5);
