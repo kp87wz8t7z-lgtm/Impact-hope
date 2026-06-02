@@ -951,8 +951,6 @@ function Index() {
       </section>
 
       <section id="roadmap" className="relative min-h-[900px] overflow-hidden py-16 md:py-20">
-        <div className="absolute inset-0 bg-gradient-to-b from-primary/5 via-transparent to-primary/10" />
-
         <div className="relative mx-auto max-w-7xl px-5 md:px-6">
           <div className="max-w-[560px]">
             <span className="text-sm font-semibold uppercase tracking-[0.22em] text-primary">
