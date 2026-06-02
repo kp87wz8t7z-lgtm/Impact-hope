@@ -243,7 +243,7 @@ function Index() {
       frame = 0;
       const scrollable = document.documentElement.scrollHeight - window.innerHeight;
       const progress = scrollable > 0 ? window.scrollY / scrollable : 0;
-      background.style.backgroundPosition = `center ${Math.min(100, Math.max(0, progress * 100))}%`;
+      background.style.backgroundPosition = `85% ${Math.min(100, Math.max(0, progress * 100))}%`;
     };
 
     const scheduleUpdate = () => {
