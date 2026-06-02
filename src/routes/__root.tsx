@@ -7,10 +7,11 @@ import {
   HeadContent,
   Scripts,
 } from "@tanstack/react-router";
+import { useEffect, useState } from "react";
 
 import appCss from "../styles.css?url";
 import coinPng from "../assets/coin.png?url";
-import "../i18n";
+import i18n from "../i18n";
 import { ThemeProvider } from "@/contexts/theme-context";
 
 function NotFoundComponent() {
@@ -129,8 +130,20 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
 });
 
 function RootShell({ children }: { children: React.ReactNode }) {
+  const [lang, setLang] = useState("en");
+
+  useEffect(() => {
+    const stored = localStorage.getItem("ihn-lang");
+    const browserLng = navigator.language.slice(0, 2);
+    const detected = stored === "es" || stored === "en" ? stored : browserLng === "es" ? "es" : "en";
+    setLang(detected);
+    if (i18n.language !== detected) {
+      i18n.changeLanguage(detected);
+    }
+  }, []);
+
   return (
-    <html lang="en">
+    <html lang={lang}>
       <head>
         <HeadContent />
       </head>
@@ -144,6 +157,15 @@ function RootShell({ children }: { children: React.ReactNode }) {
 
 function RootComponent() {
   const { queryClient } = Route.useRouteContext();
+
+  useEffect(() => {
+    const stored = localStorage.getItem("ihn-lang");
+    const browserLng = navigator.language.slice(0, 2);
+    const detected = stored === "es" || stored === "en" ? stored : browserLng === "es" ? "es" : "en";
+    if (i18n.language !== detected) {
+      i18n.changeLanguage(detected);
+    }
+  }, []);
 
   return (
     <QueryClientProvider client={queryClient}>

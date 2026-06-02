@@ -34,6 +34,7 @@ import {
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { useAccent } from "@/contexts/theme-context";
 import networkHero from "@/assets/impact-network-hero-vertical.webp";
 import coinImg from "@/assets/coin.png";
 
@@ -48,8 +49,8 @@ export const Route = createFileRoute("/")({
   component: Index,
   head: () => ({
     meta: [
-      { title: i18n.t("meta.home.title") },
-      { name: "description", content: i18n.t("meta.home.description") },
+      { title: "ImpactHope Network" },
+      { name: "description", content: "ImpactHope Network — Donaciones conectadas con impacto real." },
     ],
   }),
 });
@@ -70,6 +71,8 @@ const paymentIcons = [CreditCard, CircleDollarSign, Wifi, Landmark];
 
 function Index() {
   const { t } = useTranslation();
+  const { config } = useAccent();
+  const glowAlpha = (a: number) => config.glow.replace(/[\d.]+(?=\)$)/, String(a));
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [donation, setDonation] = useState(50);
   const [tip, setTip] = useState(10);
@@ -110,7 +113,7 @@ function Index() {
   ];
 
   const impactMetrics = [
-    { icon: HandHeart, value: "0", label: t("mission.metrics.ngos"), color: "text-amber-300" },
+    { icon: HandHeart, value: "0", label: t("mission.metrics.ngos"), color: "text-primary" },
     { icon: Users, value: "0", label: t("mission.metrics.people"), color: "text-cyan-300" },
     { icon: Globe, value: "0", label: t("mission.metrics.countries"), color: "text-orange-300" },
   ];
@@ -279,7 +282,8 @@ function Index() {
             <img
               src={coinImg}
               alt=""
-              className="h-9 w-9 drop-shadow-[0_0_18px_rgba(250,200,80,0.65)]"
+              className="h-9 w-9"
+              style={{ filter: `drop-shadow(0 0 18px ${glowAlpha(0.65)})` }}
               width={36}
               height={36}
             />
@@ -304,7 +308,8 @@ function Index() {
             </div>
             <Button
               asChild
-              className="bg-gradient-to-r from-amber-200 via-amber-400 to-orange-500 text-gray-950 shadow-[0_10px_36px_-8px_rgba(245,158,11,0.6)] transition-all duration-200 hover:brightness-110 hover:shadow-[0_14px_44px_-8px_rgba(245,158,11,0.8)]"
+              className="text-gray-950 shadow-[0_10px_36px_-8px_var(--accent-glow)] transition-all duration-200 hover:brightness-110 hover:shadow-[0_14px_44px_-8px_var(--accent-glow)]"
+              style={{ background: `linear-gradient(to right, ${config.grad.from}, ${config.grad.via}, ${config.grad.to})` }}
             >
               <a href="#donar">
                 <Heart className="mr-1 h-4 w-4" /> {t("header.donate")}
@@ -340,7 +345,8 @@ function Index() {
             </div>
             <Button
               asChild
-              className="mt-4 w-full bg-gradient-to-r from-amber-200 via-amber-400 to-orange-500 font-bold text-gray-950 shadow-[0_10px_36px_-8px_rgba(245,158,11,0.6)] transition-all duration-200 hover:brightness-110"
+              className="mt-4 w-full font-bold text-gray-950 shadow-[0_10px_36px_-8px_var(--accent-glow)] transition-all duration-200 hover:brightness-110"
+              style={{ background: `linear-gradient(to right, ${config.grad.from}, ${config.grad.via}, ${config.grad.to})` }}
             >
               <a href="#donar" onClick={() => setMobileMenuOpen(false)}>
                 <Heart className="mr-1 h-4 w-4" /> {t("header.donateNow")}
@@ -361,16 +367,20 @@ function Index() {
         <div className="relative z-10 mx-auto grid min-h-[calc(100svh-72px)] max-w-7xl items-center px-5 pb-14 pt-14 md:px-6 md:py-16 lg:py-10">
           <div className="relative z-10 max-w-[680px]">
             <div className="pointer-events-none absolute -right-16 top-16 -z-10 h-44 w-44 opacity-45 sm:hidden">
-              <div className="absolute inset-0 rounded-full bg-amber-300/35 blur-3xl" />
+              <div className="absolute inset-0 rounded-full bg-primary/35 blur-3xl" />
               <img
                 src={coinImg}
                 alt=""
-                className="relative h-full w-full drop-shadow-[0_0_55px_rgba(251,191,36,.7)]"
+                className="relative h-full w-full"
+                style={{ filter: `drop-shadow(0 0 55px ${glowAlpha(0.7)})` }}
                 width={176}
                 height={176}
               />
             </div>
-            <div className="hero-reveal inline-flex items-center gap-2 rounded-full border border-amber-300/30 bg-[#07101d]/66 px-4 py-1.5 text-xs font-semibold text-amber-100 opacity-0 shadow-[0_0_35px_rgba(245,158,11,.22)] backdrop-blur-xl">
+            <div
+              className="hero-reveal inline-flex items-center gap-2 rounded-full border border-primary/30 bg-[#07101d]/66 px-4 py-1.5 text-xs font-semibold text-primary-foreground opacity-0 backdrop-blur-xl"
+              style={{ boxShadow: `0 0 35px ${glowAlpha(0.22)}` }}
+            >
               <Sparkles className="h-3.5 w-3.5" /> {t("hero.badge")}
             </div>
             <h1 className="mt-6 max-w-[620px] text-5xl font-black leading-[.94] tracking-normal text-white sm:text-6xl lg:text-[4.9rem]">
@@ -379,7 +389,10 @@ function Index() {
                   {w}
                 </span>
               ))}
-              <span className="hero-word mr-[0.22em] inline-block bg-gradient-to-r from-amber-200 via-amber-400 to-orange-500 bg-clip-text text-transparent opacity-0">
+              <span
+                className="hero-word mr-[0.22em] inline-block bg-clip-text text-transparent opacity-0"
+                style={{ backgroundImage: `linear-gradient(to right, ${config.grad.from}, ${config.grad.via}, ${config.grad.to})` }}
+              >
                 {t("hero.titleHighlight")}
               </span>
               <br />
@@ -396,7 +409,8 @@ function Index() {
               <Button
                 size="lg"
                 asChild
-                className="bg-gradient-to-r from-amber-200 via-amber-400 to-orange-500 !text-gray-950 font-bold shadow-[0_18px_50px_-10px_rgba(245,158,11,0.75)] transition-all duration-200 hover:brightness-110 hover:shadow-[0_22px_60px_-10px_rgba(245,158,11,0.9)]"
+                className="!text-gray-950 font-bold shadow-[0_18px_50px_-10px_var(--accent-glow)] transition-all duration-200 hover:brightness-110 hover:shadow-[0_22px_60px_-10px_var(--accent-glow)]"
+                style={{ background: `linear-gradient(to right, ${config.grad.from}, ${config.grad.via}, ${config.grad.to})` }}
               >
                 <a href="#donar">
                   {t("hero.ctaDonate")} <ArrowRight className="ml-1 h-4 w-4" />
@@ -449,7 +463,7 @@ function Index() {
                   key={item.label}
                   className="signal-chip inline-flex items-center gap-2 rounded-full border border-cyan-200/20 bg-[#06111f]/68 px-3 py-2 text-xs font-semibold text-cyan-50 shadow-[0_0_26px_rgba(34,211,238,.12)] backdrop-blur-xl"
                 >
-                  <item.icon className="h-4 w-4 text-amber-200" />
+                  <item.icon className="h-4 w-4 text-primary" />
                   {item.label}
                 </div>
               ))}
@@ -458,9 +472,9 @@ function Index() {
 
           <div className="hero-reveal pointer-events-none relative mx-auto hidden h-[560px] w-full max-w-[690px] opacity-0 max-lg:-mt-4 max-sm:h-[360px]">
             <div className="absolute inset-[14px_18px_14px_18px] rounded-[2.4rem] border border-white/10 bg-[#07101d]/24 shadow-[0_18px_60px_rgba(0,0,0,.22)] backdrop-blur-[1px] max-sm:inset-[10px] max-sm:rounded-[2rem]" />
-            <div className="absolute inset-0 rounded-full bg-[radial-gradient(circle_at_52%_48%,rgba(251,191,36,.22),transparent_48%),radial-gradient(circle_at_62%_42%,rgba(34,211,238,.18),transparent_58%)] blur-2xl" />
+            <div className="absolute inset-0 rounded-full bg-[radial-gradient(circle_at_52%_48%,color-mix(in_oklch,var(--primary)_22%,transparent),transparent_48%),radial-gradient(circle_at_62%_42%,rgba(34,211,238,.18),transparent_58%)] blur-2xl" />
             <div className="coin-motion absolute left-1/2 top-1/2 h-[500px] w-[500px] -translate-x-1/2 -translate-y-1/2 rounded-full border border-cyan-300/18 shadow-[0_0_90px_rgba(34,211,238,.12)] max-sm:h-[330px] max-sm:w-[330px]" />
-            <div className="coin-motion absolute left-1/2 top-1/2 h-[360px] w-[360px] -translate-x-1/2 -translate-y-1/2 rounded-full border border-amber-300/15 max-sm:h-[250px] max-sm:w-[250px]" />
+            <div className="coin-motion absolute left-1/2 top-1/2 h-[360px] w-[360px] -translate-x-1/2 -translate-y-1/2 rounded-full border border-primary/15 max-sm:h-[250px] max-sm:w-[250px]" />
 
             <svg
               className="coin-motion absolute inset-0 z-10 h-full w-full"
@@ -469,9 +483,9 @@ function Index() {
             >
               <defs>
                 <linearGradient id="goldLine" x1="0" x2="1">
-                  <stop offset="0%" stopColor="#38bdf8" stopOpacity=".72" />
-                  <stop offset="48%" stopColor="#facc15" stopOpacity=".95" />
-                  <stop offset="100%" stopColor="#fb923c" stopOpacity=".36" />
+                  <stop offset="0%" stopColor={config.grad.from} stopOpacity=".72" />
+                  <stop offset="48%" stopColor={config.grad.via} stopOpacity=".95" />
+                  <stop offset="100%" stopColor={config.grad.to} stopOpacity=".36" />
                 </linearGradient>
                 <filter id="lineGlow" x="-20%" y="-20%" width="140%" height="140%">
                   <feGaussianBlur stdDeviation="3" result="blur" />
@@ -513,18 +527,22 @@ function Index() {
                   cx={cx}
                   cy={cy}
                   r="5"
-                  fill="#facc15"
+                  fill={config.grad.via}
                 />
               ))}
             </svg>
 
             <div className="coin-motion coin-core absolute left-1/2 top-1/2 z-40 flex h-[260px] w-[260px] -translate-x-1/2 -translate-y-1/2 items-center justify-center max-sm:h-[190px] max-sm:w-[190px]">
-              <div className="absolute inset-0 rounded-full bg-amber-300/25 blur-3xl" />
-              <div className="absolute inset-7 rounded-full border border-amber-200/30 shadow-[0_0_80px_rgba(251,191,36,.36)]" />
+              <div className="absolute inset-0 rounded-full bg-primary/25 blur-3xl" />
+              <div
+                className="absolute inset-7 rounded-full border border-primary/30"
+                style={{ boxShadow: `0 0 80px ${glowAlpha(0.36)}` }}
+              />
               <img
                 src={coinImg}
                 alt="Token ImpactHope Network"
-                className="relative z-10 w-full drop-shadow-[0_34px_80px_rgba(251,146,60,.58)]"
+                className="relative z-10 w-full"
+                style={{ filter: `drop-shadow(0 34px 80px ${glowAlpha(0.58)})` }}
                 width={260}
                 height={260}
               />
@@ -537,7 +555,10 @@ function Index() {
                 style={{ animationDelay: node.delay }}
               >
                 <div className="mb-3 flex items-center gap-2">
-                  <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-gradient-to-br from-amber-300 via-orange-400 to-cyan-300 text-black shadow-[0_0_22px_rgba(34,211,238,.22)]">
+                  <div
+                    className="flex h-9 w-9 items-center justify-center rounded-xl text-black shadow-[0_0_22px_rgba(34,211,238,.22)]"
+                    style={{ background: `linear-gradient(to bottom right, ${config.grad.from}, ${config.grad.via}, ${config.grad.to})` }}
+                  >
                     <node.icon className="h-5 w-5" />
                   </div>
                   <div className="text-sm font-bold">{node.title}</div>
@@ -557,7 +578,7 @@ function Index() {
 
       <section id="mision" className="relative py-20">
         <div className="mx-auto max-w-7xl px-5 md:px-6">
-          <div className="reveal relative grid gap-8 overflow-hidden rounded-[2rem] border border-amber-300/18 bg-[#07101d] p-7 shadow-[0_28px_90px_rgba(0,0,0,.36)] md:p-10 lg:grid-cols-[1.05fr_.95fr] lg:p-14">
+          <div className="reveal relative grid gap-8 overflow-hidden rounded-[2rem] border border-primary/18 bg-[#07101d] p-7 shadow-[0_28px_90px_rgba(0,0,0,.36)] md:p-10 lg:grid-cols-[1.05fr_.95fr] lg:p-14">
             <img
               src={worldMapImg}
               alt=""
@@ -611,10 +632,13 @@ function Index() {
                   key={s.t}
                   className="reveal group relative min-h-[220px] overflow-hidden rounded-2xl border border-white/10 bg-[#07101d]/76 p-8 backdrop-blur-xl transition-all hover:-translate-y-1 hover:border-primary/50"
                 >
-                  <div className="absolute -right-3 top-2 text-7xl font-black text-amber-300/35">
+                  <div className="absolute -right-3 top-2 text-7xl font-black text-primary/35">
                     0{i + 1}
                   </div>
-                  <div className="mb-6 flex h-12 w-12 items-center justify-center rounded-xl bg-gradient-to-br from-amber-300 to-orange-500 text-black shadow-[0_0_35px_rgba(245,158,11,.35)]">
+                  <div
+                    className="mb-6 flex h-12 w-12 items-center justify-center rounded-xl text-black shadow-[0_0_35px_rgba(245,158,11,.35)]"
+                    style={{ background: `linear-gradient(to bottom right, ${config.grad.from}, ${config.grad.to})` }}
+                  >
                     <Icon className="h-6 w-6" />
                   </div>
                   <h3 className="text-xl font-bold">{s.t}</h3>
@@ -646,7 +670,8 @@ function Index() {
               <div className="flex items-center gap-3">
                 <img
                   src={coinImg}
-                  className="h-12 w-12 drop-shadow-[0_0_18px_rgba(250,200,80,0.65)]"
+                  className="h-12 w-12"
+                  style={{ filter: `drop-shadow(0 0 18px ${glowAlpha(0.65)})` }}
                   alt=""
                   width={48}
                   height={48}
@@ -664,9 +689,9 @@ function Index() {
 
           <div className="reveal mb-6 grid grid-cols-2 gap-4 lg:grid-cols-4">
             {[
-              { icon: HandHeart, value: "0", label: t("token.stats.ngos"), bar: "#f59e0b" },
+              { icon: HandHeart, value: "0", label: t("token.stats.ngos"), bar: config.grad.via },
               { icon: Users, value: "0", label: t("token.stats.people"), bar: "#22d3ee" },
-              { icon: Globe, value: "0", label: t("token.stats.countries"), bar: "#fb923c" },
+              { icon: Globe, value: "0", label: t("token.stats.countries"), bar: config.grad.to },
               { icon: Coins, value: "$IHN", label: t("token.stats.tokenPurpose"), bar: "#34d399" },
             ].map((s) => (
               <div
@@ -705,17 +730,17 @@ function Index() {
               >
                 <defs>
                   <linearGradient id="chartFill" x1="0" x2="0" y1="0" y2="1">
-                    <stop offset="0%" stopColor="#f59e0b" stopOpacity=".28" />
-                    <stop offset="100%" stopColor="#f59e0b" stopOpacity="0" />
+                    <stop offset="0%" stopColor={config.grad.via} stopOpacity=".28" />
+                    <stop offset="100%" stopColor={config.grad.via} stopOpacity="0" />
                   </linearGradient>
                 </defs>
                 {[24, 60, 96].map((y) => (
                   <line key={y} x1="0" y1={y} x2="400" y2={y} stroke="white" strokeOpacity=".06" strokeWidth="1" />
                 ))}
                 <path d="M0,97 C18,90 28,84 48,80 C68,76 73,87 90,82 C107,77 117,66 132,61 C147,56 157,70 172,63 C187,57 197,46 217,43 C237,40 247,54 262,49 C277,44 287,35 307,30 C327,25 337,18 360,14 C378,11 390,16 400,14 L400,120 L0,120 Z" fill="url(#chartFill)" />
-                <path d="M0,97 C18,90 28,84 48,80 C68,76 73,87 90,82 C107,77 117,66 132,61 C147,56 157,70 172,63 C187,57 197,46 217,43 C237,40 247,54 262,49 C277,44 287,35 307,30 C327,25 337,18 360,14 C378,11 390,16 400,14" fill="none" stroke="#f59e0b" strokeWidth="2" strokeLinecap="round" />
-                <circle cx="400" cy="14" r="4" fill="#f59e0b" />
-                <circle cx="400" cy="14" r="8" fill="#f59e0b" fillOpacity=".25" />
+                <path d="M0,97 C18,90 28,84 48,80 C68,76 73,87 90,82 C107,77 117,66 132,61 C147,56 157,70 172,63 C187,57 197,46 217,43 C237,40 247,54 262,49 C277,44 287,35 307,30 C327,25 337,18 360,14 C378,11 390,16 400,14" fill="none" stroke={config.grad.via} strokeWidth="2" strokeLinecap="round" />
+                <circle cx="400" cy="14" r="4" fill={config.grad.via} />
+                <circle cx="400" cy="14" r="8" fill={config.grad.via} fillOpacity=".25" />
                 <text x="3" y="13" fill="white" fillOpacity=".38" fontSize="9">$0.00</text>
                 <text x="3" y="62" fill="white" fillOpacity=".38" fontSize="9">$0.00</text>
                 <text x="3" y="115" fill="white" fillOpacity=".38" fontSize="9">$0.00</text>
@@ -756,7 +781,10 @@ function Index() {
             >
               <div className="mb-4 text-sm text-white/50">{t("token.distribution.title")}</div>
               <div className="flex flex-col items-center gap-5 lg:flex-row lg:items-start">
-                <div className="relative h-[160px] w-[160px] shrink-0 rounded-full bg-[conic-gradient(#22d3ee_0_30%,#f59e0b_30%_50%,#34d399_50%_65%,#8b5cf6_65%_80%,#fb7185_80%_90%,#7dd3fc_90%_100%)]">
+                <div
+                  className="relative h-[160px] w-[160px] shrink-0 rounded-full"
+                  style={{ background: `conic-gradient(#22d3ee 0 30%, ${config.grad.via} 30% 50%, #34d399 50% 65%, #8b5cf6 65% 80%, #fb7185 80% 90%, #7dd3fc 90% 100%)` }}
+                >
                   <div className="absolute inset-[36px] flex flex-col items-center justify-center rounded-full bg-[#07101d] text-center">
                     <div className="text-lg font-black text-white leading-none">0</div>
                     <div className="mt-1 text-[10px] text-white/55 leading-tight">
@@ -943,7 +971,7 @@ function Index() {
               return (
                 <div
                   key={r.f}
-                  className={`reveal relative rounded-2xl border border-amber-300/25 p-5 ${roadmapOffsets[i]}`}
+                  className={`reveal relative rounded-2xl border border-primary/25 p-5 ${roadmapOffsets[i]}`}
                 >
                   <div className="relative z-10 mb-5">
                     <div className="text-sm font-black text-primary md:text-base">{roadmapQuarters[i]}</div>
@@ -973,7 +1001,7 @@ function Index() {
               return (
                 <div
                   key={m.label}
-                  className="reveal flex items-center gap-4 rounded-2xl border border-amber-300/25 p-4"
+                  className="reveal flex items-center gap-4 rounded-2xl border border-primary/25 p-4"
                 >
                   <Icon className="h-9 w-9 shrink-0 text-primary" />
                   <div>
@@ -986,7 +1014,7 @@ function Index() {
             })}
           </div>
 
-          <div className="reveal mt-4 flex flex-col gap-4 rounded-2xl border border-amber-300/25 p-5 md:flex-row md:items-center md:justify-between">
+          <div className="reveal mt-4 flex flex-col gap-4 rounded-2xl border border-primary/25 p-5 md:flex-row md:items-center md:justify-between">
             <div className="flex items-center gap-4">
               <Heart className="h-9 w-9 shrink-0 text-primary" />
               <p className="text-lg text-white/82">
@@ -1036,7 +1064,7 @@ function Index() {
             {partnerTags.map((tag) => (
               <span
                 key={tag}
-                className="rounded-full border border-amber-300/20 bg-amber-300/[.06] px-4 py-1.5 text-sm font-semibold text-amber-100"
+                className="rounded-full border border-primary/20 bg-primary/[.06] px-4 py-1.5 text-sm font-semibold text-primary"
               >
                 {tag}
               </span>
@@ -1070,20 +1098,28 @@ function Index() {
             <div className="rounded-3xl border border-white/12 bg-white/[.03] p-5 backdrop-blur-md md:p-7">
               <div className="text-2xl font-bold">{t("donate.selectAmount")}</div>
               <div className="mt-5 grid grid-cols-2 gap-3 sm:grid-cols-4">
-                {[10, 25, 50, 100].map((v) => (
-                  <button
-                    key={v}
-                    type="button"
-                    onClick={() => setDonation(v)}
-                    className={`rounded-xl py-4 text-lg font-bold transition-all ${
-                      donation === v
-                        ? "bg-gradient-to-r from-amber-200 via-amber-400 to-orange-500 text-gray-950 shadow-[0_8px_28px_-6px_rgba(245,158,11,.65)]"
-                        : "border border-white/10 bg-white/[.06] text-white backdrop-blur-md hover:bg-white/[.10]"
-                    }`}
-                  >
-                    ${v}
-                  </button>
-                ))}
+                {[10, 25, 50, 100].map((v) => {
+                  const isActive = donation === v;
+                  return (
+                    <button
+                      key={v}
+                      type="button"
+                      onClick={() => setDonation(v)}
+                      className={`rounded-xl py-4 text-lg font-bold transition-all ${
+                        isActive
+                          ? "text-gray-950 shadow-[0_8px_28px_-6px_var(--accent-glow)]"
+                          : "border border-white/10 bg-white/[.06] text-white backdrop-blur-md hover:bg-white/[.10]"
+                      }`}
+                      style={
+                        isActive
+                          ? { background: `linear-gradient(to right, ${config.grad.from}, ${config.grad.via}, ${config.grad.to})` }
+                          : undefined
+                      }
+                    >
+                      ${v}
+                    </button>
+                  );
+                })}
               </div>
               <Input
                 type="number"
@@ -1131,20 +1167,28 @@ function Index() {
                 <div className="font-semibold">{t("donate.tipTitle")}</div>
                 <p className="mt-1 text-sm text-white/56">{t("donate.tipDescription")}</p>
                 <div className="mt-4 grid grid-cols-2 gap-3 sm:grid-cols-4">
-                  {[5, 10, 20, 0].map((v) => (
-                    <button
-                      key={v}
-                      type="button"
-                      onClick={() => setTip(v)}
-                      className={`rounded-xl py-3 font-bold transition-colors ${
-                        tip === v
-                          ? "bg-gradient-to-r from-amber-200 via-amber-400 to-orange-500 text-gray-950 shadow-[0_8px_24px_-6px_rgba(245,158,11,.6)]"
-                          : "border border-white/10 bg-white/[.05] text-white/70 backdrop-blur-md hover:bg-white/[.09]"
-                      }`}
-                    >
-                      {v === 0 ? t("donate.noTip") : `$${v}`}
-                    </button>
-                  ))}
+                  {[5, 10, 20, 0].map((v) => {
+                    const isActive = tip === v;
+                    return (
+                      <button
+                        key={v}
+                        type="button"
+                        onClick={() => setTip(v)}
+                        className={`rounded-xl py-3 font-bold transition-colors ${
+                          isActive
+                            ? "text-gray-950 shadow-[0_8px_24px_-6px_var(--accent-glow)]"
+                            : "border border-white/10 bg-white/[.05] text-white/70 backdrop-blur-md hover:bg-white/[.09]"
+                        }`}
+                        style={
+                          isActive
+                            ? { background: `linear-gradient(to right, ${config.grad.from}, ${config.grad.via}, ${config.grad.to})` }
+                            : undefined
+                        }
+                      >
+                        {v === 0 ? t("donate.noTip") : `$${v}`}
+                      </button>
+                    );
+                  })}
                 </div>
               </div>
 
@@ -1187,7 +1231,8 @@ function Index() {
                   <Button
                     type="submit"
                     size="lg"
-                    className="h-14 w-full bg-gradient-to-r from-amber-200 via-amber-400 to-orange-500 text-base font-black text-gray-950 shadow-[0_14px_44px_-8px_rgba(245,158,11,0.65)] transition-all duration-200 hover:brightness-110 hover:shadow-[0_18px_54px_-8px_rgba(245,158,11,0.85)]"
+                    className="h-14 w-full text-base font-black text-gray-950 shadow-[0_14px_44px_-8px_var(--accent-glow)] transition-all duration-200 hover:brightness-110 hover:shadow-[0_18px_54px_-8px_var(--accent-glow)]"
+                    style={{ background: `linear-gradient(to right, ${config.grad.from}, ${config.grad.via}, ${config.grad.to})` }}
                   >
                     {t("donate.submit", { donation: displayDonation, tip })} <Heart className="ml-2 h-4 w-4" />
                   </Button>
