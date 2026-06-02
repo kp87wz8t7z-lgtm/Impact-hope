@@ -103,7 +103,7 @@ export function LegalPage({
 
       <section className="mx-auto grid max-w-6xl gap-10 px-5 py-14 md:px-6 md:py-20 lg:grid-cols-[0.72fr_0.28fr]">
         <div>
-          <div className="inline-flex items-center gap-2 rounded-full border border-amber-300/25 bg-amber-300/10 px-4 py-1.5 text-xs font-bold uppercase tracking-[0.18em] text-amber-100">
+          <div className="inline-flex items-center gap-2 rounded-full border border-primary/30 bg-primary/10 px-4 py-1.5 text-xs font-bold uppercase tracking-[0.18em] text-primary">
             <Sparkles className="h-3.5 w-3.5" />
             {eyebrow}
           </div>
@@ -112,18 +112,18 @@ export function LegalPage({
           </h1>
           <p className="mt-5 max-w-3xl text-lg leading-relaxed text-white/72">{description}</p>
           <div className="mt-6 flex flex-wrap gap-3 text-sm text-white/56">
-            <span className="inline-flex items-center gap-2 rounded-full border border-cyan-300/16 bg-cyan-300/8 px-3 py-1.5">
-              <BadgeCheck className="h-4 w-4 text-cyan-200" />
+            <span className="inline-flex items-center gap-2 rounded-full border border-white/12 bg-white/[.05] px-3 py-1.5 text-white/72">
+              <BadgeCheck className="h-4 w-4 text-primary" />
               {t("common.updated")}: {updated}
             </span>
-            <span className="inline-flex items-center gap-2 rounded-full border border-amber-300/16 bg-amber-300/8 px-3 py-1.5">
-              <Shield className="h-4 w-4 text-amber-200" />
+            <span className="inline-flex items-center gap-2 rounded-full border border-primary/20 bg-primary/8 px-3 py-1.5 text-white/72">
+              <Shield className="h-4 w-4 text-primary" />
               {t("common.informativeDocument")}
             </span>
           </div>
 
           {notice ? (
-            <div className="mt-8 rounded-2xl border border-amber-300/25 bg-amber-300/10 p-5 text-sm leading-relaxed text-amber-50/86">
+            <div className="mt-8 rounded-2xl border border-primary/25 bg-primary/[.08] p-5 text-sm leading-relaxed text-white/82">
               {notice}
             </div>
           ) : null}
