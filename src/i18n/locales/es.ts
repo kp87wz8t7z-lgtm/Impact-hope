@@ -765,6 +765,6 @@ export const es = {
       ],
     },
   },
-} as const;
+};
 
 export type Dict = typeof es;
