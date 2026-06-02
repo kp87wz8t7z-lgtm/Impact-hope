@@ -781,7 +781,10 @@ function Index() {
             >
               <div className="mb-4 text-sm text-white/50">{t("token.distribution.title")}</div>
               <div className="flex flex-col items-center gap-5 lg:flex-row lg:items-start">
-                <div className="relative h-[160px] w-[160px] shrink-0 rounded-full bg-[conic-gradient(#22d3ee_0_30%,#f59e0b_30%_50%,#34d399_50%_65%,#8b5cf6_65%_80%,#fb7185_80%_90%,#7dd3fc_90%_100%)]">
+                <div
+                  className="relative h-[160px] w-[160px] shrink-0 rounded-full"
+                  style={{ background: `conic-gradient(#22d3ee 0 30%, ${config.grad.via} 30% 50%, #34d399 50% 65%, #8b5cf6 65% 80%, #fb7185 80% 90%, #7dd3fc 90% 100%)` }}
+                >
                   <div className="absolute inset-[36px] flex flex-col items-center justify-center rounded-full bg-[#07101d] text-center">
                     <div className="text-lg font-black text-white leading-none">0</div>
                     <div className="mt-1 text-[10px] text-white/55 leading-tight">
