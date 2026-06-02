@@ -1,9 +1,9 @@
 import { Link, createFileRoute } from "@tanstack/react-router";
 import { useEffect, useRef, useState } from "react";
 import { animate, createScope, stagger, type Scope } from "animejs";
+import { useTranslation } from "react-i18next";
 import {
   ArrowRight,
-  BadgeCheck,
   BrainCircuit,
   CheckCircle2,
   CircleDollarSign,
@@ -21,10 +21,8 @@ import {
   LockKeyhole,
   Mail,
   Map,
-  MapPin,
   Menu,
   Network,
-  PieChart,
   Rocket,
   Shield,
   Sparkles,
@@ -37,135 +35,41 @@ import {
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import networkHero from "@/assets/impact-network-hero-vertical.webp";
-import impact1 from "@/assets/impact-1.jpg";
-import impact2 from "@/assets/impact-2.jpg";
-import impact3 from "@/assets/impact-3.jpg";
 import coinImg from "@/assets/coin.png";
 
 import handsImg from "@/assets/hands.webp";
 import worldMapImg from "@/assets/world-map.webp";
 import { PriceTicker } from "@/components/landing/PriceTicker";
 import { LiveOnChain } from "@/components/landing/LiveOnChain";
+import { LanguageThemeSwitcher } from "@/components/LanguageThemeSwitcher";
+import i18n from "@/i18n";
 
 export const Route = createFileRoute("/")({
   component: Index,
   head: () => ({
     meta: [
-      { title: "ImpactHope Network - Inversión digital con impacto social real" },
-      {
-        name: "description",
-        content:
-          "ImpactHope Network conecta blockchain, inversión y causas benéficas. Cada transacción genera impacto social real, con transparencia total.",
-      },
+      { title: i18n.t("meta.home.title") },
+      { name: "description", content: i18n.t("meta.home.description") },
     ],
   }),
 });
 
-const nav = [
-  { label: "Misión", href: "#mision" },
-  { label: "Cómo funciona", href: "#funciona" },
-  { label: "Token", href: "#token" },
-  { label: "Live", href: "#onchain" },
-  { label: "Impacto", href: "#impacto" },
-  { label: "Roadmap", href: "#roadmap" },
-  { label: "Donar", href: "#donar" },
-];
-
 const chartRanges = ["1D", "7D", "1M", "3M", "1A", "Todo"] as const;
 
-const paymentMethods = [
-  { icon: CreditCard, label: "Tarjeta de crédito / débito", detail: "Stripe" },
-  { icon: CircleDollarSign, label: "Criptomonedas", detail: "BTC · ETH · USDC" },
-  { icon: Wifi, label: "Zelle", detail: "Transferencia directa" },
-  { icon: Landmark, label: "Cuenta de banco", detail: "ACH" },
-] as const;
-
-const orbitNodes = [
-  {
-    title: "Educación",
-    value: "0",
-    caption: "vidas transformadas",
-    icon: GraduationCap,
-    className: "left-[6%] top-[16%]",
-    delay: "0s",
-  },
-  {
-    title: "On-chain",
-    value: "0%",
-    caption: "transparencia",
-    icon: LockKeyhole,
-    className: "right-[4%] top-[18%]",
-    delay: ".4s",
-  },
-  {
-    title: "Alimentos",
-    value: "0",
-    caption: "países conectados",
-    icon: Utensils,
-    className: "left-[1%] bottom-[24%]",
-    delay: ".8s",
-  },
-  {
-    title: "Comunidad",
-    value: "0",
-    caption: "personas unidas",
-    icon: Users,
-    className: "right-[3%] bottom-[23%]",
-    delay: "1.2s",
-  },
-  {
-    title: "Impacto",
-    value: "$0",
-    caption: "fondos donados",
-    icon: HandHeart,
-    className: "left-[36%] bottom-[12%]",
-    delay: "1.6s",
-  },
+const tokenomicsColors = [
+  "bg-cyan-400",
+  "bg-amber-400",
+  "bg-emerald-400",
+  "bg-violet-400",
+  "bg-rose-400",
+  "bg-sky-300",
 ];
+const tokenomicsValues = ["30%", "20%", "15%", "15%", "10%", "10%"];
 
-const impactMetrics = [
-  { icon: HandHeart, value: "0", label: "ONG apoyadas", color: "text-amber-300" },
-  { icon: Users, value: "0", label: "Personas beneficiadas", color: "text-cyan-300" },
-  { icon: Globe, value: "0", label: "Países alcanzados", color: "text-orange-300" },
-];
-
-const transactions = [
-  { id: "0x00...000", org: "Pendiente", amount: "$0 USDC", chain: "Ethereum" },
-  { id: "0x00...001", org: "Pendiente", amount: "$0 USDC", chain: "Polygon" },
-  { id: "0x00...002", org: "Pendiente", amount: "$0 USDC", chain: "Ethereum" },
-  { id: "0x00...003", org: "Pendiente", amount: "$0 USDC", chain: "Polygon" },
-];
-
-const tokenomics = [
-  {
-    label: "Liquidez",
-    desc: "Estabilidad y confianza para el crecimiento",
-    value: "30%",
-    color: "bg-cyan-400",
-  },
-  {
-    label: "Recompensas e incentivos",
-    desc: "Para quienes construyen y apoyan el ecosistema",
-    value: "20%",
-    color: "bg-amber-400",
-  },
-  {
-    label: "Reserva de impacto",
-    desc: "Financia proyectos sociales y ambientales",
-    value: "15%",
-    color: "bg-emerald-400",
-  },
-  {
-    label: "Tesorería",
-    desc: "Desarrollo y expansión sostenible",
-    value: "15%",
-    color: "bg-violet-400",
-  },
-  { label: "Premarket", desc: "Soporte inicial del proyecto", value: "10%", color: "bg-rose-400" },
-  { label: "Operaciones", desc: "Team & legal", value: "10%", color: "bg-sky-300" },
-];
+const paymentIcons = [CreditCard, CircleDollarSign, Wifi, Landmark];
 
 function Index() {
+  const { t } = useTranslation();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [donation, setDonation] = useState(50);
   const [tip, setTip] = useState(10);
@@ -173,7 +77,68 @@ function Index() {
   const [sent, setSent] = useState(false);
   const [displayDonation, setDisplayDonation] = useState(50);
   const [selectedRange, setSelectedRange] = useState<(typeof chartRanges)[number]>("1D");
-  const [selectedPayment, setSelectedPayment] = useState<string>(paymentMethods[0].label);
+
+  const paymentMethodsT = t("donate.paymentMethods", { returnObjects: true }) as {
+    label: string;
+    detail: string;
+  }[];
+  const [selectedPayment, setSelectedPayment] = useState<string>(paymentMethodsT[0]?.label ?? "");
+  // Keep selectedPayment valid after a language switch.
+  useEffect(() => {
+    if (!paymentMethodsT.some((m) => m.label === selectedPayment)) {
+      setSelectedPayment(paymentMethodsT[0]?.label ?? "");
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [i18n.language]);
+
+  const nav = [
+    { label: t("nav.mission"), href: "#mision" },
+    { label: t("nav.howItWorks"), href: "#funciona" },
+    { label: t("nav.token"), href: "#token" },
+    { label: t("nav.live"), href: "#onchain" },
+    { label: t("nav.impact"), href: "#impacto" },
+    { label: t("nav.roadmap"), href: "#roadmap" },
+    { label: t("nav.donate"), href: "#donar" },
+  ];
+
+  const orbitNodes = [
+    { title: t("hero.orbit.educationTitle"), value: "0", caption: t("hero.orbit.educationCaption"), icon: GraduationCap, className: "left-[6%] top-[16%]", delay: "0s" },
+    { title: t("hero.orbit.onchainTitle"), value: "0%", caption: t("hero.orbit.onchainCaption"), icon: LockKeyhole, className: "right-[4%] top-[18%]", delay: ".4s" },
+    { title: t("hero.orbit.foodTitle"), value: "0", caption: t("hero.orbit.foodCaption"), icon: Utensils, className: "left-[1%] bottom-[24%]", delay: ".8s" },
+    { title: t("hero.orbit.communityTitle"), value: "0", caption: t("hero.orbit.communityCaption"), icon: Users, className: "right-[3%] bottom-[23%]", delay: "1.2s" },
+    { title: t("hero.orbit.impactTitle"), value: "$0", caption: t("hero.orbit.impactCaption"), icon: HandHeart, className: "left-[36%] bottom-[12%]", delay: "1.6s" },
+  ];
+
+  const impactMetrics = [
+    { icon: HandHeart, value: "0", label: t("mission.metrics.ngos"), color: "text-amber-300" },
+    { icon: Users, value: "0", label: t("mission.metrics.people"), color: "text-cyan-300" },
+    { icon: Globe, value: "0", label: t("mission.metrics.countries"), color: "text-orange-300" },
+  ];
+
+  const howSteps = t("howItWorks.steps", { returnObjects: true }) as { t: string; d: string }[];
+  const howIcons = [Link2, TrendingUp, Heart];
+
+  const tokenomicsT = t("token.tokenomics", { returnObjects: true }) as { label: string; desc: string }[];
+
+  const roadmapPhases = t("roadmap.phases", { returnObjects: true }) as { f: string; t: string; d: string[] }[];
+  const roadmapQuarters = ["Q1 2026", "Q2 2026", "Q3 2026", "Q4 2026", "Q5 2026"];
+  const roadmapIcons = [Rocket, Users, TrendingUp, Handshake, BrainCircuit];
+  const roadmapOffsets = ["lg:mt-44", "lg:mt-32", "lg:mt-20", "lg:mt-10", "lg:mt-0"];
+
+  const roadmapMetrics = t("roadmap.metrics", { returnObjects: true }) as { label: string; desc: string }[];
+  const roadmapMetricIcons = [Users, Globe, Heart, Coins, Shield];
+  const roadmapMetricValues = ["0", "0", "0", "$0", "0%"];
+
+  const partners = t("partners.list", { returnObjects: true }) as { name: string; category: string; quote: string }[];
+  const partnerColors = ["from-amber-400 to-orange-500", "from-cyan-400 to-sky-500", "from-violet-400 to-purple-500"];
+  const partnerInitials = ["EG", "AL", "RC"];
+
+  const partnerTags = t("partners.tags", { returnObjects: true }) as string[];
+
+  const donateBenefits = t("donate.benefits", { returnObjects: true }) as string[];
+
+  const values = t("values", { returnObjects: true }) as { t: string; d: string }[];
+  const valueIcons = [Shield, BrainCircuit, Users, Rocket, Heart];
 
   const rootRef = useRef<HTMLDivElement>(null);
   const backgroundRef = useRef<HTMLDivElement>(null);
@@ -334,17 +299,20 @@ function Index() {
             ))}
           </nav>
           <div className="flex items-center gap-3">
+            <div className="hidden md:block">
+              <LanguageThemeSwitcher />
+            </div>
             <Button
               asChild
               className="bg-gradient-to-r from-amber-200 via-amber-400 to-orange-500 text-gray-950 shadow-[0_10px_36px_-8px_rgba(245,158,11,0.6)] transition-all duration-200 hover:brightness-110 hover:shadow-[0_14px_44px_-8px_rgba(245,158,11,0.8)]"
             >
               <a href="#donar">
-                <Heart className="mr-1 h-4 w-4" /> Donar
+                <Heart className="mr-1 h-4 w-4" /> {t("header.donate")}
               </a>
             </Button>
             <button
               type="button"
-              aria-label={mobileMenuOpen ? "Cerrar menú" : "Abrir menú"}
+              aria-label={mobileMenuOpen ? t("common.closeMenu") : t("common.openMenu")}
               onClick={() => setMobileMenuOpen((o) => !o)}
               className="flex h-10 w-10 cursor-pointer items-center justify-center rounded-xl border border-white/10 bg-white/[.05] text-white/80 transition-colors hover:bg-white/[.10] md:hidden"
             >
@@ -367,12 +335,15 @@ function Index() {
                 </a>
               ))}
             </nav>
+            <div className="mt-3 px-1">
+              <LanguageThemeSwitcher />
+            </div>
             <Button
               asChild
               className="mt-4 w-full bg-gradient-to-r from-amber-200 via-amber-400 to-orange-500 font-bold text-gray-950 shadow-[0_10px_36px_-8px_rgba(245,158,11,0.6)] transition-all duration-200 hover:brightness-110"
             >
               <a href="#donar" onClick={() => setMobileMenuOpen(false)}>
-                <Heart className="mr-1 h-4 w-4" /> Donar ahora
+                <Heart className="mr-1 h-4 w-4" /> {t("header.donateNow")}
               </a>
             </Button>
           </div>
@@ -400,28 +371,26 @@ function Index() {
               />
             </div>
             <div className="hero-reveal inline-flex items-center gap-2 rounded-full border border-amber-300/30 bg-[#07101d]/66 px-4 py-1.5 text-xs font-semibold text-amber-100 opacity-0 shadow-[0_0_35px_rgba(245,158,11,.22)] backdrop-blur-xl">
-              <Sparkles className="h-3.5 w-3.5" /> Partner-ready impact infrastructure
+              <Sparkles className="h-3.5 w-3.5" /> {t("hero.badge")}
             </div>
             <h1 className="mt-6 max-w-[620px] text-5xl font-black leading-[.94] tracking-normal text-white sm:text-6xl lg:text-[4.9rem]">
-              {"Ayuda con el".split(" ").map((w, i) => (
+              {t("hero.title1").split(" ").map((w, i) => (
                 <span key={`a${i}`} className="hero-word mr-[0.22em] inline-block opacity-0">
                   {w}
                 </span>
               ))}
               <span className="hero-word mr-[0.22em] inline-block bg-gradient-to-r from-amber-200 via-amber-400 to-orange-500 bg-clip-text text-transparent opacity-0">
-                corazón.
+                {t("hero.titleHighlight")}
               </span>
               <br />
-              {"Transforma vidas reales.".split(" ").map((w, i) => (
+              {t("hero.title2").split(" ").map((w, i) => (
                 <span key={`b${i}`} className="hero-word mr-[0.22em] inline-block opacity-0">
                   {w}
                 </span>
               ))}
             </h1>
             <p className="hero-reveal mt-6 max-w-xl rounded-xl bg-black/64 px-4 py-3 text-lg leading-relaxed text-white/92 opacity-0 backdrop-blur-sm">
-              ImpactHope Network une blockchain, comunidad y causas benéficas. Cada transacción
-              genera una contribución verificable para niños, familias y organizaciones que más lo
-              necesitan.
+              {t("hero.description")}
             </p>
             <div className="hero-reveal mt-8 flex flex-wrap gap-3 opacity-0">
               <Button
@@ -430,7 +399,7 @@ function Index() {
                 className="bg-gradient-to-r from-amber-200 via-amber-400 to-orange-500 !text-gray-950 font-bold shadow-[0_18px_50px_-10px_rgba(245,158,11,0.75)] transition-all duration-200 hover:brightness-110 hover:shadow-[0_22px_60px_-10px_rgba(245,158,11,0.9)]"
               >
                 <a href="#donar">
-                  Donar ahora <ArrowRight className="ml-1 h-4 w-4" />
+                  {t("hero.ctaDonate")} <ArrowRight className="ml-1 h-4 w-4" />
                 </a>
               </Button>
               <Button
@@ -439,7 +408,7 @@ function Index() {
                 asChild
                 className="border-violet-500/35 bg-violet-600/10 text-violet-100 backdrop-blur transition-all duration-200 hover:border-violet-400/55 hover:bg-violet-600/22 hover:text-white"
               >
-                <a href="#funciona">Cómo funciona</a>
+                <a href="#funciona">{t("hero.ctaHow")}</a>
               </Button>
             </div>
             <div
@@ -447,9 +416,9 @@ function Index() {
               className="hero-reveal mt-10 grid max-w-md grid-cols-3 gap-4 opacity-0"
             >
               {[
-                { k: "0", prefix: "$", suffix: "", v: "Inversión inicial" },
-                { k: null, raw: "On-chain", prefix: "", suffix: "", v: "Transparencia" },
-                { k: "0", prefix: "", suffix: "", v: "Vidas posibles" },
+                { k: "0", prefix: "$", suffix: "", v: t("hero.stats.initialInvestment") },
+                { k: null, raw: t("hero.stats.onchain"), prefix: "", suffix: "", v: t("hero.stats.transparency") },
+                { k: "0", prefix: "", suffix: "", v: t("hero.stats.lives") },
               ].map((s) => (
                 <div
                   key={s.v}
@@ -472,9 +441,9 @@ function Index() {
             </div>
             <div className="hero-reveal mt-8 flex max-w-xl flex-wrap gap-3 opacity-0">
               {[
-                { icon: Shield, label: "On-chain transparency" },
-                { icon: Handshake, label: "Partner ecosystem" },
-                { icon: GraduationCap, label: "Measurable education impact" },
+                { icon: Shield, label: t("hero.chips.transparency") },
+                { icon: Handshake, label: t("hero.chips.partners") },
+                { icon: GraduationCap, label: t("hero.chips.education") },
               ].map((item) => (
                 <div
                   key={item.label}
@@ -580,7 +549,7 @@ function Index() {
 
             <div className="absolute bottom-4 left-1/2 z-30 flex -translate-x-1/2 items-center gap-2 rounded-full border border-cyan-300/20 bg-cyan-300/16 px-4 py-2 text-xs font-semibold text-cyan-100 backdrop-blur-xl">
               <Network className="h-4 w-4" />
-              Ecosistema de impacto conectado al token
+              {t("hero.network")}
             </div>
           </div>
         </div>
@@ -598,16 +567,14 @@ function Index() {
             <div className="absolute inset-0 bg-gradient-to-br from-[#07101d]/60 via-[#07101d]/30 to-[#07101d]/70" />
             <div className="relative z-10">
               <span className="text-sm font-semibold uppercase tracking-[0.22em] text-primary">
-                Nuestra Misión
+                {t("mission.eyebrow")}
               </span>
               <h2 className="mt-3 text-4xl font-black leading-tight md:text-5xl">
-                Un puente entre la <span className="text-primary">economía digital</span> y el{" "}
-                <span className="text-primary">impacto humano</span>.
+                {t("mission.title1")} <span className="text-primary">{t("mission.titleHL1")}</span> {t("mission.title2")}{" "}
+                <span className="text-primary">{t("mission.titleHL2")}</span>{t("mission.titleEnd")}
               </h2>
               <p className="mt-6 max-w-3xl text-lg leading-relaxed text-white/72">
-                Las donaciones tradicionales sufren de falta de transparencia. Los activos digitales
-                carecen de propósito. ImpactHope Network une lo mejor de ambos mundos: tecnología
-                blockchain con responsabilidad social verificable.
+                {t("mission.description")}
               </p>
             </div>
             <div className="relative z-10 grid content-center gap-3">
@@ -632,61 +599,47 @@ function Index() {
         <div className="mx-auto max-w-7xl px-5 md:px-6">
           <div className="mx-auto max-w-2xl text-center">
             <span className="text-sm font-semibold uppercase tracking-[0.22em] text-primary">
-              Cómo funciona
+              {t("howItWorks.eyebrow")}
             </span>
-            <h2 className="mt-3 text-4xl font-black md:text-5xl">Tres pasos. Impacto real.</h2>
+            <h2 className="mt-3 text-4xl font-black md:text-5xl">{t("howItWorks.title")}</h2>
           </div>
           <div className="mt-14 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-            {[
-              {
-                icon: Link2,
-                t: "Adquiere el token",
-                d: "Compra ImpactHope Network y forma parte de una comunidad global comprometida.",
-              },
-              {
-                icon: TrendingUp,
-                t: "Cada tx genera impacto",
-                d: "Un porcentaje de las transacciones se destina automáticamente a causas benéficas.",
-              },
-              {
-                icon: Heart,
-                t: "Cambia vidas",
-                d: "Recibe reportes verificables sobre las personas y proyectos que tu participación apoya.",
-              },
-            ].map((s, i) => (
-              <div
-                key={s.t}
-                className="reveal group relative min-h-[220px] overflow-hidden rounded-2xl border border-white/10 bg-[#07101d]/76 p-8 backdrop-blur-xl transition-all hover:-translate-y-1 hover:border-primary/50"
-              >
-                <div className="absolute -right-3 top-2 text-7xl font-black text-amber-300/35">
-                  0{i + 1}
+            {howSteps.map((s, i) => {
+              const Icon = howIcons[i];
+              return (
+                <div
+                  key={s.t}
+                  className="reveal group relative min-h-[220px] overflow-hidden rounded-2xl border border-white/10 bg-[#07101d]/76 p-8 backdrop-blur-xl transition-all hover:-translate-y-1 hover:border-primary/50"
+                >
+                  <div className="absolute -right-3 top-2 text-7xl font-black text-amber-300/35">
+                    0{i + 1}
+                  </div>
+                  <div className="mb-6 flex h-12 w-12 items-center justify-center rounded-xl bg-gradient-to-br from-amber-300 to-orange-500 text-black shadow-[0_0_35px_rgba(245,158,11,.35)]">
+                    <Icon className="h-6 w-6" />
+                  </div>
+                  <h3 className="text-xl font-bold">{s.t}</h3>
+                  <p className="mt-3 leading-relaxed text-white/68">{s.d}</p>
                 </div>
-                <div className="mb-6 flex h-12 w-12 items-center justify-center rounded-xl bg-gradient-to-br from-amber-300 to-orange-500 text-black shadow-[0_0_35px_rgba(245,158,11,.35)]">
-                  <s.icon className="h-6 w-6" />
-                </div>
-                <h3 className="text-xl font-bold">{s.t}</h3>
-                <p className="mt-3 leading-relaxed text-white/68">{s.d}</p>
-              </div>
-            ))}
+              );
+            })}
           </div>
         </div>
       </section>
 
       <section id="token" className="relative py-16">
         <div className="mx-auto max-w-7xl px-5 md:px-6">
-          {/* Header + supply */}
           <div className="reveal mb-8 flex flex-col gap-6 lg:flex-row lg:items-start lg:justify-between">
             <div>
               <span className="text-sm font-semibold uppercase tracking-[0.22em] text-primary">
-                Token
+                {t("token.eyebrow")}
               </span>
               <h2 className="mt-3 max-w-xl text-4xl font-black leading-tight md:text-5xl">
-                El movimiento del <span className="text-primary">Token IHN</span> en el mercado.
+                {t("token.title1")} <span className="text-primary">{t("token.titleHL")}</span> {t("token.title2")}
               </h2>
               <p className="mt-3 text-lg text-white/68">
-                Transparente. Trazable. Con propósito.
+                {t("token.subtitle")}
                 <br />
-                Cada token impulsa un cambio real.
+                {t("token.subtitle2")}
               </p>
             </div>
             <div className="shrink-0 rounded-2xl border border-white/12 bg-[#07101d]/80 p-5 backdrop-blur-xl">
@@ -699,23 +652,22 @@ function Index() {
                   height={48}
                 />
                 <div>
-                  <div className="text-xs text-white/50">Supply inicial (Circulación inicial)</div>
+                  <div className="text-xs text-white/50">{t("token.initialSupply")}</div>
                   <div className="text-2xl font-black text-white">
                     0 <span className="text-primary">IHN</span>
                   </div>
-                  <div className="text-sm text-white/50">0 coins</div>
+                  <div className="text-sm text-white/50">0 {t("token.coins")}</div>
                 </div>
               </div>
             </div>
           </div>
 
-          {/* Stat cards */}
           <div className="reveal mb-6 grid grid-cols-2 gap-4 lg:grid-cols-4">
             {[
-              { icon: HandHeart, value: "0", label: "ONG apoyadas", bar: "#f59e0b" },
-              { icon: Users, value: "0", label: "Personas beneficiadas", bar: "#22d3ee" },
-              { icon: Globe, value: "0", label: "Países alcanzados", bar: "#fb923c" },
-              { icon: Coins, value: "$IHN", label: "Token con propósito", bar: "#34d399" },
+              { icon: HandHeart, value: "0", label: t("token.stats.ngos"), bar: "#f59e0b" },
+              { icon: Users, value: "0", label: t("token.stats.people"), bar: "#22d3ee" },
+              { icon: Globe, value: "0", label: t("token.stats.countries"), bar: "#fb923c" },
+              { icon: Coins, value: "$IHN", label: t("token.stats.tokenPurpose"), bar: "#34d399" },
             ].map((s) => (
               <div
                 key={s.label}
@@ -732,17 +684,15 @@ function Index() {
             ))}
           </div>
 
-          {/* Price chart + Distribution */}
           <div className="reveal mb-6 grid gap-6 lg:grid-cols-2">
-            {/* Price chart */}
             <div className="rounded-2xl border border-white/10 bg-[#07101d]/78 p-5 backdrop-blur-xl">
               <div className="mb-4 flex items-start justify-between">
                 <div>
-                  <div className="text-sm text-white/50">Precio del token (IHN)</div>
+                  <div className="text-sm text-white/50">{t("token.chart.label")}</div>
                   <div className="mt-1 flex items-end gap-3">
                     <div className="text-4xl font-black text-white">$0.0000</div>
                     <div className="mb-1 flex items-center gap-1 text-sm font-semibold text-emerald-400">
-                      <TrendingUp className="h-4 w-4" /> 0.00% últimas 24h
+                      <TrendingUp className="h-4 w-4" /> {t("token.chart.change24h")}
                     </div>
                   </div>
                 </div>
@@ -760,63 +710,37 @@ function Index() {
                   </linearGradient>
                 </defs>
                 {[24, 60, 96].map((y) => (
-                  <line
-                    key={y}
-                    x1="0"
-                    y1={y}
-                    x2="400"
-                    y2={y}
-                    stroke="white"
-                    strokeOpacity=".06"
-                    strokeWidth="1"
-                  />
+                  <line key={y} x1="0" y1={y} x2="400" y2={y} stroke="white" strokeOpacity=".06" strokeWidth="1" />
                 ))}
-                <path
-                  d="M0,97 C18,90 28,84 48,80 C68,76 73,87 90,82 C107,77 117,66 132,61 C147,56 157,70 172,63 C187,57 197,46 217,43 C237,40 247,54 262,49 C277,44 287,35 307,30 C327,25 337,18 360,14 C378,11 390,16 400,14 L400,120 L0,120 Z"
-                  fill="url(#chartFill)"
-                />
-                <path
-                  d="M0,97 C18,90 28,84 48,80 C68,76 73,87 90,82 C107,77 117,66 132,61 C147,56 157,70 172,63 C187,57 197,46 217,43 C237,40 247,54 262,49 C277,44 287,35 307,30 C327,25 337,18 360,14 C378,11 390,16 400,14"
-                  fill="none"
-                  stroke="#f59e0b"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                />
+                <path d="M0,97 C18,90 28,84 48,80 C68,76 73,87 90,82 C107,77 117,66 132,61 C147,56 157,70 172,63 C187,57 197,46 217,43 C237,40 247,54 262,49 C277,44 287,35 307,30 C327,25 337,18 360,14 C378,11 390,16 400,14 L400,120 L0,120 Z" fill="url(#chartFill)" />
+                <path d="M0,97 C18,90 28,84 48,80 C68,76 73,87 90,82 C107,77 117,66 132,61 C147,56 157,70 172,63 C187,57 197,46 217,43 C237,40 247,54 262,49 C277,44 287,35 307,30 C327,25 337,18 360,14 C378,11 390,16 400,14" fill="none" stroke="#f59e0b" strokeWidth="2" strokeLinecap="round" />
                 <circle cx="400" cy="14" r="4" fill="#f59e0b" />
                 <circle cx="400" cy="14" r="8" fill="#f59e0b" fillOpacity=".25" />
-                <text x="3" y="13" fill="white" fillOpacity=".38" fontSize="9">
-                  $0.00
-                </text>
-                <text x="3" y="62" fill="white" fillOpacity=".38" fontSize="9">
-                  $0.00
-                </text>
-                <text x="3" y="115" fill="white" fillOpacity=".38" fontSize="9">
-                  $0.00
-                </text>
+                <text x="3" y="13" fill="white" fillOpacity=".38" fontSize="9">$0.00</text>
+                <text x="3" y="62" fill="white" fillOpacity=".38" fontSize="9">$0.00</text>
+                <text x="3" y="115" fill="white" fillOpacity=".38" fontSize="9">$0.00</text>
               </svg>
               <div className="mt-3 flex gap-1.5">
-                {chartRanges.map((t) => (
+                {chartRanges.map((r) => (
                   <button
-                    key={t}
+                    key={r}
                     type="button"
-                    onClick={() => setSelectedRange(t)}
-                    aria-pressed={selectedRange === t}
+                    onClick={() => setSelectedRange(r)}
+                    aria-pressed={selectedRange === r}
                     className={`rounded-lg px-2.5 py-1 text-xs font-semibold transition-colors ${
-                      selectedRange === t
-                        ? "bg-primary/20 text-primary"
-                        : "text-white/40 hover:text-white/70"
+                      selectedRange === r ? "bg-primary/20 text-primary" : "text-white/40 hover:text-white/70"
                     }`}
                   >
-                    {t}
+                    {r}
                   </button>
                 ))}
               </div>
               <div className="mt-4 grid grid-cols-2 gap-3 rounded-xl border border-white/[.06] bg-white/[.025] p-3 sm:grid-cols-4">
                 {[
-                  { label: "Capitalización", value: "$0" },
-                  { label: "Volumen 24h", value: "$0" },
-                  { label: "Suministro total", value: "0 IHN" },
-                  { label: "En circulación", value: "0 IHN" },
+                  { label: t("token.chart.marketCap"), value: "$0" },
+                  { label: t("token.chart.volume24h"), value: "$0" },
+                  { label: t("token.chart.totalSupply"), value: "0 IHN" },
+                  { label: t("token.chart.circulating"), value: "0 IHN" },
                 ].map((s) => (
                   <div key={s.label} className="text-center">
                     <div className="text-[11px] text-white/45">{s.label}</div>
@@ -826,31 +750,28 @@ function Index() {
               </div>
             </div>
 
-            {/* Token distribution */}
             <div
               id="token-transacciones"
               className="rounded-2xl border border-white/10 bg-[#07101d]/78 p-5 backdrop-blur-xl"
             >
-              <div className="mb-4 text-sm text-white/50">Distribución real del token (0 IHN)</div>
+              <div className="mb-4 text-sm text-white/50">{t("token.distribution.title")}</div>
               <div className="flex flex-col items-center gap-5 lg:flex-row lg:items-start">
                 <div className="relative h-[160px] w-[160px] shrink-0 rounded-full bg-[conic-gradient(#22d3ee_0_30%,#f59e0b_30%_50%,#34d399_50%_65%,#8b5cf6_65%_80%,#fb7185_80%_90%,#7dd3fc_90%_100%)]">
                   <div className="absolute inset-[36px] flex flex-col items-center justify-center rounded-full bg-[#07101d] text-center">
                     <div className="text-lg font-black text-white leading-none">0</div>
                     <div className="mt-1 text-[10px] text-white/55 leading-tight">
-                      Suministro
+                      {t("token.distribution.totalSupply")}
                       <br />
-                      total
+                      {t("token.distribution.total")}
                     </div>
                   </div>
                 </div>
                 <div className="space-y-2.5">
-                  {tokenomics.map((item) => (
+                  {tokenomicsT.map((item, i) => (
                     <div key={item.label} className="flex items-start gap-2.5 text-sm">
-                      <span
-                        className={`mt-[3px] h-2.5 w-2.5 shrink-0 rounded-full ${item.color}`}
-                      />
+                      <span className={`mt-[3px] h-2.5 w-2.5 shrink-0 rounded-full ${tokenomicsColors[i]}`} />
                       <div>
-                        <span className="font-bold text-white">{item.value}</span>{" "}
+                        <span className="font-bold text-white">{tokenomicsValues[i]}</span>{" "}
                         <span className="text-white/72">{item.label}</span>
                         <p className="text-xs text-white/42">{item.desc}</p>
                       </div>
@@ -860,15 +781,12 @@ function Index() {
               </div>
               <div className="mt-5 flex items-start gap-2.5 rounded-xl border border-white/[.06] bg-white/[.025] p-3 text-xs text-white/55">
                 <Heart className="mt-0.5 h-4 w-4 shrink-0 text-primary" />
-                Cada transacción impulsa el cambio. El 10% de las operaciones se destina a impacto
-                social real.
+                {t("token.distribution.impactNote")}
               </div>
             </div>
           </div>
 
-          {/* Transactions + Exchanges */}
           <div className="reveal mb-6 grid gap-6 lg:grid-cols-2">
-            {/* Live transactions */}
             <div className="rounded-2xl border border-white/10 bg-[#07101d]/78 p-5 backdrop-blur-xl">
               <div className="mb-4 flex items-center gap-2">
                 <span className="relative flex h-2 w-2">
@@ -876,55 +794,23 @@ function Index() {
                   <span className="relative inline-flex h-2 w-2 rounded-full bg-primary" />
                 </span>
                 <span className="text-xs font-semibold uppercase tracking-widest text-primary">
-                  Transacciones en tiempo real
+                  {t("token.liveTx.title")}
                 </span>
               </div>
               <div className="space-y-2">
                 {[
-                  {
-                    addr: "0x00…0000",
-                    type: "Compra",
-                    typeColor: "bg-cyan-400/20 text-cyan-300",
-                    amount: "0 IHN",
-                    time: "Pendiente",
-                  },
-                  {
-                    addr: "0x00…0001",
-                    type: "Recompensa",
-                    typeColor: "bg-violet-400/20 text-violet-300",
-                    amount: "0 IHN",
-                    time: "Pendiente",
-                  },
-                  {
-                    addr: "0x00…0002",
-                    type: "Donación",
-                    typeColor: "bg-amber-400/20 text-amber-300",
-                    amount: "0 IHN",
-                    time: "Pendiente",
-                  },
-                  {
-                    addr: "0x00…0003",
-                    type: "Compra",
-                    typeColor: "bg-cyan-400/20 text-cyan-300",
-                    amount: "0 IHN",
-                    time: "Pendiente",
-                  },
-                  {
-                    addr: "0x00…0004",
-                    type: "Recompensa",
-                    typeColor: "bg-violet-400/20 text-violet-300",
-                    amount: "0 IHN",
-                    time: "Pendiente",
-                  },
+                  { addr: "0x00…0000", type: t("token.liveTx.buy"), typeColor: "bg-cyan-400/20 text-cyan-300", amount: "0 IHN", time: t("token.liveTx.pending") },
+                  { addr: "0x00…0001", type: t("token.liveTx.reward"), typeColor: "bg-violet-400/20 text-violet-300", amount: "0 IHN", time: t("token.liveTx.pending") },
+                  { addr: "0x00…0002", type: t("token.liveTx.donation"), typeColor: "bg-amber-400/20 text-amber-300", amount: "0 IHN", time: t("token.liveTx.pending") },
+                  { addr: "0x00…0003", type: t("token.liveTx.buy"), typeColor: "bg-cyan-400/20 text-cyan-300", amount: "0 IHN", time: t("token.liveTx.pending") },
+                  { addr: "0x00…0004", type: t("token.liveTx.reward"), typeColor: "bg-violet-400/20 text-violet-300", amount: "0 IHN", time: t("token.liveTx.pending") },
                 ].map((tx) => (
                   <div
-                    key={tx.addr + tx.time}
+                    key={tx.addr + tx.type}
                     className="flex items-center gap-2 rounded-xl border border-white/[.07] bg-white/[.03] px-3 py-2.5 text-xs"
                   >
                     <span className="font-mono text-white/50">{tx.addr}</span>
-                    <span
-                      className={`shrink-0 rounded-full px-2 py-0.5 text-[10px] font-semibold ${tx.typeColor}`}
-                    >
+                    <span className={`shrink-0 rounded-full px-2 py-0.5 text-[10px] font-semibold ${tx.typeColor}`}>
                       {tx.type}
                     </span>
                     <span className="ml-auto font-bold text-white">{tx.amount}</span>
@@ -936,17 +822,13 @@ function Index() {
                 to="/transactions"
                 className="mt-4 flex w-full items-center justify-center gap-1.5 text-xs font-semibold text-primary hover:underline"
               >
-                Ver todas las transacciones <ArrowRight className="h-3 w-3" />
+                {t("token.liveTx.viewAll")} <ArrowRight className="h-3 w-3" />
               </Link>
             </div>
 
-            {/* Exchanges */}
-            <div
-              id="token-mercados"
-              className="rounded-2xl border border-white/10 bg-[#07101d]/78 p-5 backdrop-blur-xl"
-            >
+            <div id="token-mercados" className="rounded-2xl border border-white/10 bg-[#07101d]/78 p-5 backdrop-blur-xl">
               <div className="mb-4 text-xs font-semibold uppercase tracking-widest text-primary">
-                Dónde puedes conseguir $IHN
+                {t("token.exchanges.title")}
               </div>
               <div className="grid grid-cols-2 gap-3">
                 {[
@@ -955,7 +837,7 @@ function Index() {
                   { name: "MEXC", abbr: "MEXC" },
                   { name: "Gate.io", abbr: "GT" },
                   { name: "BitMart", abbr: "BMX" },
-                  { name: "Próximamente...", abbr: "···" },
+                  { name: t("token.exchanges.comingSoon"), abbr: "···" },
                 ].map((ex) => (
                   <div
                     key={ex.name}
@@ -972,49 +854,18 @@ function Index() {
                 to="/markets"
                 className="mt-4 flex w-full items-center justify-center gap-1.5 text-xs font-semibold text-primary hover:underline"
               >
-                Ver todos los mercados <ArrowRight className="h-3 w-3" />
+                {t("token.exchanges.viewAll")} <ArrowRight className="h-3 w-3" />
               </Link>
             </div>
           </div>
 
-          {/* Impact metrics strip */}
           <div className="reveal grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-5">
             {[
-              {
-                icon: Droplets,
-                label: "Agua potable",
-                value: "0",
-                unit: "litros entregados",
-                color: "text-cyan-300",
-              },
-              {
-                icon: GraduationCap,
-                label: "Educación",
-                value: "0",
-                unit: "niños educados",
-                color: "text-amber-300",
-              },
-              {
-                icon: Leaf,
-                label: "Medio ambiente",
-                value: "0",
-                unit: "árboles plantados",
-                color: "text-emerald-300",
-              },
-              {
-                icon: Users,
-                label: "Comunidad",
-                value: "0",
-                unit: "familias ayudadas",
-                color: "text-violet-300",
-              },
-              {
-                icon: HandHeart,
-                label: "Salud",
-                value: "0",
-                unit: "personas atendidas",
-                color: "text-rose-300",
-              },
+              { icon: Droplets, label: t("token.impactStrip.water"), value: "0", unit: t("token.impactStrip.waterUnit"), color: "text-cyan-300" },
+              { icon: GraduationCap, label: t("token.impactStrip.education"), value: "0", unit: t("token.impactStrip.educationUnit"), color: "text-amber-300" },
+              { icon: Leaf, label: t("token.impactStrip.env"), value: "0", unit: t("token.impactStrip.envUnit"), color: "text-emerald-300" },
+              { icon: Users, label: t("token.impactStrip.community"), value: "0", unit: t("token.impactStrip.communityUnit"), color: "text-violet-300" },
+              { icon: HandHeart, label: t("token.impactStrip.health"), value: "0", unit: t("token.impactStrip.healthUnit"), color: "text-rose-300" },
             ].map((m) => (
               <div
                 key={m.label}
@@ -1033,13 +884,12 @@ function Index() {
       <LiveOnChain />
 
       <section id="impacto" className="relative py-20">
-
         <div className="mx-auto px-4 sm:px-5 md:max-w-2xl lg:max-w-5xl lg:px-6">
           <div className="reveal overflow-hidden rounded-[1.65rem] border border-white/12 bg-[#070c19]/20 shadow-[0_26px_78px_rgba(0,0,0,.44)]">
             <div className="relative min-h-[232px] p-7 lg:min-h-[280px] lg:p-10">
               <img
                 src={handsImg}
-                alt="Manos sosteniendo un corazón luminoso"
+                alt={t("impactCta.handsAlt")}
                 loading="lazy"
                 width={1024}
                 height={1024}
@@ -1049,12 +899,11 @@ function Index() {
               <div className="relative max-w-[70%] sm:max-w-[320px]">
                 <div className="inline-block rounded-2xl bg-[#070c19]/55 px-4 pb-4 pt-3 backdrop-blur-md">
                   <h2 className="text-[2.45rem] font-black leading-[.98] tracking-normal text-white lg:text-6xl">
-                    Tu token,
-                    <span className="block text-primary">su esperanza.</span>
+                    {t("impactCta.title1")}
+                    <span className="block text-primary">{t("impactCta.titleHL")}</span>
                   </h2>
                   <p className="mt-5 text-xl leading-snug text-white/78 lg:text-2xl">
-                    Cada transacción genera impacto real para ONG y comunidades que más lo
-                    necesitan.
+                    {t("impactCta.description")}
                   </p>
                 </div>
                 <Button
@@ -1064,139 +913,87 @@ function Index() {
                 >
                   <Link to="/impact-map">
                     <Map className="h-7 w-7" />
-                    Explorar mapa de impacto
+                    {t("impactCta.cta")}
                   </Link>
                 </Button>
               </div>
             </div>
           </div>
-
         </div>
       </section>
 
-      <section
-        id="roadmap"
-        className="relative min-h-[900px] overflow-hidden py-16 md:py-20"
-      >
+      <section id="roadmap" className="relative min-h-[900px] overflow-hidden py-16 md:py-20">
         <div className="absolute inset-0 bg-gradient-to-b from-primary/5 via-transparent to-primary/10" />
 
         <div className="relative mx-auto max-w-7xl px-5 md:px-6">
           <div className="max-w-[560px]">
             <span className="text-sm font-semibold uppercase tracking-[0.22em] text-primary">
-              Roadmap
+              {t("roadmap.eyebrow")}
             </span>
             <h2 className="mt-3 text-4xl font-black leading-tight md:text-6xl">
-              El camino hacia el impacto
+              {t("roadmap.title")}
             </h2>
             <p className="mt-4 text-lg leading-relaxed text-white/78 md:text-xl">
-              Nuestro roadmap estratégico para construir un ecosistema transparente, sostenible y
-              con impacto real.
+              {t("roadmap.description")}
             </p>
           </div>
           <div className="relative mt-12 grid gap-5 lg:grid-cols-5">
-            {[
-              {
-                q: "Q1 2026",
-                icon: Rocket,
-                f: "Fase 1",
-                t: "Fundamentos",
-                d: ["Branding", "Estructura legal", "Sitio web", "Mensaje inicial"],
-                offset: "lg:mt-44",
-              },
-              {
-                q: "Q2 2026",
-                icon: Users,
-                f: "Fase 2",
-                t: "Comunidad",
-                d: ["Redes sociales", "Lista de interesados", "Contenido educativo"],
-                offset: "lg:mt-32",
-              },
-              {
-                q: "Q3 2026",
-                icon: TrendingUp,
-                f: "Fase 3",
-                t: "Lanzamiento",
-                d: ["Activación de mercado", "Métricas", "Informes de impacto"],
-                offset: "lg:mt-20",
-              },
-              {
-                q: "Q4 2026",
-                icon: Handshake,
-                f: "Fase 4",
-                t: "Alianzas",
-                d: ["ONG aliadas", "Acuerdos preliminares", "Criterios de donación"],
-                offset: "lg:mt-10",
-              },
-              {
-                q: "Q5 2026",
-                icon: BrainCircuit,
-                f: "Fase 5",
-                t: "Expansión",
-                d: ["Integración de IA", "Automatización", "Nuevas alianzas"],
-                offset: "lg:mt-0",
-              },
-            ].map((r) => (
-              <div
-                key={r.f}
-                className={`reveal relative rounded-2xl border border-amber-300/25 p-5 ${r.offset}`}
-              >
-                <div className="relative z-10 mb-5">
-                  <div className="text-sm font-black text-primary md:text-base">{r.q}</div>
+            {roadmapPhases.map((r, i) => {
+              const Icon = roadmapIcons[i];
+              return (
+                <div
+                  key={r.f}
+                  className={`reveal relative rounded-2xl border border-amber-300/25 p-5 ${roadmapOffsets[i]}`}
+                >
+                  <div className="relative z-10 mb-5">
+                    <div className="text-sm font-black text-primary md:text-base">{roadmapQuarters[i]}</div>
+                  </div>
+                  <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-full border border-primary/30 text-primary">
+                    <Icon className="h-6 w-6" />
+                  </div>
+                  <div className="text-xs font-bold uppercase tracking-[0.18em] text-primary">
+                    {r.f}
+                  </div>
+                  <h3 className="mt-2 text-2xl font-bold">{r.t}</h3>
+                  <ul className="mt-4 space-y-2">
+                    {r.d.map((item) => (
+                      <li key={item} className="flex items-center gap-2 text-sm text-white/68">
+                        <CheckCircle2 className="h-4 w-4 text-primary" /> {item}
+                      </li>
+                    ))}
+                  </ul>
                 </div>
-                <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-full border border-primary/30 text-primary">
-                  <r.icon className="h-6 w-6" />
-                </div>
-                <div className="text-xs font-bold uppercase tracking-[0.18em] text-primary">
-                  {r.f}
-                </div>
-                <h3 className="mt-2 text-2xl font-bold">{r.t}</h3>
-                <ul className="mt-4 space-y-2">
-                  {r.d.map((item) => (
-                    <li key={item} className="flex items-center gap-2 text-sm text-white/68">
-                      <CheckCircle2 className="h-4 w-4 text-primary" /> {item}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            ))}
+              );
+            })}
           </div>
 
           <div className="mt-10 grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-5">
-            {[
-              { icon: Users, label: "Comunidad", value: "0", desc: "Personas unidas" },
-              { icon: Globe, label: "Alcance global", value: "0", desc: "Países conectados" },
-              { icon: Heart, label: "Vidas transformadas", value: "0", desc: "Impactos reales" },
-              {
-                icon: Coins,
-                label: "Fondos para impacto",
-                value: "$0",
-                desc: "Destinados a causas",
-              },
-              { icon: Shield, label: "Transparencia", value: "0%", desc: "On-chain verificable" },
-            ].map((m) => (
-              <div
-                key={m.label}
-                className="reveal flex items-center gap-4 rounded-2xl border border-amber-300/25 p-4"
-              >
-                <m.icon className="h-9 w-9 shrink-0 text-primary" />
-                <div>
-                  <div className="text-sm text-primary">{m.label}</div>
-                  <div className="text-2xl font-black leading-none md:text-3xl">{m.value}</div>
-                  <div className="mt-1 text-xs text-white/72">{m.desc}</div>
+            {roadmapMetrics.map((m, i) => {
+              const Icon = roadmapMetricIcons[i];
+              return (
+                <div
+                  key={m.label}
+                  className="reveal flex items-center gap-4 rounded-2xl border border-amber-300/25 p-4"
+                >
+                  <Icon className="h-9 w-9 shrink-0 text-primary" />
+                  <div>
+                    <div className="text-sm text-primary">{m.label}</div>
+                    <div className="text-2xl font-black leading-none md:text-3xl">{roadmapMetricValues[i]}</div>
+                    <div className="mt-1 text-xs text-white/72">{m.desc}</div>
+                  </div>
                 </div>
-              </div>
-            ))}
+              );
+            })}
           </div>
 
           <div className="reveal mt-4 flex flex-col gap-4 rounded-2xl border border-amber-300/25 p-5 md:flex-row md:items-center md:justify-between">
             <div className="flex items-center gap-4">
               <Heart className="h-9 w-9 shrink-0 text-primary" />
               <p className="text-lg text-white/82">
-                Cada paso nos acerca a un mundo más justo, transparente y lleno de oportunidades
-                para todos.
+                {t("roadmap.closing")}
               </p>
             </div>
-            <span className="font-black text-primary">Sé parte del cambio.</span>
+            <span className="font-black text-primary">{t("roadmap.closingHL")}</span>
           </div>
         </div>
       </section>
@@ -1205,53 +1002,25 @@ function Index() {
         <div className="mx-auto max-w-7xl px-5 md:px-6">
           <div className="reveal text-center">
             <span className="text-sm font-semibold uppercase tracking-[0.22em] text-primary">
-              Ecosistema
+              {t("partners.eyebrow")}
             </span>
             <h2 className="mt-3 text-4xl font-black md:text-5xl">
-              Construido para <span className="text-primary">alianzas reales</span>
+              {t("partners.title1")} <span className="text-primary">{t("partners.titleHL")}</span>
             </h2>
             <p className="mx-auto mt-4 max-w-xl text-lg text-white/65">
-              Buscamos organizaciones que compartan nuestra visión: transparencia, impacto medible y
-              tecnología al servicio del bien común.
+              {t("partners.description")}
             </p>
           </div>
 
           <div className="reveal mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-            {[
-              {
-                name: "ONG Educación Global",
-                category: "Educación",
-                quote:
-                  "La tecnología blockchain puede llevar transparencia real a cada donación. ImpactHope Network lo hace posible.",
-                initials: "EG",
-                color: "from-amber-400 to-orange-500",
-              },
-              {
-                name: "Fundación Agua Limpia",
-                category: "Medio ambiente",
-                quote:
-                  "Un ecosistema donde cada transacción genera impacto verificable es exactamente lo que el sector necesita.",
-                initials: "AL",
-                color: "from-cyan-400 to-sky-500",
-              },
-              {
-                name: "Red Comunitaria Latino",
-                category: "Comunidad",
-                quote:
-                  "Por fin una plataforma que une a quienes tienen recursos con quienes tienen la necesidad, con total trazabilidad.",
-                initials: "RC",
-                color: "from-violet-400 to-purple-500",
-              },
-            ].map((p) => (
+            {partners.map((p, i) => (
               <div
                 key={p.name}
                 className="flex flex-col gap-4 rounded-2xl border border-white/10 bg-[#07101d]/78 p-6 backdrop-blur-xl"
               >
                 <div className="flex items-center gap-3">
-                  <div
-                    className={`flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-gradient-to-br ${p.color} text-sm font-black text-black`}
-                  >
-                    {p.initials}
+                  <div className={`flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-gradient-to-br ${partnerColors[i]} text-sm font-black text-black`}>
+                    {partnerInitials[i]}
                   </div>
                   <div>
                     <div className="font-bold text-white">{p.name}</div>
@@ -1264,13 +1033,7 @@ function Index() {
           </div>
 
           <div className="reveal mt-10 flex flex-wrap items-center justify-center gap-3">
-            {[
-              "Transparencia on-chain",
-              "Impacto medible",
-              "Reportes verificables",
-              "Sin intermediarios",
-              "Comunidad global",
-            ].map((tag) => (
+            {partnerTags.map((tag) => (
               <span
                 key={tag}
                 className="rounded-full border border-amber-300/20 bg-amber-300/[.06] px-4 py-1.5 text-sm font-semibold text-amber-100"
@@ -1287,28 +1050,25 @@ function Index() {
           <div className="reveal grid gap-10 rounded-[2rem] border border-white/10 bg-[#07101d]/62 p-7 shadow-[0_30px_90px_rgba(0,0,0,.42)] md:p-10 lg:grid-cols-[.95fr_1.05fr] lg:p-12">
             <div>
               <span className="inline-flex items-center gap-2 rounded-full bg-primary/15 px-3 py-1 text-xs font-semibold text-primary">
-                <Heart className="h-3.5 w-3.5" /> Tu aporte importa
+                <Heart className="h-3.5 w-3.5" /> {t("donate.badge")}
               </span>
               <h2 className="mt-4 text-5xl font-black leading-tight md:text-6xl">
-                Dona hoy. Transforma <span className="text-primary">mañana.</span>
+                {t("donate.title1")} <span className="text-primary">{t("donate.titleHL")}</span>
               </h2>
               <p className="mt-5 max-w-xl text-lg leading-relaxed text-white/72">
-                Cada contribución se registra en blockchain y se reporta de forma transparente a la
-                comunidad.
+                {t("donate.description")}
               </p>
               <ul className="mt-8 space-y-4">
-                {["Transparencia verificable", "Reportes verificables", "Impacto medible"].map(
-                  (b) => (
-                    <li key={b} className="flex items-center gap-3 text-lg text-white/86">
-                      <CheckCircle2 className="h-6 w-6 text-primary" /> {b}
-                    </li>
-                  ),
-                )}
+                {donateBenefits.map((b) => (
+                  <li key={b} className="flex items-center gap-3 text-lg text-white/86">
+                    <CheckCircle2 className="h-6 w-6 text-primary" /> {b}
+                  </li>
+                ))}
               </ul>
             </div>
 
             <div className="rounded-3xl border border-white/12 bg-white/[.03] p-5 backdrop-blur-md md:p-7">
-              <div className="text-2xl font-bold">Selecciona tu donación</div>
+              <div className="text-2xl font-bold">{t("donate.selectAmount")}</div>
               <div className="mt-5 grid grid-cols-2 gap-3 sm:grid-cols-4">
                 {[10, 25, 50, 100].map((v) => (
                   <button
@@ -1335,14 +1095,15 @@ function Index() {
                   if (Number.isFinite(n) && n >= 0) setDonation(n);
                 }}
                 className="mt-4 h-14 border-white/15 bg-transparent text-lg"
-                placeholder="Monto personalizado"
-                aria-label="Monto de donación personalizado"
+                placeholder={t("donate.customAmount")}
+                aria-label={t("donate.customAmountLabel")}
               />
 
-              <div className="mt-7 text-xl font-bold">Elige tu método de pago</div>
-              <div className="mt-4 space-y-3" role="radiogroup" aria-label="Método de pago">
-                {paymentMethods.map((method) => {
+              <div className="mt-7 text-xl font-bold">{t("donate.paymentTitle")}</div>
+              <div className="mt-4 space-y-3" role="radiogroup" aria-label={t("donate.paymentRadioLabel")}>
+                {paymentMethodsT.map((method, i) => {
                   const isSelected = selectedPayment === method.label;
+                  const Icon = paymentIcons[i];
                   return (
                     <button
                       key={method.label}
@@ -1357,7 +1118,7 @@ function Index() {
                       }`}
                     >
                       <span className="flex items-center gap-3">
-                        <method.icon className="h-6 w-6 text-white/72" />
+                        <Icon className="h-6 w-6 text-white/72" />
                         <span className="font-semibold">{method.label}</span>
                       </span>
                       <span className="text-sm text-white/48">{method.detail}</span>
@@ -1367,10 +1128,8 @@ function Index() {
               </div>
 
               <div className="mt-6 border-t border-white/10 pt-5">
-                <div className="font-semibold">¿Quieres dejar un tip opcional?</div>
-                <p className="mt-1 text-sm text-white/56">
-                  Apoya el desarrollo y crecimiento de la organización.
-                </p>
+                <div className="font-semibold">{t("donate.tipTitle")}</div>
+                <p className="mt-1 text-sm text-white/56">{t("donate.tipDescription")}</p>
                 <div className="mt-4 grid grid-cols-2 gap-3 sm:grid-cols-4">
                   {[5, 10, 20, 0].map((v) => (
                     <button
@@ -1383,7 +1142,7 @@ function Index() {
                           : "border border-white/10 bg-white/[.05] text-white/70 backdrop-blur-md hover:bg-white/[.09]"
                       }`}
                     >
-                      {v === 0 ? "Sin tip" : `$${v}`}
+                      {v === 0 ? t("donate.noTip") : `$${v}`}
                     </button>
                   ))}
                 </div>
@@ -1391,7 +1150,7 @@ function Index() {
 
               {sent ? (
                 <div className="mt-5 rounded-xl border border-primary/30 bg-primary/15 p-4 text-center text-sm">
-                  ¡Gracias! Te contactaremos pronto sobre tu aporte de ${displayDonation + tip}.
+                  {t("donate.sent", { total: displayDonation + tip })}
                 </div>
               ) : (
                 <form
@@ -1400,9 +1159,15 @@ function Index() {
                     if (!email) return;
                     setSent(true);
                     const total = displayDonation + tip;
-                    const subject = encodeURIComponent(`Aporte ImpactHope Network - $${total}`);
+                    const subject = encodeURIComponent(t("donate.mailSubject", { total }));
                     const body = encodeURIComponent(
-                      `Hola ImpactHope Network,\n\nQuiero coordinar un aporte de $${total}.\n\nDonacion: $${displayDonation}\nTip: $${tip}\nMetodo preferido: ${selectedPayment}\nCorreo: ${email}\n\nGracias.`,
+                      t("donate.mailBody", {
+                        total,
+                        donation: displayDonation,
+                        tip,
+                        method: selectedPayment,
+                        email,
+                      }),
                     );
                     window.location.href = `mailto:contact@impacthopenetwork.org?subject=${subject}&body=${body}`;
                   }}
@@ -1413,7 +1178,7 @@ function Index() {
                     <Input
                       type="email"
                       required
-                      placeholder="tu@email.com"
+                      placeholder={t("donate.emailPlaceholder")}
                       value={email}
                       onChange={(e) => setEmail(e.target.value)}
                       className="h-14 border-white/15 bg-transparent pl-9"
@@ -1424,12 +1189,12 @@ function Index() {
                     size="lg"
                     className="h-14 w-full bg-gradient-to-r from-amber-200 via-amber-400 to-orange-500 text-base font-black text-gray-950 shadow-[0_14px_44px_-8px_rgba(245,158,11,0.65)] transition-all duration-200 hover:brightness-110 hover:shadow-[0_18px_54px_-8px_rgba(245,158,11,0.85)]"
                   >
-                    Donar ${displayDonation} + ${tip} tip <Heart className="ml-2 h-4 w-4" />
+                    {t("donate.submit", { donation: displayDonation, tip })} <Heart className="ml-2 h-4 w-4" />
                   </Button>
                 </form>
               )}
               <p className="mt-4 text-center text-xs text-white/42">
-                Información de pago segura. No constituye asesoría financiera.
+                {t("donate.secure")}
               </p>
             </div>
           </div>
@@ -1438,22 +1203,19 @@ function Index() {
 
       <section className="relative py-16">
         <div className="mx-auto grid max-w-7xl gap-4 px-4 sm:grid-cols-2 sm:px-5 md:px-6 lg:grid-cols-5">
-          {[
-            { i: Shield, t: "Seguridad", d: "Smart contracts auditados." },
-            { i: BrainCircuit, t: "IA transparente", d: "Verificación de proyectos." },
-            { i: Users, t: "Comunidad", d: "Decisiones compartidas." },
-            { i: Rocket, t: "Futuro", d: "Herramientas para impacto." },
-            { i: Heart, t: "Recompensas", d: "Ayudas mientras creces." },
-          ].map((v) => (
-            <div
-              key={v.t}
-              className="reveal rounded-2xl border border-white/10 bg-[#07101d]/76 p-5 backdrop-blur-xl lg:rounded-none lg:first:rounded-l-2xl lg:last:rounded-r-2xl"
-            >
-              <v.i className="h-9 w-9 text-primary" />
-              <div className="mt-3 font-bold text-primary">{v.t}</div>
-              <div className="mt-1 text-sm text-white/62">{v.d}</div>
-            </div>
-          ))}
+          {values.map((v, i) => {
+            const Icon = valueIcons[i];
+            return (
+              <div
+                key={v.t}
+                className="reveal rounded-2xl border border-white/10 bg-[#07101d]/76 p-5 backdrop-blur-xl lg:rounded-none lg:first:rounded-l-2xl lg:last:rounded-r-2xl"
+              >
+                <Icon className="h-9 w-9 text-primary" />
+                <div className="mt-3 font-bold text-primary">{v.t}</div>
+                <div className="mt-1 text-sm text-white/62">{v.d}</div>
+              </div>
+            );
+          })}
         </div>
       </section>
       </main>
@@ -1462,24 +1224,14 @@ function Index() {
         <div className="mx-auto flex max-w-7xl flex-col items-center justify-between gap-4 px-5 text-sm text-white/52 md:flex-row md:px-6">
           <div className="flex items-center gap-2">
             <img src={coinImg} alt="" className="h-6 w-6" width={24} height={24} />
-            <span>© 2026 ImpactHope Network LLC</span>
+            <span>{t("footer.copyright")}</span>
           </div>
-          <nav className="flex flex-wrap items-center gap-4" aria-label="Enlaces legales">
-            <Link to="/terms" className="transition-colors hover:text-white/80">
-              Términos de uso
-            </Link>
-            <Link to="/privacy" className="transition-colors hover:text-white/80">
-              Política de privacidad
-            </Link>
-            <Link to="/risk" className="transition-colors hover:text-white/80">
-              Riesgos
-            </Link>
-            <Link to="/legal" className="transition-colors hover:text-white/80">
-              Aviso legal
-            </Link>
-            <Link to="/contact" className="transition-colors hover:text-white/80">
-              Contacto
-            </Link>
+          <nav className="flex flex-wrap items-center gap-4" aria-label={t("footer.legalNav")}>
+            <Link to="/terms" className="transition-colors hover:text-white/80">{t("footer.terms")}</Link>
+            <Link to="/privacy" className="transition-colors hover:text-white/80">{t("footer.privacy")}</Link>
+            <Link to="/risk" className="transition-colors hover:text-white/80">{t("footer.risk")}</Link>
+            <Link to="/legal" className="transition-colors hover:text-white/80">{t("footer.legal")}</Link>
+            <Link to="/contact" className="transition-colors hover:text-white/80">{t("footer.contact")}</Link>
           </nav>
         </div>
       </footer>
