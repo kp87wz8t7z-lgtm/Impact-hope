@@ -86,11 +86,19 @@ function Index() {
     label: string;
     detail: string;
   }[];
+  const tipPaymentMethodsT = t("donate.tipPaymentMethods", { returnObjects: true }) as {
+    label: string;
+    detail: string;
+  }[];
   const [selectedPayment, setSelectedPayment] = useState<string>(paymentMethodsT[0]?.label ?? "");
-  // Keep selectedPayment valid after a language switch.
+  const [selectedTipPayment, setSelectedTipPayment] = useState<string>(tipPaymentMethodsT[0]?.label ?? "");
+  // Keep selections valid after a language switch.
   useEffect(() => {
     if (!paymentMethodsT.some((m) => m.label === selectedPayment)) {
       setSelectedPayment(paymentMethodsT[0]?.label ?? "");
+    }
+    if (!tipPaymentMethodsT.some((m) => m.label === selectedTipPayment)) {
+      setSelectedTipPayment(tipPaymentMethodsT[0]?.label ?? "");
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [i18n.language]);
