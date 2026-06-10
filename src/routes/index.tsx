@@ -1172,9 +1172,19 @@ function Index() {
                 })}
               </div>
 
-              <div className="mt-6 border-t border-white/10 pt-5">
-                <div className="font-semibold">{t("donate.tipTitle")}</div>
-                <p className="mt-1 text-sm text-white/56">{t("donate.tipDescription")}</p>
+              <div className="mt-5 flex items-start gap-2 rounded-xl border border-emerald-400/25 bg-emerald-400/[.06] p-3 text-xs text-emerald-100/90">
+                <Heart className="mt-0.5 h-4 w-4 shrink-0 text-emerald-300" />
+                <span>{t("donate.donationNote")}</span>
+              </div>
+
+              <div className="mt-6 rounded-2xl border border-dashed border-white/15 bg-white/[.03] p-5 backdrop-blur-md">
+                <div className="flex flex-wrap items-center gap-2">
+                  <span className="inline-flex items-center rounded-full border border-primary/35 bg-primary/10 px-2.5 py-0.5 text-[10px] font-semibold uppercase tracking-wider text-primary">
+                    {t("donate.tipBadge")}
+                  </span>
+                </div>
+                <div className="mt-2 font-semibold">{t("donate.tipTitle")}</div>
+                <p className="mt-1 text-sm text-white/64">{t("donate.tipDescription")}</p>
                 <div className="mt-4 grid grid-cols-2 gap-3 sm:grid-cols-4">
                   {[5, 10, 20, 0].map((v) => {
                     const isActive = tip === v;
@@ -1201,9 +1211,9 @@ function Index() {
                 </div>
 
                 {tip > 0 && (
-                  <div className="mt-5">
+                  <div className="mt-5 border-t border-white/10 pt-4">
                     <div className="text-sm font-semibold text-white/90">{t("donate.tipPaymentTitle")}</div>
-                    <p className="mt-1 text-xs text-white/52">{t("donate.tipPaymentHelp")}</p>
+                    <p className="mt-1 text-xs text-white/56">{t("donate.tipPaymentHelp")}</p>
                     <div
                       className="mt-3 grid grid-cols-1 gap-2 sm:grid-cols-3"
                       role="radiogroup"
