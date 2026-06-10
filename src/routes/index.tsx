@@ -82,11 +82,13 @@ function Index() {
   const [displayDonation, setDisplayDonation] = useState(50);
   const [selectedRange, setSelectedRange] = useState<(typeof chartRanges)[number]>("1D");
 
-  const paymentMethodsT = t("donate.paymentMethods", { returnObjects: true }) as {
+  const paymentMethodsRaw = t("donate.paymentMethods", { returnObjects: true });
+  const paymentMethodsT = (Array.isArray(paymentMethodsRaw) ? paymentMethodsRaw : []) as {
     label: string;
     detail: string;
   }[];
-  const tipPaymentMethodsT = t("donate.tipPaymentMethods", { returnObjects: true }) as {
+  const tipPaymentMethodsRaw = t("donate.tipPaymentMethods", { returnObjects: true });
+  const tipPaymentMethodsT = (Array.isArray(tipPaymentMethodsRaw) ? tipPaymentMethodsRaw : []) as {
     label: string;
     detail: string;
   }[];
