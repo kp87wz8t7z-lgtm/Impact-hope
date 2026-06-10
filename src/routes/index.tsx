@@ -1197,6 +1197,43 @@ function Index() {
                     );
                   })}
                 </div>
+
+                {tip > 0 && (
+                  <div className="mt-5">
+                    <div className="text-sm font-semibold text-white/90">{t("donate.tipPaymentTitle")}</div>
+                    <p className="mt-1 text-xs text-white/52">{t("donate.tipPaymentHelp")}</p>
+                    <div
+                      className="mt-3 grid grid-cols-1 gap-2 sm:grid-cols-3"
+                      role="radiogroup"
+                      aria-label={t("donate.tipPaymentRadioLabel")}
+                    >
+                      {tipPaymentMethodsT.map((method, i) => {
+                        const isSelected = selectedTipPayment === method.label;
+                        const Icon = tipPaymentIcons[i] ?? CircleDollarSign;
+                        return (
+                          <button
+                            key={method.label}
+                            type="button"
+                            role="radio"
+                            aria-checked={isSelected}
+                            onClick={() => setSelectedTipPayment(method.label)}
+                            className={`flex flex-col items-start gap-1 rounded-xl border p-3 text-left transition-colors ${
+                              isSelected
+                                ? "border-primary/55 bg-primary/12"
+                                : "border-white/10 bg-white/[.05] backdrop-blur-md hover:border-primary/40 hover:bg-white/[.09]"
+                            }`}
+                          >
+                            <span className="flex items-center gap-2">
+                              <Icon className="h-4 w-4 text-white/72" />
+                              <span className="text-sm font-semibold">{method.label}</span>
+                            </span>
+                            <span className="text-[11px] text-white/48">{method.detail}</span>
+                          </button>
+                        );
+                      })}
+                    </div>
+                  </div>
+                )}
               </div>
 
               {sent ? (
