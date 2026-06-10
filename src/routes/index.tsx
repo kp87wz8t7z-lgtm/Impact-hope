@@ -1254,6 +1254,7 @@ function Index() {
                         donation: displayDonation,
                         tip,
                         method: selectedPayment,
+                        tipMethod: tip > 0 ? selectedTipPayment : "—",
                         email,
                       }),
                     );
@@ -1280,6 +1281,19 @@ function Index() {
                   >
                     {t("donate.submit", { donation: displayDonation, tip })} <Heart className="ml-2 h-4 w-4" />
                   </Button>
+                  <p className="text-center text-xs text-white/62">
+                    {tip > 0
+                      ? t("donate.submitBreakdown", {
+                          donation: displayDonation,
+                          method: selectedPayment,
+                          tip,
+                          tipMethod: selectedTipPayment,
+                        })
+                      : t("donate.submitBreakdownNoTip", {
+                          donation: displayDonation,
+                          method: selectedPayment,
+                        })}
+                  </p>
                 </form>
               )}
               <p className="mt-4 text-center text-xs text-white/42">
