@@ -35,7 +35,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useAccent } from "@/contexts/theme-context";
-import networkHero from "@/assets/impact-network-hero-vertical.webp";
+import networkHero from "@/assets/impact-network-hero-vertical.jpg";
 import coinImg from "@/assets/coin.png";
 
 import handsImg from "@/assets/hands.webp";
@@ -68,6 +68,7 @@ const tokenomicsColors = [
 const tokenomicsValues = ["30%", "20%", "15%", "15%", "10%", "10%"];
 
 const paymentIcons = [CreditCard, CircleDollarSign, Wifi, Landmark];
+const tipPaymentIcons = [Wifi, CircleDollarSign, Landmark];
 
 function Index() {
   const { t } = useTranslation();
@@ -81,15 +82,25 @@ function Index() {
   const [displayDonation, setDisplayDonation] = useState(50);
   const [selectedRange, setSelectedRange] = useState<(typeof chartRanges)[number]>("1D");
 
-  const paymentMethodsT = t("donate.paymentMethods", { returnObjects: true }) as {
+  const paymentMethodsRaw = t("donate.paymentMethods", { returnObjects: true });
+  const paymentMethodsT = (Array.isArray(paymentMethodsRaw) ? paymentMethodsRaw : []) as {
+    label: string;
+    detail: string;
+  }[];
+  const tipPaymentMethodsRaw = t("donate.tipPaymentMethods", { returnObjects: true });
+  const tipPaymentMethodsT = (Array.isArray(tipPaymentMethodsRaw) ? tipPaymentMethodsRaw : []) as {
     label: string;
     detail: string;
   }[];
   const [selectedPayment, setSelectedPayment] = useState<string>(paymentMethodsT[0]?.label ?? "");
-  // Keep selectedPayment valid after a language switch.
+  const [selectedTipPayment, setSelectedTipPayment] = useState<string>(tipPaymentMethodsT[0]?.label ?? "");
+  // Keep selections valid after a language switch.
   useEffect(() => {
     if (!paymentMethodsT.some((m) => m.label === selectedPayment)) {
       setSelectedPayment(paymentMethodsT[0]?.label ?? "");
+    }
+    if (!tipPaymentMethodsT.some((m) => m.label === selectedTipPayment)) {
+      setSelectedTipPayment(tipPaymentMethodsT[0]?.label ?? "");
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [i18n.language]);
@@ -1161,9 +1172,19 @@ function Index() {
                 })}
               </div>
 
-              <div className="mt-6 border-t border-white/10 pt-5">
-                <div className="font-semibold">{t("donate.tipTitle")}</div>
-                <p className="mt-1 text-sm text-white/56">{t("donate.tipDescription")}</p>
+              <div className="mt-5 flex items-start gap-2 rounded-xl border border-emerald-400/25 bg-emerald-400/[.06] p-3 text-xs text-emerald-100/90">
+                <Heart className="mt-0.5 h-4 w-4 shrink-0 text-emerald-300" />
+                <span>{t("donate.donationNote")}</span>
+              </div>
+
+              <div className="mt-6 rounded-2xl border border-dashed border-white/15 bg-white/[.03] p-5 backdrop-blur-md">
+                <div className="flex flex-wrap items-center gap-2">
+                  <span className="inline-flex items-center rounded-full border border-primary/35 bg-primary/10 px-2.5 py-0.5 text-[10px] font-semibold uppercase tracking-wider text-primary">
+                    {t("donate.tipBadge")}
+                  </span>
+                </div>
+                <div className="mt-2 font-semibold">{t("donate.tipTitle")}</div>
+                <p className="mt-1 text-sm text-white/64">{t("donate.tipDescription")}</p>
                 <div className="mt-4 grid grid-cols-2 gap-3 sm:grid-cols-4">
                   {[5, 10, 20, 0].map((v) => {
                     const isActive = tip === v;
@@ -1188,6 +1209,43 @@ function Index() {
                     );
                   })}
                 </div>
+
+                {tip > 0 && (
+                  <div className="mt-5 border-t border-white/10 pt-4">
+                    <div className="text-sm font-semibold text-white/90">{t("donate.tipPaymentTitle")}</div>
+                    <p className="mt-1 text-xs text-white/56">{t("donate.tipPaymentHelp")}</p>
+                    <div
+                      className="mt-3 grid grid-cols-1 gap-2 sm:grid-cols-3"
+                      role="radiogroup"
+                      aria-label={t("donate.tipPaymentRadioLabel")}
+                    >
+                      {tipPaymentMethodsT.map((method, i) => {
+                        const isSelected = selectedTipPayment === method.label;
+                        const Icon = tipPaymentIcons[i] ?? CircleDollarSign;
+                        return (
+                          <button
+                            key={method.label}
+                            type="button"
+                            role="radio"
+                            aria-checked={isSelected}
+                            onClick={() => setSelectedTipPayment(method.label)}
+                            className={`flex flex-col items-start gap-1 rounded-xl border p-3 text-left transition-colors ${
+                              isSelected
+                                ? "border-primary/55 bg-primary/12"
+                                : "border-white/10 bg-white/[.05] backdrop-blur-md hover:border-primary/40 hover:bg-white/[.09]"
+                            }`}
+                          >
+                            <span className="flex items-center gap-2">
+                              <Icon className="h-4 w-4 text-white/72" />
+                              <span className="text-sm font-semibold">{method.label}</span>
+                            </span>
+                            <span className="text-[11px] text-white/48">{method.detail}</span>
+                          </button>
+                        );
+                      })}
+                    </div>
+                  </div>
+                )}
               </div>
 
               {sent ? (
@@ -1208,6 +1266,7 @@ function Index() {
                         donation: displayDonation,
                         tip,
                         method: selectedPayment,
+                        tipMethod: tip > 0 ? selectedTipPayment : "—",
                         email,
                       }),
                     );
@@ -1234,6 +1293,19 @@ function Index() {
                   >
                     {t("donate.submit", { donation: displayDonation, tip })} <Heart className="ml-2 h-4 w-4" />
                   </Button>
+                  <p className="text-center text-xs text-white/62">
+                    {tip > 0
+                      ? t("donate.submitBreakdown", {
+                          donation: displayDonation,
+                          method: selectedPayment,
+                          tip,
+                          tipMethod: selectedTipPayment,
+                        })
+                      : t("donate.submitBreakdownNoTip", {
+                          donation: displayDonation,
+                          method: selectedPayment,
+                        })}
+                  </p>
                 </form>
               )}
               <p className="mt-4 text-center text-xs text-white/42">
