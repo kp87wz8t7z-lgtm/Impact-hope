@@ -68,6 +68,7 @@ const tokenomicsColors = [
 const tokenomicsValues = ["30%", "20%", "15%", "15%", "10%", "10%"];
 
 const paymentIcons = [CreditCard, CircleDollarSign, Wifi, Landmark];
+const tipPaymentIcons = [Wifi, CircleDollarSign, Landmark];
 
 function Index() {
   const { t } = useTranslation();
